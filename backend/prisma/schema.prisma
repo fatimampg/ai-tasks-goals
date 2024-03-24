@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  email String @unique
+  name String
+  password String
+  tasks Task[]
+  goals Goal[]
+}
+
+enum TASK_STATUS {
+  TO_DO
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum TASK_PRIORITY {
+  LOW
+  MODERATE
+  HIGH
+}
+
+model Task {
+  id Int @id @default(autoincrement())
+  description String @db.VarChar(255)
+  deadline DateTime 
+  belongsToId String
+  belongsTo User @relation(fields: [belongsToId], references: [id])
+  @@unique([id, belongsToId])
+  status TASK_STATUS @default(IN_PROGRESS)
+  percentageCompleted Int? //associated to state IN_PROGRESS
+  priority TASK_PRIORITY @default(MODERATE)
+  relatedGoal Goal? @relation(fields:[relatedGoalId], references: [id])
+  relatedGoalId Int?
+}
+
+enum GOAL_STATUS {
+  ACHIEVED
+  IN_PROGRESS
+  NEEDS_IMPROVEMENT
+}
+
+model Goal {
+  id Int @id @default(autoincrement())
+  description String @db.VarChar(255)
+  month Int
+  year Int
+  belongsToId String
+  belongsTo User @relation(fields: [belongsToId], references: [id])
+  @@unique([id, belongsToId])
+  status GOAL_STATUS @default(IN_PROGRESS)
+  tasks Task[]
+}
