@@ -1,0 +1,148 @@
+@import './base.css';
+
+.sidebar-container {
+    background-color: white;
+    position: absolute;
+    left:0;
+    top: 61.3px;
+    bottom: 0;
+    overflow-y: scroll;
+}
+
+.sidebar__goals-items {
+    margin: 20px 20px auto 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.sidebar-container h1{
+    color: var(--color-text-on-primary-light);
+    font-weight:600
+}
+.sidebar-container label{
+    color: var(--color-text-on-primary-light);
+    font-weight:400;
+    font-size: 15px;
+}
+.sidebar__insert--date {
+    display: flex;
+    flex-direction: row;
+    align-items: center
+}
+
+.sidebar__month-input {
+    font-size: 15px;
+    font-family: var(--font-family);
+    color: var(--color-text-on-primary-light);
+    background-color: var(--color-primary);
+    border: 0 solid var(--color-text-on-primary-light);
+    width: 129.14px;
+    height: 1.125rem;
+    margin: 10px 0px 10px 10px ;
+    padding: 2px 0 2px 0;
+    text-align: center;
+}
+.sidebar__month-input::placeholder {
+    font-family: var(--font-family);
+    font-size: 15px;
+    color: var(--color-text-on-primary-light);
+}
+.sidebar__search-box {
+    margin-bottom: 30px;
+    margin-top: 10px;
+    text-align: center;
+}
+.sidebar-container li{
+    font-size: 16px;
+    font-family: var(--font-family);
+    color: black;
+       
+}
+.sidebar__icon-title-pair {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    list-style-type: none;
+    margin: 8px 0 8px 0;
+}
+
+.sidebar__icon-title-pair li {
+    margin-left: 5px;
+}
+
+.sidebar__button-secondary {
+    display: block;
+    font-size: 16px;
+    width: 188.8px;
+    height: 1.8rem;
+    border-radius: 0.4rem;
+    box-sizing: border-box; 
+    cursor: pointer;
+    transition: outline 0.1s linear;
+    margin: 7px 0px 7px 0px;
+    background-color: var(--color-primary);
+    border: 0.1rem solid var(--color-primary);
+}
+.sidebar__button-secondary:hover {
+background-color: #bcbcbc; 
+color: white
+}
+
+.sidebar__button-primary {
+    font-size: 16px;
+    font-weight: 500;
+    width: 188px;
+    height: 3.0rem;
+    border-radius: 0.4rem;
+    box-sizing: border-box; 
+    cursor: pointer;
+    transition: outline 0.1s linear;
+    vertical-align: middle;
+    margin: 15px 0px 15px 0px;
+    background-color: var(--color-button-primary-bg);
+    border: 0.1rem solid var(--color-button-primary-bg);
+    color: white;
+}
+.sidebar__button-primary:hover {
+    background-color: white;
+    border: 0.1rem solid var(--color-button-primary-bg);
+    color: var(--color-button-primary-bg)
+}
+
+.sidebar__tasks-items {
+    margin: 30px 20px auto 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+}
+
+.sidebar__date-input {
+    font-size: 15px;
+    font-family: var(--font-family);
+    color: var(--color-text-on-primary-light);
+    background-color: var(--color-primary);
+    border: 0 solid var(--color-text-on-primary-light);
+    width: 135px;
+    margin-left: 10px;
+    padding: 2px;
+    text-align: center;
+}
+
+.sidebar__text-date-pair {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    list-style-type: none;
+    margin: 10px 0 0px 0;
+}
+.sidebar__tasks-items .sidebar__icon-title-pair li:first-child {
+  background-color: var(--color-primary);
+  border-radius: 8px;
+  height: 25px;
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0
+}

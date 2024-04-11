@@ -1,0 +1,168 @@
+@import './base.css';
+
+.tasks-page {
+    padding-top: 61.3px;
+    padding-left:240px ;
+}
+  
+.dashboard__main-container {
+padding-left: 20px;
+padding-right: 20px;
+}
+
+.dashboard__title-welcome { 
+    padding-top: 20px;
+    font-weight: 700;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.icon__waving-hand{
+  height: 1.5rem;
+  padding-left: 10px;
+}
+.dashboard__sub-title { 
+    padding-top: 10px;
+    color: var(--dark-grey);
+}
+.dashboard__main-title { 
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-weight: 700;
+    color: var(--dark-grey);
+}
+
+.dashboard__identifiers {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    color: var(--dark-grey);
+}
+.dashboard__task-items {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.dashboard__card {
+    background-color: var(--white);
+    border-radius: 10px;
+}
+.dashboard__identifiers h3:nth-child(2), .dashboard__task-items h3:nth-child(2) {
+    padding: 10px 10px 10px 5px;
+    margin-right: auto;
+}
+
+.dashboard__identifiers h3:nth-child(n+3) {
+    padding: 10px 13px 10px 13px;
+    text-align: center;
+} 
+
+#menu_vertical {
+    padding: 10px 10px 10px 10px;
+    text-align: center; 
+        cursor: pointer;
+}
+
+.dashboard__task-items input{
+    text-align: center;
+} 
+
+.dashboard__task-items.dashboard__card input[type="radio"] { 
+    height: 15px;
+    width: 15px;
+    border: solid 1px var(--dark-grey);
+    accent-color: var(--dark-grey);}
+
+.dashboard__task-items.dashboard__card input[type="radio"]:first-of-type {
+    margin-left: 0px;
+    margin-right: 38px;
+}
+.dashboard__task-items.dashboard__card input[type="radio"]:last-of-type {
+    margin-left: 0px;
+    margin-right: 25px;
+}
+
+.dashboard__task-items.dashboard__card input[type="text"] {
+    margin-left: 0px;
+    margin-right: 47px;
+    height: 25px;
+    width: 75px;  
+    font-size: 16px;
+    color: var(--dark-grey);
+    border: solid 1px var(--dark-grey);
+    border-radius: 5px;
+}
+
+/* #checkboxPercentage {
+    margin-left: 0px;
+    margin-right: 0px;
+   } */
+
+.center_square {
+    align-items: center;
+    margin: 5px 5px 5px 20px;
+    display: flex
+}
+
+.task__menu {
+   position: relative;
+
+}
+.dropdown-content {
+    display: block;
+    position: absolute;
+    top: 100%; /* Position below the menu button */
+    right:0;
+    background-color: var(--light-grey-bg);
+    min-width: 160px;
+    z-index: 1;
+    text-align: center;
+    color: black;
+    border: 1px solid var(--grey-text);
+    border-radius: 10px;
+}
+.dropdown-content h4 {
+    display: block;
+    margin: 5px auto;
+}
+.dropdown-content button{
+    display: block;
+    margin: 10px auto;
+}
+
+.dropdown-content h4:nth-child(1){
+    margin-top: 15px;
+}
+
+.dropdown-menu-button {
+font-size: 0.9rem;
+color: var(--dark-grey);
+background-color: var(--white) ;
+padding: 0 0.9rem;
+height: 25px;
+border-radius: 0.625rem;
+border: 0.01rem solid var(--grey-text);
+box-sizing: border-box; 
+cursor: pointer;
+transition: outline 0.1s linear;
+vertical-align: middle;
+}
+
+#checkboxAchieved,
+#checkboxInProgress,
+#checkboxNeedsImprovement
+ {
+    margin-left: 0px;
+    margin-right: 80px;
+    height: 15px;
+    width: 15px;
+    border: solid 1px var(--dark-grey);
+    accent-color: var(--dark-grey);
+}
+#checkboxNeedsImprovement
+ {
+    margin-right: 45px;
+    margin-left: 5px;
+}

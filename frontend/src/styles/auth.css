@@ -1,0 +1,73 @@
+@import './base.css';
+
+.register__container {
+margin-top: 55px;
+display: flex;
+justify-content: center;
+align-items: center;
+height: calc(100vh - 55px);
+}
+
+.register__container h2 {
+    text-align: center;
+    font-weight: 700;
+    color: var(--dark-grey);
+    padding-bottom: 20px;
+}
+.register__container label {
+    text-align: start;
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--color-text-on-primary);
+    padding-bottom: 5px;
+    padding-top: 10px;
+}
+.register__container input {
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--color-text-on-primary);
+    border: solid var(--light-grey-bg);
+    background-color: var(--white);
+    margin: 0 0px 10px 0px;
+    width: 100%;
+    line-height: 30px;
+    height: 32px;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    padding: 0 10px 0 10px;
+    box-sizing: border-box; 
+    
+}
+
+.register__card {
+    font-family: var(--font-family);
+    background-color: var(--white);
+    width: 250px;
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.register__form {
+display: block;
+}
+
+.register__form button {
+display: block;
+margin: 20px auto;
+}
+
+.register__signin-forward {
+    color: var(--color-text-on-primary-light);
+    display: flex;
+    flex-direction: row;
+    padding-top: 5px;
+}
+.register__signin-forward button {
+    color: var(--color-text-on-primary-light);
+    text-decoration: underline;
+    background-color: transparent;
+    font-size: 0.875rem;
+    padding-left: 10px;
+    cursor: pointer;
+}
