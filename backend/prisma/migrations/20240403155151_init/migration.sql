@@ -5,15 +5,17 @@ CREATE TYPE "TASK_STATUS" AS ENUM ('TO_DO', 'IN_PROGRESS', 'COMPLETED');
 CREATE TYPE "TASK_PRIORITY" AS ENUM ('LOW', 'MODERATE', 'HIGH');
 
 -- CreateEnum
-CREATE TYPE "GOAL_STATUS" AS ENUM ('ACHIEVED', 'ONGOING', 'NEEDS_IMPROVEMENT');
+CREATE TYPE "GOAL_STATUS" AS ENUM ('ACHIEVED', 'IN_PROGRESS', 'NEEDS_IMPROVEMENT');
+
+-- CreateEnum
+CREATE TYPE "CATEGORY" AS ENUM ('CAREER', 'PERSONAL_DEVELOPMENT', 'HEALTH_AND_WELLNESS', 'FINANCIAL', 'FAMILY_AND_FRIENDS', 'LEISURE');
 
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "email" TEXT NOT NULL,
-    "nameFirst" TEXT NOT NULL,
-    "nameLast" TEXT,
+    "name" TEXT NOT NULL,
     "password" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -23,14 +25,13 @@ CREATE TABLE "User" (
 CREATE TABLE "Task" (
     "id" SERIAL NOT NULL,
     "description" VARCHAR(255) NOT NULL,
-    "deadlineDay" INTEGER NOT NULL,
-    "deadlineMonth" INTEGER NOT NULL,
-    "deadlineYear" INTEGER NOT NULL,
+    "deadline" TIMESTAMP(3) NOT NULL,
     "belongsToId" TEXT NOT NULL,
     "status" "TASK_STATUS" NOT NULL DEFAULT 'IN_PROGRESS',
     "percentageCompleted" INTEGER,
-    "priority" "TASK_PRIORITY" NOT NULL,
+    "priority" "TASK_PRIORITY" NOT NULL DEFAULT 'MODERATE',
     "relatedGoalId" INTEGER,
+    "category" "CATEGORY",
 
     CONSTRAINT "Task_pkey" PRIMARY KEY ("id")
 );
@@ -39,9 +40,10 @@ CREATE TABLE "Task" (
 CREATE TABLE "Goal" (
     "id" SERIAL NOT NULL,
     "description" VARCHAR(255) NOT NULL,
-    "month" TEXT NOT NULL,
+    "month" INTEGER NOT NULL,
     "year" INTEGER NOT NULL,
     "belongsToId" TEXT NOT NULL,
+    "category" "CATEGORY" NOT NULL,
     "status" "GOAL_STATUS" NOT NULL,
 
     CONSTRAINT "Goal_pkey" PRIMARY KEY ("id")

@@ -37,16 +37,26 @@ model Task {
   belongsTo User @relation(fields: [belongsToId], references: [id])
   @@unique([id, belongsToId])
   status TASK_STATUS @default(IN_PROGRESS)
-  percentageCompleted Int? //associated to state IN_PROGRESS
+  percentageCompleted Int? //associated to status IN_PROGRESS
   priority TASK_PRIORITY @default(MODERATE)
   relatedGoal Goal? @relation(fields:[relatedGoalId], references: [id])
   relatedGoalId Int?
+  category CATEGORY?
 }
 
 enum GOAL_STATUS {
   ACHIEVED
   IN_PROGRESS
   NEEDS_IMPROVEMENT
+}
+
+enum CATEGORY {
+  CAREER
+  PERSONAL_DEVELOPMENT
+  HEALTH_AND_WELLNESS
+  FINANCIAL
+  FAMILY_AND_FRIENDS
+  LEISURE
 }
 
 model Goal {
@@ -57,6 +67,7 @@ model Goal {
   belongsToId String
   belongsTo User @relation(fields: [belongsToId], references: [id])
   @@unique([id, belongsToId])
-  status GOAL_STATUS @default(IN_PROGRESS)
   tasks Task[]
+  category CATEGORY
+  status GOAL_STATUS?
 }

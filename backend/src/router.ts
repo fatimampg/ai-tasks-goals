@@ -72,7 +72,19 @@ router.put(
 //Add new goal
 router.post(
   "/goal",
-  [body("description").isString(), body("month").isInt(), body("year").isInt()],
+  [
+    body("description").isString(),
+    body("month").isInt(),
+    body("year").isInt(),
+    body("category").isIn([
+      "CAREER",
+      "PERSONAL_DEVELOPMENT",
+      "HEALTH_AND_WELLNESS",
+      "FINANCIAL",
+      "FAMILY_AND_FRIENDS",
+      "LEISURE",
+    ]),
+  ],
   handleErrors,
   createGoal,
 );

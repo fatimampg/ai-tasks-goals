@@ -34,12 +34,21 @@ export const getTasksTimeInterval = async (
   next: NextFunction,
 ) => {
   try {
+    const gteDate = req.query.gte ? String(req.query.gte) : undefined;
+    const lteDate = req.query.lte ? String(req.query.lte) : undefined;
+
+    console.log(
+      "Query param received (BE) - gteDate:",
+      gteDate,
+      "lteDate:",
+      lteDate,
+    );
     const tasks = await prisma.task.findMany({
       where: {
         belongsToId: req.body.user.id,
         deadline: {
-          gte: new Date(req.body.gte), // expected format: "2024-02-01"
-          lte: new Date(req.body.lte),
+          gte: gteDate,
+          lte: lteDate,
         },
       },
     });
@@ -52,7 +61,7 @@ export const getTasksTimeInterval = async (
     console.log(e, "Unable to get tasks from the DB, within that period");
     next(e);
   }
-}; // FGDGSDD
+};
 
 // ------------- Get a specific task -------------
 export const getOneTask = async (

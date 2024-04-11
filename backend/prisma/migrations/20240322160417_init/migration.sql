@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Task" ALTER COLUMN "deadline" SET DATA TYPE TIMESTAMP(3);

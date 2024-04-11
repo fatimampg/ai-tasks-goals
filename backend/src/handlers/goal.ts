@@ -90,6 +90,7 @@ export const createGoal = async (
         month: +req.body.month,
         year: +req.body.year,
         belongsToId: req.body.user.id,
+        category: req.body.category,
       },
     });
     res.json({ data: goal });
@@ -115,7 +116,7 @@ export const updateGoal = async (
         description: req.body.description,
         month: +req.body.month,
         year: +req.body.year,
-        status: req.body.status,
+        category: req.body.category,
       },
     });
     res.json(updatedGoal);
