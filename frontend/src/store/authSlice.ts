@@ -11,8 +11,9 @@ interface SignInState {
   error: string | null;
 }
 
+const storedToken = localStorage.getItem("token");
 const initialState: SignInState = {
-  header: { Authorization: "" },
+  header: { Authorization: storedToken ? `Bearer ${storedToken}` : "" },
   error: null,
 };
 
@@ -49,7 +50,7 @@ const authSlice = createSlice({
         // state.token = action.payload;
         state.header = action.payload;
         state.error = null;
-        console.log("token given and authheader created");
+        console.log("token given and auth header created");
       })
       .addCase(signInUser.rejected, (state, action) => {
         state.error = action.error.message || "There was an error...";
