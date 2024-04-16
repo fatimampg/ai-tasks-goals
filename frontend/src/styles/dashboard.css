@@ -6,16 +6,18 @@
 }
   
 .dashboard__main-container {
-padding-left: 20px;
-padding-right: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
 }
 
 .dashboard__title-welcome { 
-    padding-top: 20px;
+    padding-top: 35px;
     font-weight: 700;
+    font-family: AptosBold, sans-serif;
     display: flex;
     flex-direction: row;
     align-items: center;
+    color: var(--color-text-on-primary);
 }
 .icon__waving-hand{
   height: 1.5rem;
@@ -23,13 +25,14 @@ padding-right: 20px;
 }
 .dashboard__sub-title { 
     padding-top: 10px;
-    color: var(--dark-grey);
+    color: var(--color-text-on-primary);
 }
 .dashboard__main-title { 
-    padding-top: 25px;
+    padding-top: 40px;
     padding-bottom: 25px;
     font-weight: 700;
-    color: var(--dark-grey);
+    font-family: AptosBold, sans-serif;
+    color: var(--color-text-on-primary);
 }
 
 .dashboard__identifiers {
@@ -111,22 +114,30 @@ padding-right: 20px;
 
 }
 .dropdown-content {
+    background-color:var(--main-color-bg);
+    font-family: Aptos, sans-serif;
+    font-size: 1.0rem;
+    text-align: center;
+    border: 1px solid #dddbda;
     display: block;
     position: absolute;
     top: 100%; /* Position below the menu button */
     right:0;
-    background-color: var(--light-grey-bg);
     min-width: 160px;
     z-index: 1;
-    text-align: center;
     color: black;
-    border: 1px solid var(--grey-text);
     border-radius: 10px;
 }
 .dropdown-content h4 {
     display: block;
     margin: 5px auto;
+    font-family: Aptos, sans-serif;
 }
+
+.dropdown-content h4:last-of-type {
+    margin-bottom: 20px;
+}
+
 .dropdown-content button{
     display: block;
     margin: 10px auto;
@@ -137,18 +148,37 @@ padding-right: 20px;
 }
 
 .dropdown-menu-button {
-font-size: 0.9rem;
-color: var(--dark-grey);
-background-color: var(--white) ;
-padding: 0 0.9rem;
-height: 25px;
-border-radius: 0.625rem;
-border: 0.01rem solid var(--grey-text);
-box-sizing: border-box; 
-cursor: pointer;
-transition: outline 0.1s linear;
-vertical-align: middle;
+    font-size: 0.9rem;
+    color: var(--dark-grey);
+    background-color: var(--white) ;
+    padding: 0 0.9rem;
+    height: 25px;
+    border-radius: 0.5rem;
+    border: 0.22rem solid var(--color-button-border);
+    box-sizing: border-box; 
+    cursor: pointer;
+    transition: outline 0.1s linear;
+    vertical-align: middle;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: outline 0.1s linear;
+    vertical-align: middle;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
+.dropdown-menu-button:last-child {
+    margin-bottom: 15px;
+}
+
+.dropdown-menu-button:hover, .dropdown-menu-button:focus {
+    outline: 0.125rem solid var(--color-button-primary-bg);
+    background-color: var(--color-button-primary-bg) ;
+    color: var(--white)
+}
+
+
+
+
 
 #checkboxAchieved,
 #checkboxInProgress,
@@ -166,3 +196,74 @@ vertical-align: middle;
     margin-right: 45px;
     margin-left: 5px;
 }
+
+#modal {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+#modal:empty {
+  display: none;
+}
+
+#modal > div {
+    background-color:var(--main-color-bg);
+    font-family: Aptos, sans-serif;
+    font-size: 1.0rem;
+    padding: 40px;
+    text-align: center;
+    border-radius: 20px;
+}
+  
+.modal__container select, .modal__container textarea, .modal__container input {
+    color: var(--dark-grey);
+    border: solid var(--light-grey-bg);
+    background-color: var(--white);
+    margin: 0 0px 5px 15px;
+    line-height: 20px;
+    border: 1px solid #dddbda;
+    border-radius: 4px;
+    padding: 0 10px 0 10px;
+    box-sizing: border-box; 
+  }
+
+.modal__container select, .modal__container input {
+    height: 30px;
+    width: 40%;
+  }
+.modal__container .taskPriorityModal {
+    margin-left: 27px;
+    
+  }
+.modal__container textarea {
+    height: 90px;
+    min-width: 380px;
+    width: 100%;
+    padding-top: 5px;
+}
+  #modal .buttons button {
+    display: inline-block;
+    margin-right: 15px;
+  }
+  
+.modal__info-key-value {
+    display: flex;
+    flex-direction: row; 
+    gap: "20px";
+    text-justify: start;
+    justify-content: start;  
+    margin: 20px auto;
+}
+.modal__info-key-value:first-child {
+    margin-top: 0px;
+}
+  

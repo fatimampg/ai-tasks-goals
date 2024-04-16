@@ -16,8 +16,10 @@
     justify-content: start;
 }
 .sidebar-container h1{
-    color: var(--color-text-on-primary-light);
-    font-weight:600
+    /* color: var(--color-text-on-primary-light); */
+    color: var(--dark-grey);
+    font-weight: 700;
+    font-family: AptosBold, sans-serif;
 }
 .sidebar-container label{
     color: var(--color-text-on-primary-light);
@@ -34,7 +36,7 @@
     font-size: 15px;
     font-family: var(--font-family);
     color: var(--color-text-on-primary-light);
-    background-color: var(--color-primary);
+    background-color: var(--main-color-bg);
     border: 0 solid var(--color-text-on-primary-light);
     width: 129.14px;
     height: 1.125rem;
@@ -72,25 +74,33 @@
 
 .sidebar__button-secondary {
     display: block;
-    font-size: 16px;
+    font-size: 0.95rem;
     width: 188.8px;
     height: 1.8rem;
-    border-radius: 0.4rem;
+    border-radius: 0.5rem;
     box-sizing: border-box; 
     cursor: pointer;
-    transition: outline 0.1s linear;
     margin: 7px 0px 7px 0px;
-    background-color: var(--color-primary);
-    border: 0.1rem solid var(--color-primary);
+    background-color: var(--main-color-bg);
+    border: 0.22rem solid var(--main-color-bg);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: outline 0.1s linear;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
-.sidebar__button-secondary:hover {
-background-color: #bcbcbc; 
-color: white
+
+.sidebar__button-secondary:hover, .sidebar__button-secondary:focus {
+    outline: 0.15rem solid var(--grey-text);
+    outline-offset: -0.2rem;
+    background-color: var(--grey-text) ;
+    color: var(--white)
 }
 
 .sidebar__button-primary {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: AptosBold, sans-serif;
     width: 188px;
     height: 3.0rem;
     border-radius: 0.4rem;
@@ -102,6 +112,11 @@ color: white
     background-color: var(--color-button-primary-bg);
     border: 0.1rem solid var(--color-button-primary-bg);
     color: white;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: outline 0.1s linear;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 .sidebar__button-primary:hover {
     background-color: white;
@@ -121,7 +136,7 @@ color: white
     font-size: 15px;
     font-family: var(--font-family);
     color: var(--color-text-on-primary-light);
-    background-color: var(--color-primary);
+    background-color: var(--main-color-bg);
     border: 0 solid var(--color-text-on-primary-light);
     width: 135px;
     margin-left: 10px;
@@ -137,7 +152,7 @@ color: white
     margin: 10px 0 0px 0;
 }
 .sidebar__tasks-items .sidebar__icon-title-pair li:first-child {
-  background-color: var(--color-primary);
+  background-color: var(--main-color-bg);
   border-radius: 8px;
   height: 25px;
   width: 25px;

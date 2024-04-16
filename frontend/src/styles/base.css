@@ -25,11 +25,12 @@
   --light-coral-bg: #F9B1BC;
   --light-orange-bg: #FAB7B6;
   --light-yellow-bg: #F9D79F;
+  --lightest-grey-bg: #ebeaea;
   --light-grey-bg: #d7d6d6;
   --grey-text: #a1a1a1;
   --dark-grey: #565656;
   
-  --color-primary: #F2F2F2; 
+  --main-color-bg: #F2F2F2; 
   --color-text-on-primary: #000000;
   --color-text-on-primary-light: #a1a1a1;
   --color-button-primary-bg: #FFA14C;
@@ -49,7 +50,7 @@
 }
 
 body {
-  background-color: var(--color-primary);
+  background-color: var(--main-color-bg);
   color:var(--color-text-on-primary);
   font-family:var(--font-family);
   font-size: 18px;
@@ -80,7 +81,7 @@ a:hover {
   }
 
 .button {
-font-size: 0.95rem;
+font-size: 1rem;
 font-weight: 400;
 padding: 0.5rem 1.5rem;
 text-align: center;
@@ -127,7 +128,7 @@ margin-inline-end: 1.11rem;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: var(--color-primary);
+  background-color: var(--main-color-bg);
   box-shadow:  0 0.11rem 0.22rem rgba(0, 0, 0, 0.1);
 }
 
@@ -174,7 +175,7 @@ margin-inline-end: 1.11rem;
 .nav__button {
 padding: 0.4rem 0.8rem 0.4rem 0.8rem;
 color:white;
-font-size: 1.125rem;
+font-size: 1.0rem;
 font-weight: 400;
 background-color: var(--color-button-primary-bg);
 border-radius: 0.6rem;
