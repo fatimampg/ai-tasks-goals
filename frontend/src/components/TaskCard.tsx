@@ -1,11 +1,29 @@
-import { useState, useEffect, SetStateAction } from "react";
+import { useState, useEffect, useRef, SetStateAction } from "react";
+import { UseDispatch, useDispatch } from "react-redux";
 import "../styles/dashboard.css";
 import menu_vertical from "../assets/icons/menu-vertical.svg";
 import { Task } from "../types";
 import checkPercentageInput from "../utils/checkPercentageInput";
-import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import Modal from "./Modal";
+import { deleteTask, updateTask } from "../store/tasksSlice";
+import { AppDispatch } from "../store";
+import TaskAddEditModal from "./TaskAddEditModal";
+
+export interface UpdateTasksParams {
+  id: number;
+  description: string;
+  priority: string;
+  category: string;
+  deadline: Date;
+  percentageCompleted?: number | null;
+  status: string;
+}
 
 const TaskCard = (props: Task) => {
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     id,
     description,
@@ -18,23 +36,22 @@ const TaskCard = (props: Task) => {
     category,
   } = props;
 
-  console.log(
-    description,
-    deadline,
-    status,
-    percentageCompleted,
-    priority,
-    category,
+  const [updatedDescription, setUpdatedDescription] = useState(description);
+  const [updatedDeadline, setUpdatedDeadline] = useState<string>(deadline);
+  const [updatedPriority, setUpdatedPriority] = useState<string>(priority);
+  const [updatedCategory, setUpdatedCategory] = useState<string>(
+    category || "CAREER",
   );
+  const [selectedOption, setSelectedOption] = useState<string>(status);
+  const [updatedStatus, setUpdatedStatus] = useState("");
+  const [updatedPercentageCompleted, setUpdatedPercentageCompleted] = useState<
+    number | null
+  >(null);
   const [percentageInput, setPercentageInput] = useState<number>(
     percentageCompleted !== null && percentageCompleted !== undefined
       ? percentageCompleted
       : 0,
   );
-  const [selectedOption, setSelectedOption] = useState<string>(status);
-  const [updatedStatus, setUpdatedStatus] = useState("");
-  const [updatedPercentageCompleted, setUpdatedPercentageCompleted] =
-    useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Handle clicking outside the dropdown menu:
@@ -49,7 +66,6 @@ const TaskCard = (props: Task) => {
     ) {
       e.stopPropagation();
       setMenuOpen(false);
-      console.log(menuOpen, "menuOpen withing handleClickOutsideMenu");
     }
   };
   useEffect(() => {
@@ -67,27 +83,22 @@ const TaskCard = (props: Task) => {
     }
   }, [status, percentageCompleted]);
 
-  // TO BE SENT TO DB: Update status based on user input:
+  // Update status (to be sent to the DB):
   useEffect(() => {
     setUpdatedStatus(selectedOption);
   }, [selectedOption]);
 
-  // TO BE SENT TO DB: Update percentageCompleted based on user input:
   useEffect(() => {
-    setUpdatedPercentageCompleted(
-      (percentageInput !== null && percentageInput !== undefined
-        ? percentageInput
-        : null) as SetStateAction<null>,
-    );
+    setUpdatedPercentageCompleted(percentageInput);
   }, [percentageInput]);
 
-  // Update selectedOption and percentage based on the changes made by the user:
   const handleRadioChange = (e) => {
     setSelectedOption(e.target.value);
   };
   const handlePercentageChange = (e) => {
     setPercentageInput(e.target.value);
   };
+
   //Clear %input in case another option (besides IN_PROGRESS) is selected:
   useEffect(() => {
     if (selectedOption !== "IN_PROGRESS") {
@@ -95,14 +106,41 @@ const TaskCard = (props: Task) => {
     }
   }, [selectedOption]);
 
-  const handleEditClick = () => {
-    // to do
+  const handleRemoveTask = () => {
+    dispatch(deleteTask(props.id));
+    console.log(
+      "id from the task to remove - sent to Redux store - action: deleteTasks",
+      props.id,
+    );
   };
 
-  const handleRemoveClick = () => {
-    // to do
+  const handleUpdateTask = async () => {
+    setShowModal(false);
+    const dateObjDeadline = new Date(updatedDeadline);
+    if (isNaN(dateObjDeadline.getTime())) {
+      console.log("Invalid date format");
+      return;
+    }
+    const params: UpdateTasksParams = {
+      id: id,
+      description: updatedDescription,
+      priority: updatedPriority,
+      category: updatedCategory,
+      deadline: dateObjDeadline,
+      percentageCompleted: updatedPercentageCompleted,
+      status: updatedStatus,
+    };
+
+    dispatch(updateTask(params));
+    console.log("params sent to Redux store - action: updateTasks", params);
   };
+
+  const handleCloseEditTask = () => {
+    setShowModal(false);
+  };
+
   const formattedDeadline = new Date(deadline).toLocaleDateString();
+
   return (
     <div className="dashboard__task-items dashboard__card">
       <div
@@ -157,17 +195,37 @@ const TaskCard = (props: Task) => {
           <div className="dropdown-content" ref={dropdownRef}>
             <h4> Priority: {priority}</h4>
             <h4> Deadline: {formattedDeadline}</h4>
-            <button className="dropdown-menu-button" onClick={handleEditClick}>
-              Edit
-            </button>
             <button
               className="dropdown-menu-button"
-              onClick={handleRemoveClick}
+              onClick={() => setShowModal(true)}
             >
+              Edit
+            </button>
+            <button className="dropdown-menu-button" onClick={handleRemoveTask}>
               Remove
             </button>
           </div>
         )}
+      </div>
+      <div className="editTask">
+        {showModal ? (
+          <Modal>
+            <TaskAddEditModal
+              //Pass current values into TaskEditAddModal:
+              updatedDescription={updatedDescription}
+              updatedPriority={updatedPriority}
+              updatedCategory={updatedCategory}
+              updatedDeadline={updatedDeadline}
+              //Pass functions set... to TaskEditAddModal to update the values (here) by the ones obtained in TaskEditAddModal:
+              onUpdateDescription={setUpdatedDescription}
+              onUpdatePriority={setUpdatedPriority}
+              onUpdateCategory={setUpdatedCategory}
+              onUpdateDeadline={setUpdatedDeadline}
+              onSave={handleUpdateTask}
+              onClose={() => setShowModal(false)}
+            />
+          </Modal>
+        ) : null}
       </div>
     </div>
   );

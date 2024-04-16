@@ -6,14 +6,43 @@ import waving_hand from "../assets/icons/waving-hand.svg";
 import menu_vertical from "../assets/icons/menu-vertical.svg";
 import { UseSelector, useSelector } from "react-redux";
 import { RootState } from "../store";
+import axios from "axios";
 
 const Tasks = () => {
+  const [userName, setUserName] = useState("");
   const taskList = useSelector((state: RootState) => state.tasks.taskList);
-  console.log("taskList received from Redux (at Tasks.tsx)", taskList);
+  console.log("taskList (Redux)", taskList);
+
+  const header = useSelector((state: RootState) => state.auth.header);
 
   //Request userName:
-  const userId = useSelector((state: RootState) => state.auth.header);
-  console.log("header received in Tasks", userId);
+  const getUserName = async (header: { [key: string]: string }) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_REACT_APP_AUTH_URL}/api/username`,
+        {
+          headers: header,
+        },
+      );
+      const userName = response.data.userName;
+      console.log("userName:", userName);
+      setUserName(userName);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getUserName(header);
+  }, [header]);
+
+  // Current date:
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString("en-us", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
   return (
     <div>
@@ -23,7 +52,7 @@ const Tasks = () => {
       <div className="tasks-page">
         <div className="dashboard__main-container">
           <div className="dashboard__title-welcome">
-            <h2> Hello usr (replace)</h2>
+            <h2> Hello {userName}</h2>
             <img
               src={waving_hand}
               alt="waving-hand"
@@ -31,9 +60,7 @@ const Tasks = () => {
             />
           </div>
 
-          <h3 className="dashboard__sub-title">
-            Today, Mon 25 March 2024 (replace data)
-          </h3>
+          <h3 className="dashboard__sub-title">Today, {formattedDate}</h3>
           <h2 className="dashboard__main-title"> Tasks:</h2>
           <div className="dashboard__identifiers">
             <div

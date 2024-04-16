@@ -3,7 +3,7 @@ import TaskCard from "./TaskCard";
 import { Task } from "../types";
 
 const TasksList = ({ tasks }: { tasks: Task[] }) => {
-  console.log("tasks received at TaskList.tsx", tasks);
+  console.log("Task List (Redux)", tasks);
   return (
     <div>
       {!tasks?.length ? (
