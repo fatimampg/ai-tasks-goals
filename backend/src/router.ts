@@ -17,8 +17,12 @@ import {
   getOneGoal,
   updateGoal,
 } from "./handlers/goal";
+import { userName } from "./handlers/user";
 
 const router = Router();
+
+// Get user name
+router.get("/username", handleErrors, userName);
 
 //----------------- TASKS -------------------
 

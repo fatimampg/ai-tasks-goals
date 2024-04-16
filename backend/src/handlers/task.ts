@@ -1,3 +1,4 @@
+import { CATEGORY, TASK_PRIORITY, TASK_STATUS } from "@prisma/client";
 import prisma from "../db";
 import { NextFunction, Request, Response } from "express";
 
@@ -94,9 +95,14 @@ export const createTask = async (
   next: NextFunction,
 ) => {
   try {
+    console.log("userId from the BE", req.body.user.id);
+    console.log("description from the BE", req.body.description);
+    // console.log("req", req);
     const task = await prisma.task.create({
       data: {
         description: req.body.description,
+        priority: req.body.priority,
+        category: req.body.category,
         deadline: req.body.deadline, //execting format: "YYYY-MM-DDTHH:MM:SSZ"
         belongsToId: req.body.user.id,
       },
@@ -115,17 +121,33 @@ export const updateTask = async (
   next: NextFunction,
 ) => {
   try {
-    const updatedTask = await prisma.task.update({
+    const data: {
+      id: number;
+      description: string;
+      deadline: Date;
+      priority: TASK_PRIORITY;
+      category: CATEGORY;
+      status: TASK_STATUS;
+      percentageCompleted?: number;
+    } = {
+      id: req.body.id,
+      description: req.body.description,
+      deadline: req.body.deadline,
+      priority: req.body.priority,
+      category: req.body.category,
+      status: req.body.status,
+    };
+    if (req.body.percentageCompleted !== undefined) {
+      data.percentageCompleted = req.body.percentageCompleted;
+    }
+    const taskUpdated = await prisma.task.update({
       where: {
         id: +req.params.id,
         belongsToId: req.body.user.id,
       },
-      data: {
-        description: req.body.description,
-        deadline: req.body.deadline,
-      },
+      data: data,
     });
-    res.json(updatedTask);
+    res.json(taskUpdated);
   } catch (e) {
     console.log(e, "Unable to update task");
     next(e);

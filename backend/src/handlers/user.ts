@@ -3,12 +3,6 @@ import { hashPassword } from "../modules/auth";
 import { NextFunction, Request, Response } from "express";
 import { createJWT, comparePasswords } from "../modules/auth";
 
-// interface Error {
-//   name: string;
-//   message: string;
-//   stack?: string;
-// }
-
 // Create new user and token:
 export const createNewUser = async (
   req: Request,
@@ -64,10 +58,35 @@ export const signIn = async (
       return;
     }
 
+    const userName = user.name;
+
     const token = createJWT(user);
-    res.json({ token: token });
+    res.json({ token: token, userName: userName });
   } catch (e) {
     console.log(e, "Unable to signin");
+    next(e);
+  }
+};
+
+// Get User Name:
+export const userName = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.body.user.id,
+      },
+    });
+    if (!user) {
+      res.send({ message: "User not found" });
+    } else {
+      res.json({ userName: user.name });
+    }
+  } catch (e) {
+    console.log(e, "Unable to tget user name");
     next(e);
   }
 };
