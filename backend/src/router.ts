@@ -7,6 +7,7 @@ import {
   getTasks,
   getTasksTimeInterval,
   updateTask,
+  updateTasksStatus,
 } from "./handlers/task";
 import { handleErrors } from "./modules/middleware";
 import {
@@ -42,6 +43,8 @@ router.put(
   handleErrors,
   updateTask,
 );
+//Update status of a list of tasks:
+router.put("/tasklist", handleErrors, updateTasksStatus);
 
 //Add new task
 router.post(

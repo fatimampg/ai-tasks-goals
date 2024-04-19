@@ -1,4 +1,4 @@
-import { CATEGORY, TASK_PRIORITY, TASK_STATUS } from "@prisma/client";
+import { CATEGORY, TASK_PRIORITY, TASK_STATUS, Task } from "@prisma/client";
 import prisma from "../db";
 import { NextFunction, Request, Response } from "express";
 
@@ -148,6 +148,42 @@ export const updateTask = async (
       data: data,
     });
     res.json(taskUpdated);
+  } catch (e) {
+    console.log(e, "Unable to update task");
+    next(e);
+  }
+};
+// ------------- Update the status of a list of tasks -------------
+export const updateTasksStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const tasks: {
+      id: number;
+      status: TASK_STATUS;
+      percentageCompleted?: number;
+    }[] = req.body.data;
+
+    // console.log("req.body", req.body);
+    console.log("req.body.data", req.body.data);
+
+    const updatedtaskList = await prisma.$transaction(
+      tasks.map((task) =>
+        prisma.task.update({
+          where: {
+            id: task.id,
+            belongsToId: req.body.user.id,
+          },
+          data: {
+            status: task.status,
+            percentageCompleted: task.percentageCompleted,
+          },
+        }),
+      ),
+    );
+    res.json(updatedtaskList);
   } catch (e) {
     console.log(e, "Unable to update task");
     next(e);
