@@ -2,11 +2,12 @@
 
 .sidebar-container {
     background-color: white;
-    position: absolute;
+    position: fixed;
     left:0;
     top: 61.3px;
     bottom: 0;
     overflow-y: scroll;
+    width: 240px;
 }
 
 .sidebar__goals-items {
