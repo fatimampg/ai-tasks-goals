@@ -1,9 +1,55 @@
 import "../styles/dashboard.css";
 import TaskCard from "./TaskCard";
 import { Task } from "../types";
+import { updateTask } from "../store/tasksSlice";
+import { useEffect, useState } from "react";
 
-const TasksList = ({ tasks }: { tasks: Task[] }) => {
-  console.log("Task List (Redux)", tasks);
+const TasksList = ({
+  tasks,
+  onUpdatefromTaskListoTasks,
+}: {
+  tasks: Task[];
+  onUpdatefromTaskListoTasks: (updatedNewTaskList: Task[]) => void;
+}) => {
+  const [taskList, setTaskList] = useState<Task[]>(tasks);
+  console.log("taskList ", taskList);
+  const [cumulativeUpdatedTasks, setCumulativeUpdatedTasks] = useState<Task[]>(
+    [],
+  );
+
+  const [updatedTaskListChild, setUpdatedTaskListChild] = useState<Task[]>([]);
+
+  useEffect(() => {
+    setTaskList(tasks);
+    setCumulativeUpdatedTasks(tasks);
+  }, [tasks]);
+
+  const handleUpdateTaskList = (
+    taskId: number,
+    updatedTaskData: Partial<Task>,
+  ) => {
+    // console.log("cumulativeUpdatedTasks ", cumulativeUpdatedTasks);
+    const updatedTaskIndex = cumulativeUpdatedTasks.findIndex(
+      (task) => task.id === taskId,
+    );
+    // console.log("updatedTaskIndex ", updatedTaskIndex);
+    if (updatedTaskIndex !== -1) {
+      const updatedNewTaskList = [...cumulativeUpdatedTasks];
+      updatedNewTaskList[updatedTaskIndex] = {
+        ...updatedNewTaskList[updatedTaskIndex],
+        ...updatedTaskData,
+      };
+      setCumulativeUpdatedTasks(updatedNewTaskList); //store in cumulativeUpdatedTasks array all changes made until now
+      console.log(
+        "UPDATEDTASKS (in handleUpdateTaskList - TaskList.tsx):",
+        updatedNewTaskList,
+      );
+
+      // Call the onUpdateTaskList callback to propagate the update
+      onUpdatefromTaskListoTasks(updatedNewTaskList);
+    }
+  };
+
   return (
     <div>
       {!tasks?.length ? (
@@ -11,15 +57,16 @@ const TasksList = ({ tasks }: { tasks: Task[] }) => {
       ) : (
         tasks.map((task: Task) => (
           <TaskCard
-            id={task.id}
-            description={task.description}
-            deadline={task.deadline}
-            belongsToId={task.belongsToId}
-            status={task.status}
-            percentageCompleted={task.percentageCompleted ?? 0}
-            priority={task.priority}
-            relatedGoalId={task.relatedGoalId}
-            category={task.category}
+            key={task.id}
+            task={task}
+            //Get updated task (individually) from TaskCard and send the updated array of tasks into Task.tsx (parent component).
+            onUpdatefromTaskCardToTaskList={(taskId, updatedTaskData) => {
+              console.log(
+                "inside onUpdatefromTaskCardToTaskList on TaskList",
+                updatedTaskData,
+              );
+              handleUpdateTaskList(taskId, updatedTaskData);
+            }}
           />
         ))
       )}

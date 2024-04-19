@@ -1,7 +1,7 @@
 export interface Task {
   id: number;
   description: string;
-  deadline: string;
+  deadline: Date;
   belongsToId: string;
   status: string;
   percentageCompleted?: number | null;

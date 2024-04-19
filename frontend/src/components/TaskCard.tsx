@@ -1,28 +1,29 @@
-import { useState, useEffect, useRef, SetStateAction } from "react";
-import { UseDispatch, useDispatch } from "react-redux";
+import { useState, useEffect, useRef } from "react";
 import "../styles/dashboard.css";
 import menu_vertical from "../assets/icons/menu-vertical.svg";
 import { Task } from "../types";
 import checkPercentageInput from "../utils/checkPercentageInput";
 import { useNavigate } from "react-router-dom";
 import Modal from "./Modal";
-import { deleteTask, updateTask } from "../store/tasksSlice";
+import { UseDispatch, useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
+import { deleteTask, updateTask } from "../store/tasksSlice";
 import TaskAddEditModal from "./TaskAddEditModal";
 
-export interface UpdateTasksParams {
-  id: number;
-  description: string;
-  priority: string;
-  category: string;
-  deadline: Date;
-  percentageCompleted?: number | null;
-  status: string;
-}
-
-const TaskCard = (props: Task) => {
+const TaskCard = ({
+  task,
+  onUpdatefromTaskCardToTaskList, // triggered when status and %completed change - send updated task status to the parent component (TasksList) (passed as prop)
+}: {
+  task: Task;
+  onUpdatefromTaskCardToTaskList: (
+    taskId: number,
+    updatedTaskData: Partial<Task>,
+  ) => void;
+}) => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+
+  //to TypeScript infer the type of the dispacth function:
   const dispatch = useDispatch<AppDispatch>();
   const {
     id,
@@ -34,15 +35,9 @@ const TaskCard = (props: Task) => {
     priority,
     relatedGoalId,
     category,
-  } = props;
+  } = task;
 
-  const [updatedDescription, setUpdatedDescription] = useState(description);
-  const [updatedDeadline, setUpdatedDeadline] = useState<string>(deadline);
-  const [updatedPriority, setUpdatedPriority] = useState<string>(priority);
-  const [updatedCategory, setUpdatedCategory] = useState<string>(
-    category || "CAREER",
-  );
-  const [selectedOption, setSelectedOption] = useState<string>(status);
+  //Task status will be updated in the DB based on these inputs --> done by clicking on the SAVE TASK PROGRESS button located in parent component Tasks.tsx (to allow updating the status of all tasks at once):
   const [updatedStatus, setUpdatedStatus] = useState("");
   const [updatedPercentageCompleted, setUpdatedPercentageCompleted] = useState<
     number | null
@@ -52,6 +47,23 @@ const TaskCard = (props: Task) => {
       ? percentageCompleted
       : 0,
   );
+  //To be passed into TaskList.tsx:
+  useEffect(() => {
+    //Send updated data to parent (TaskList):
+    onUpdatefromTaskCardToTaskList(id, {
+      status: updatedStatus,
+      percentageCompleted: updatedPercentageCompleted,
+    });
+  }, [updatedStatus, updatedPercentageCompleted]);
+
+  //State of inputs that will be updated in the DB using a button in this component:
+  const [updatedDescription, setUpdatedDescription] = useState(description);
+  const [updatedDeadline, setUpdatedDeadline] = useState<Date>(deadline);
+  const [updatedPriority, setUpdatedPriority] = useState<string>(priority);
+  const [updatedCategory, setUpdatedCategory] = useState<string>(
+    category || "CAREER",
+  );
+  const [selectedOption, setSelectedOption] = useState<string>(status);
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Handle clicking outside the dropdown menu:
@@ -107,10 +119,10 @@ const TaskCard = (props: Task) => {
   }, [selectedOption]);
 
   const handleRemoveTask = () => {
-    dispatch(deleteTask(props.id));
+    dispatch(deleteTask(task.id));
     console.log(
       "id from the task to remove - sent to Redux store - action: deleteTasks",
-      props.id,
+      task.id,
     );
   };
 
@@ -121,7 +133,7 @@ const TaskCard = (props: Task) => {
       console.log("Invalid date format");
       return;
     }
-    const params: UpdateTasksParams = {
+    const params: Task = {
       id: id,
       description: updatedDescription,
       priority: updatedPriority,
@@ -129,6 +141,8 @@ const TaskCard = (props: Task) => {
       deadline: dateObjDeadline,
       percentageCompleted: updatedPercentageCompleted,
       status: updatedStatus,
+      belongsToId: task.belongsToId,
+      relatedGoalId: task.relatedGoalId,
     };
 
     dispatch(updateTask(params));
@@ -149,13 +163,13 @@ const TaskCard = (props: Task) => {
           borderColor: `var(--${category})`,
         }}
       ></div>
-      <h3 className="">{description}</h3>
+      <h3 className="dashboard__task-description">{description}</h3>
       <input
         type="radio"
         id={`checkboxToDo_${id}`}
         name={`progress_${id}`}
         value="TO_DO"
-        onClick={handleRadioChange}
+        onChange={handleRadioChange}
         checked={selectedOption === "TO_DO"}
       />
       <input
@@ -163,7 +177,7 @@ const TaskCard = (props: Task) => {
         id={`checkboxPercentage_${id}`}
         name={`progress_${id}`}
         value="IN_PROGRESS"
-        onClick={handleRadioChange}
+        onChange={handleRadioChange}
         checked={selectedOption === "IN_PROGRESS"}
       />
       <input
@@ -181,7 +195,7 @@ const TaskCard = (props: Task) => {
         id={`checkboxCompleted_${id}`}
         name={`progress_${id}`}
         value="COMPLETED"
-        onClick={handleRadioChange}
+        onChange={handleRadioChange}
         checked={selectedOption === "COMPLETED"}
       />
       <div className="task__menu">

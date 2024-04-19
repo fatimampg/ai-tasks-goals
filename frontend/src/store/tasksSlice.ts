@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
-import { UpdateTasksParams } from "../components/TaskCard";
+// import { UpdateTasksParams } from "../components/TaskCard";
 import { AddTasksParams } from "../components/Sidebar";
+import { Task } from "../types";
 
 interface TaskListState {
   taskList: any[];
@@ -55,7 +56,7 @@ export const fetchTasks = createAsyncThunk(
 
 export const updateTask = createAsyncThunk(
   "task/update",
-  async (params: UpdateTasksParams, { getState, rejectWithValue }) => {
+  async (params: Task, { getState, rejectWithValue }) => {
     try {
       const state = getState() as RootState;
 
@@ -87,6 +88,42 @@ export const updateTask = createAsyncThunk(
     }
   },
 );
+
+//Update the status of all tasks (received in TaskCard and accessible in Task.tsx):
+// export const updateTaskListStatus = createAsyncThunk(
+//   "task/updateTaskListStatus",
+//   async (params: Task[], { getState, rejectWithValue }) => {
+//     // in params is receiving updatedTasks
+//     try {
+//       const state = getState() as RootState;
+//       console.log(
+//         "from Redux - updateTaskListStatus, this is updatedTasks",
+//         params,
+//       );
+//       if (!state || !state.auth || !state.auth.header) {
+//         throw new Error("Authentication header not found in state");
+//       }
+//       const { header } = state.auth;
+
+//       const response = await axios.put(
+//         `${import.meta.env.VITE_REACT_APP_AUTH_URL}/api/tasklist`,
+//         { data: params },
+//         { headers: header },
+//       );
+
+//       const updatedTaskList = response.data;
+//       console.log("response - updateTaskList NOW (tasksSlice)", response);
+//       console.log(
+//         "response.data - updateTaskList NOW (tasksSlice)",
+//         response.data,
+//       );
+
+//       return updatedTaskList;
+//     } catch (error: any) {
+//       return rejectWithValue(error.message);
+//     }
+//   },
+// );
 
 export const deleteTask = createAsyncThunk(
   "task/delete",
@@ -155,7 +192,11 @@ export const addTask = createAsyncThunk(
 const tasksSlice = createSlice({
   name: "tasks",
   initialState,
-  reducers: {},
+  reducers: {
+    clearTaskList: (state) => {
+      state.taskList = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTasks.fulfilled, (state, action) => {
@@ -200,8 +241,22 @@ const tasksSlice = createSlice({
         state.error =
           action.error.message || "There was an error while adding task...";
       });
+
+    // .addCase(updateTaskListStatus.fulfilled, (state, action) => {
+    //   console.log("Task status (list) updated successfully:", action.payload);
+    //   state.error = null;
+    //   state.taskList = state.taskList.map((task) =>
+    //     task.id === action.payload.id ? action.payload : task,
+    //   ); //replace in the taskList, the updated task (matching its id) and leave the rest unchanged
+    // })
+    // .addCase(updateTaskListStatus.rejected, (state, action) => {
+    //   state.error =
+    //     action.error.message ||
+    //     "There was an error while trying to update task status list (reducer)...";
+    // });
   },
 });
 
+export const { clearTaskList } = tasksSlice.actions;
 export const { actions: taskActions } = tasksSlice;
 export default tasksSlice.reducer;

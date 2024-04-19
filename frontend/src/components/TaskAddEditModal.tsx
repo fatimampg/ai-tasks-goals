@@ -2,13 +2,13 @@ import React, { useState } from "react";
 
 interface TaskAddEditModalProps {
   updatedDescription: string;
-  updatedDeadline: string;
+  updatedDeadline: Date;
   updatedPriority: string;
   updatedCategory: string;
   onUpdateDescription: (value: string) => void; // function that takes one param. (value) (type:string) and returns void.
   onUpdatePriority: (value: string) => void;
   onUpdateCategory: (value: string) => void;
-  onUpdateDeadline: (value: string) => void;
+  onUpdateDeadline: (value: Date) => void;
   onSave: () => void;
   onClose: () => void;
 }
