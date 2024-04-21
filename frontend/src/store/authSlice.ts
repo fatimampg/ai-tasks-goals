@@ -5,10 +5,12 @@ import {
   handleResponse,
 } from "../utils/authHandler";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface SignInState {
   header: { [key: string]: string };
-  error: string | null;
+  error: string | null | { message: string };
 }
 
 const storedToken = localStorage.getItem("token");
@@ -35,12 +37,23 @@ export const signInUser = createAsyncThunk(
       console.log(header);
       return header;
     } catch (error: any) {
-      return rejectWithValue(error.message); // Pass error message to the reducer
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        return rejectWithValue({ message: error.response.data.message });
+      }
+      return rejectWithValue({ message: error.response.data.message }); // Pass error message to the reducer
     }
   },
 );
-
-
+//Typescript not infering type of error message received from backend (format is: { message: string } - in user.tsx of BE code). To handle that:
+function isErrorPayload(payload: any): payload is { message: string } {
+  return (
+    typeof payload === "object" && payload !== null && "message" in payload
+  );
+}
 
 const authSlice = createSlice({
   name: "auth",
@@ -60,7 +73,13 @@ const authSlice = createSlice({
         console.log("token given and auth header created");
       })
       .addCase(signInUser.rejected, (state, action) => {
-        state.error = action.error.message || "There was an error...";
+        if (isErrorPayload(action.payload)) {
+          state.error = action.payload.message;
+          console.log("state.error", state.error);
+        } else {
+          state.error = "Error occurred while trying to Sign In";
+          console.log("state.error", state.error);
+        }
       });
   },
 });

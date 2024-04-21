@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/auth.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,12 +26,29 @@ const SignIn = () => {
     if (userData.email && userData.password) {
       dispatch(signInUser(userData));
     }
-    console.log(header);
-    navigate("/tasks");
   };
 
   const error = useSelector((state: any) => state.auth.error);
+  // console.log(error, "error");
   const header = useSelector((state: any) => state.auth.header);
+  // console.log(header, "header");
+
+  useEffect(() => {
+    if (error !== null) {
+      const signInMessage = document.querySelector(
+        ".signin-message",
+      ) as HTMLElement;
+      if (signInMessage) {
+        signInMessage.style.display = "block";
+      }
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (header && header.Authorization) {
+      navigate("/tasks");
+    }
+  }, [header]);
 
   return (
     <div className="register__container">
@@ -40,7 +57,7 @@ const SignIn = () => {
           <h2> SIGN IN: </h2>
           <label htmlFor="email"> Email: </label>
           <input
-            type="text"
+            type="email"
             id="email"
             name="email"
             className="register__email-input"
@@ -56,6 +73,7 @@ const SignIn = () => {
             value={userData.password}
             onChange={handleInputChange}
           />
+          <div>{error && <h4 className="signin-message"> {error}</h4>}</div>
           <button type="submit" className="button button--primary">
             SIGN IN
           </button>
