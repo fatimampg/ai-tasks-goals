@@ -10,17 +10,18 @@ import axios from "axios";
 import { Task } from "../types";
 import { UseDispatch, useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
+import { updateTaskListStatus } from "../store/tasksSlice";
 
 const Tasks = () => {
   const [userName, setUserName] = useState("");
-  //get taskList and header from Redux Stroe:
+  //get taskList and header from Redux Store:
   const taskList = useSelector((state: RootState) => state.tasks.taskList);
-  console.log("INITIAL taskList (Redux) - taskList from Tasks.tsx", taskList);
+  // console.log("INITIAL taskList (Redux) - taskList from Tasks.tsx", taskList);
   const header = useSelector((state: RootState) => state.auth.header);
   const dispatch = useDispatch<AppDispatch>();
-  const [updatedTaskListToSendDb, setUpdatedTaskListToSendDb] = useState<
-    Task[]
-  >([]);
+  const [updatedTaskStatusList, setUpdatedTaskStatusList] = useState<Task[]>(
+    [],
+  );
 
   //Request userName:
   const getUserName = async (header: { [key: string]: string }) => {
@@ -32,7 +33,7 @@ const Tasks = () => {
         },
       );
       const userName = response.data.userName;
-      console.log("userName:", userName);
+      // console.log("userName:", userName);
       setUserName(userName);
     } catch (error: any) {
       console.log(error);
@@ -53,15 +54,30 @@ const Tasks = () => {
 
   // Callback function to get updated tasks from TaskList:
   const handleUpdateTasksTopParent = (updatedNewTaskList: Task[]) => {
-    setUpdatedTaskListToSendDb(updatedNewTaskList);
-    //TO DO
+    setUpdatedTaskStatusList(updatedNewTaskList);
   };
-  useEffect(() => {
+  // useEffect(() => {
+  //   console.log(
+  //     "Task List with updated status (from Parent: Tasks.tsx) - SEND TO THE DATABASE:",
+  //     updatedTaskStatusList,
+  //   );
+  // }, [updatedTaskStatusList]);
+
+  // Handle update task progress in the Data Base:
+  const handleUpdateTasksStatus = async () => {
     console.log(
-      "Task List with updated status (from Parent: Tasks.tsx) - SEND TO THE DATABASE:",
-      updatedTaskListToSendDb,
+      "Task List with updated status (from Parent: Tasks.tsx) - sent to DB in the req:",
+      updatedTaskStatusList,
     );
-  }, [updatedTaskListToSendDb]);
+
+    const params: Task[] = updatedTaskStatusList;
+
+    dispatch(updateTaskListStatus(params));
+    console.log(
+      "Task List with updated status (from Parent: Tasks.tsx) - sent to Redux store to update the DB (updateTaskListStatus)",
+      params,
+    );
+  };
 
   return (
     <div>
@@ -84,7 +100,7 @@ const Tasks = () => {
             <h2 className="dashboard__main-title"> Tasks:</h2>
             <button
               className="button button--primary"
-              // onClick={handleUpdateTasksStatus} --> TO DO
+              onClick={handleUpdateTasksStatus}
             >
               Save Task Progress
             </button>

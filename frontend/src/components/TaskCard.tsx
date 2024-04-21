@@ -44,7 +44,7 @@ const TaskCard = ({
   >(null);
   const [percentageInput, setPercentageInput] = useState<number>(
     percentageCompleted !== null && percentageCompleted !== undefined
-      ? percentageCompleted
+      ? Number(percentageCompleted)
       : 0,
   );
   //To be passed into TaskList.tsx:
@@ -54,6 +54,10 @@ const TaskCard = ({
       status: updatedStatus,
       percentageCompleted: updatedPercentageCompleted,
     });
+    console.log(
+      "type of updatedPercentageCompleted: ",
+      typeof updatedPercentageCompleted,
+    );
   }, [updatedStatus, updatedPercentageCompleted]);
 
   //State of inputs that will be updated in the DB using a button in this component:
@@ -108,7 +112,10 @@ const TaskCard = ({
     setSelectedOption(e.target.value);
   };
   const handlePercentageChange = (e) => {
-    setPercentageInput(e.target.value);
+    const inputValue = e.target.value.trim(); //remove white spaces if added
+    const numberInputValue = parseFloat(inputValue);
+    console.log("TYPE OF PERCENTAGE INPUT", numberInputValue);
+    setPercentageInput(numberInputValue);
   };
 
   //Clear %input in case another option (besides IN_PROGRESS) is selected:
