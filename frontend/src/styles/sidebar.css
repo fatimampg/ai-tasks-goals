@@ -7,17 +7,19 @@
     top: 61.3px;
     bottom: 0;
     overflow-y: scroll;
-    width: 240px;
+    width: 245px;
 }
 
-.sidebar__goals-items {
-    margin: 20px 20px auto 20px;
+.sidebar__progress-button {
+    margin: 20px auto auto 20px;
+}
+.sidebar__goals-items, .sidebar__categories {
+    margin: 30px 20px auto 20px;
     display: flex;
     flex-direction: column;
     justify-content: start;
 }
 .sidebar-container h1{
-    /* color: var(--color-text-on-primary-light); */
     color: var(--dark-grey);
     font-weight: 700;
     font-family: AptosBold, sans-serif;

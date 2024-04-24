@@ -17,15 +17,29 @@
     height: 100%;
 }
 .tasks-page {
-    padding-top: 61.3px;
-    padding-left:240px ;
-    height: 100%;
-    box-sizing: border-box;
+    margin-top: 61.3px;
+    margin-left:245px ;
 }
   
 .dashboard__main-container {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 15px;
+}
+
+.dashboard__top-info {
+    position: fixed;
+    z-index: 2;
+    background-color: var(--main-color-bg);
+    width: calc(100% - 290px); 
+    padding-right: 20px;
+}
+
+.dashboard__list-container {
+    position: absolute;
+    margin-top: 250px;
+    width: calc(100% - 285px); 
+    right: 20px;
+    padding-bottom: 150px;
+    
 }
 
 .dashboard__title-welcome { 
@@ -53,13 +67,14 @@
     color: var(--color-text-on-primary);
 }
 
-.dashboard__identifiers {
+.dashboard__identifiers, .dashboard__identifiers__goals {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     color: var(--dark-grey);
 }
+
 .dashboard__task-items {
     display: flex;
     gap: 10px;
@@ -80,8 +95,18 @@
     text-align: center;
 } 
 
+.dashboard__identifiers__goals h3:nth-child(2), .dashboard__task-items h3:nth-child(2) {
+    padding: 10px 6px 10px 6px;
+    margin-right: auto;
+}
+
+.dashboard__identifiers__goals h3:nth-child(n+3) {
+    padding: 10px 6px 10px 6px;
+    text-align: center;
+} 
+
 #menu_vertical {
-    padding: 10px 10px 10px 10px;
+    padding: 10px 2px 10px 2px;
     text-align: center; 
         cursor: pointer;
 }
@@ -89,9 +114,6 @@
 .dashboard__task-items input{
     text-align: center;
 } 
-.dashboard__task-items.dashboard__card {
-    /* margin-right:5px */
-}
 
 .dashboard__task-items.dashboard__card input[type="radio"] { 
     height: 15px;
@@ -123,10 +145,6 @@
     min-width: 150px;
     word-wrap:break-word;
 }
-/* #checkboxPercentage {
-    margin-left: 0px;
-    margin-right: 0px;
-   } */
 
 .center_square {
     align-items: center;
@@ -202,25 +220,18 @@
 }
 
 
-
-
-
 #checkboxAchieved,
 #checkboxInProgress,
 #checkboxNeedsImprovement
  {
-    margin-left: 0px;
-    margin-right: 80px;
     height: 15px;
     width: 15px;
     border: solid 1px var(--dark-grey);
     accent-color: var(--dark-grey);
+    margin-right: 38px;
+    margin-left: 38px;
 }
-#checkboxNeedsImprovement
- {
-    margin-right: 45px;
-    margin-left: 5px;
-}
+
 
 #modal {
     background-color: rgba(0, 0, 0, 0.7);
@@ -292,3 +303,4 @@
     margin-top: 0px;
 }
   
+
