@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../store";
 import { signOutUser } from "../store/authSlice";
 import { clearTaskList } from "../store/tasksSlice";
+import { clearGoalList } from "../store/goalsSlice";
+import { Goal } from "../types";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,7 +36,7 @@ const Navbar = () => {
     }
   };
   useEffect(() => {
-    console.log("profileDropdownMenuOpen", profileDropdownMenuOpen);
+    // console.log("profileDropdownMenuOpen", profileDropdownMenuOpen);
     document.addEventListener("mousedown", handleClickOutsideMenu);
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideMenu);
@@ -61,9 +63,10 @@ const Navbar = () => {
 
   // ----------- sign out:
   const handleSignOut = () => {
-    console.log("signout");
+    // console.log("signout");
     dispatch(signOutUser());
     dispatch(clearTaskList());
+    dispatch(clearGoalList());
     setProfileDropdownMenuOpen(false);
     navigate("/");
   };
