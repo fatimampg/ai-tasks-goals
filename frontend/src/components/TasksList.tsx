@@ -1,8 +1,6 @@
-import "../styles/dashboard.css";
+import { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import { Task } from "../types";
-import { updateTask } from "../store/tasksSlice";
-import { useEffect, useState } from "react";
 
 const TasksList = ({
   tasks,
@@ -12,7 +10,7 @@ const TasksList = ({
   onUpdatefromTaskListoTasks: (updatedNewTaskList: Task[]) => void;
 }) => {
   const [taskList, setTaskList] = useState<Task[]>(tasks);
-  console.log("taskList ", taskList);
+  // console.log("taskList ", taskList);
   const [cumulativeUpdatedTasks, setCumulativeUpdatedTasks] = useState<Task[]>(
     [],
   );
@@ -40,10 +38,6 @@ const TasksList = ({
         ...updatedTaskData,
       };
       setCumulativeUpdatedTasks(updatedNewTaskList); //store in cumulativeUpdatedTasks array all changes made until now
-      console.log(
-        "UPDATEDTASKS (in handleUpdateTaskList - TaskList.tsx):",
-        updatedNewTaskList,
-      );
 
       // Call the onUpdateTaskList callback to propagate the update
       onUpdatefromTaskListoTasks(updatedNewTaskList);
@@ -61,10 +55,6 @@ const TasksList = ({
             task={task}
             //Get updated task (individually) from TaskCard and send the updated array of tasks into Task.tsx (parent component).
             onUpdatefromTaskCardToTaskList={(taskId, updatedTaskData) => {
-              console.log(
-                "inside onUpdatefromTaskCardToTaskList on TaskList",
-                updatedTaskData,
-              );
               handleUpdateTaskList(taskId, updatedTaskData);
             }}
           />

@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
-// import { UpdateTasksParams } from "../components/TaskCard";
 import { AddTasksParams } from "../components/Sidebar";
 import { Task } from "../types";
 
@@ -28,16 +27,7 @@ export const fetchTasks = createAsyncThunk(
         throw new Error("Authentication header not found in state");
       }
       const { header } = state.auth;
-      console.log(
-        "Type of gte",
-        typeof gte,
-        "and value:",
-        gte.toISOString(),
-        "Type of lte",
-        typeof lte,
-        "and value:",
-        lte.toISOString(),
-      );
+
       const response = await axios.get(
         `${import.meta.env.VITE_REACT_APP_AUTH_URL}/api/taskint`,
         {
@@ -64,7 +54,6 @@ export const updateTask = createAsyncThunk(
         throw new Error("Authentication header not found in state");
       }
       const { header } = state.auth;
-      console.log("/api/task/${params.id}`", `/api/task/${params.id}`);
       const response = await axios.put(
         `${import.meta.env.VITE_REACT_APP_AUTH_URL}/api/task/${params.id}`,
         {
@@ -80,7 +69,7 @@ export const updateTask = createAsyncThunk(
       );
 
       const updatedTask = response.data;
-      console.log("response.data - updateTask (tasksSlice)", response.data);
+      // console.log("response.data - updateTask (tasksSlice)", response.data);
 
       return updatedTask;
     } catch (error: any) {
@@ -89,14 +78,14 @@ export const updateTask = createAsyncThunk(
   },
 );
 
-//Update the status of all tasks (received in TaskCard and accessible in Task.tsx):
+//Update the status of all tasks (updated (input) in TaskCard and made accessible to TasksList.tsx and Task.tsx):
 export const updateTaskListStatus = createAsyncThunk(
   "task/updateTaskListStatus",
   async (params: Partial<Task[]>, { getState, rejectWithValue }) => {
     // in params is receiving updatedTaskStatusList
     try {
       const state = getState() as RootState;
-      // console.log("from Redux - updatedTaskStatusList", params);
+
       if (!state || !state.auth || !state.auth.header) {
         throw new Error("Authentication header not found in state");
       }
@@ -109,14 +98,6 @@ export const updateTaskListStatus = createAsyncThunk(
       );
 
       const updatedTaskList = response.data;
-      // console.log(
-      //   "response - !!!updateTaskListStatus updated NOW (tasksSlice)",
-      //   response,
-      // );
-      console.log(
-        "response.data - !!!updateTaskListStatus NOW (tasksSlice)",
-        response.data,
-      );
 
       return updatedTaskList;
     } catch (error: any) {
@@ -135,14 +116,12 @@ export const deleteTask = createAsyncThunk(
         throw new Error("Authentication header not found in state");
       }
       const { header } = state.auth;
-      // console.log("/api/task/${id}`", `/api/task/${id}`);
       const response = await axios.delete(
         `${import.meta.env.VITE_REACT_APP_AUTH_URL}/api/task/${id}`,
         { headers: header },
       );
 
       const deletedTask = response.data.data;
-      // console.log("response - deleteTask (taskSlice)", response);
       // console.log(
       //   "response.data.data - deleteTask (taskSlice)",
       //   response.data.data,
@@ -163,8 +142,7 @@ export const addTask = createAsyncThunk(
         throw new Error("Authentication header not found in state");
       }
       const { header } = state.auth;
-      // console.log("header - Redux store", header);
-      // console.log("addTasks params", params);
+
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_AUTH_URL}/api/task`,
         {
@@ -177,7 +155,6 @@ export const addTask = createAsyncThunk(
       );
 
       const addedTask = response.data.data;
-      // console.log("response - addedTasks (tasksSlice)", response);
       // console.log(
       //   "response.data.data - addedTasks (tasksSlice)",
       //   response.data.data,
@@ -243,9 +220,20 @@ const tasksSlice = createSlice({
       })
 
       .addCase(updateTaskListStatus.fulfilled, (state, action) => {
-        console.log("Task status (list) updated successfully:", action.payload);
+        console.log(
+          "Task status (list) updated successfully (all tasks searched until now):",
+          action.payload,
+        );
         state.error = null;
-        state.taskList = action.payload;
+        //Ensure that only tasks between gte and lte are shown after saving task progress:
+        state.taskList.forEach((taskStoredRedux) => {
+          const updatedTaskStatus = action.payload.find(
+            (updatedTask: Task) => updatedTask.id === taskStoredRedux.id,
+          );
+          if (updatedTaskStatus) {
+            Object.assign(taskStoredRedux, updatedTaskStatus);
+          }
+        });
       })
 
       .addCase(updateTaskListStatus.rejected, (state, action) => {
@@ -257,5 +245,4 @@ const tasksSlice = createSlice({
 });
 
 export const { clearTaskList } = tasksSlice.actions;
-export const { actions: taskActions } = tasksSlice;
 export default tasksSlice.reducer;

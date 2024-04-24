@@ -1,14 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import "../styles/dashboard.css";
-import menu_vertical from "../assets/icons/menu-vertical.svg";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteTask, updateTask } from "../store/tasksSlice";
+import { AppDispatch } from "../store";
+import Modal from "./Modal";
+import TaskAddEditModal from "./TaskAddEditModal";
 import { Task } from "../types";
 import checkPercentageInput from "../utils/checkPercentageInput";
-import { useNavigate } from "react-router-dom";
-import Modal from "./Modal";
-import { UseDispatch, useDispatch } from "react-redux";
-import { AppDispatch } from "../store";
-import { deleteTask, updateTask } from "../store/tasksSlice";
-import TaskAddEditModal from "./TaskAddEditModal";
+import menu_vertical from "../assets/icons/menu-vertical.svg";
 
 const TaskCard = ({
   task,
@@ -54,10 +53,6 @@ const TaskCard = ({
       status: updatedStatus,
       percentageCompleted: updatedPercentageCompleted,
     });
-    console.log(
-      "type of updatedPercentageCompleted: ",
-      typeof updatedPercentageCompleted,
-    );
   }, [updatedStatus, updatedPercentageCompleted]);
 
   //State of inputs that will be updated in the DB using a button in this component:
@@ -108,13 +103,12 @@ const TaskCard = ({
     setUpdatedPercentageCompleted(percentageInput);
   }, [percentageInput]);
 
-  const handleRadioChange = (e) => {
+  const handleRadioChange = (e: any) => {
     setSelectedOption(e.target.value);
   };
-  const handlePercentageChange = (e) => {
+  const handlePercentageChange = (e: any) => {
     const inputValue = e.target.value.trim(); //remove white spaces if added
     const numberInputValue = parseFloat(inputValue);
-    console.log("TYPE OF PERCENTAGE INPUT", numberInputValue);
     setPercentageInput(numberInputValue);
   };
 
@@ -127,15 +121,16 @@ const TaskCard = ({
 
   const handleRemoveTask = () => {
     dispatch(deleteTask(task.id));
-    console.log(
-      "id from the task to remove - sent to Redux store - action: deleteTasks",
-      task.id,
-    );
+    // console.log(
+    //   "id from the task to remove - sent to Redux store - action: deleteTasks",
+    //   task.id,
+    // );
   };
 
   const handleUpdateTask = async () => {
     setShowModal(false);
     const dateObjDeadline = new Date(updatedDeadline);
+
     if (isNaN(dateObjDeadline.getTime())) {
       console.log("Invalid date format");
       return;
@@ -153,7 +148,7 @@ const TaskCard = ({
     };
 
     dispatch(updateTask(params));
-    console.log("params sent to Redux store - action: updateTasks", params);
+    // console.log("params sent to Redux store - action: updateTasks", params);
   };
 
   const handleCloseEditTask = () => {

@@ -1,22 +1,21 @@
 import { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar";
-import "../styles/sidebar.css";
-import TasksList from "../components/TasksList";
-import waving_hand from "../assets/icons/waving-hand.svg";
-import menu_vertical from "../assets/icons/menu-vertical.svg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
-import axios from "axios";
-import { Task } from "../types";
-import { UseDispatch, useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
 import { updateTaskListStatus } from "../store/tasksSlice";
+import TasksList from "../components/TasksList";
+import Sidebar from "../components/Sidebar";
+import axios from "axios";
+import { Task } from "../types";
+import "../styles/sidebar.css";
+import "../styles/dashboard.css";
+import waving_hand from "../assets/icons/waving-hand.svg";
+import menu_vertical from "../assets/icons/menu-vertical.svg";
 
 const Tasks = () => {
   const [userName, setUserName] = useState("");
   //get taskList and header from Redux Store:
   const taskList = useSelector((state: RootState) => state.tasks.taskList);
-  // console.log("INITIAL taskList (Redux) - taskList from Tasks.tsx", taskList);
   const header = useSelector((state: RootState) => state.auth.header);
   const dispatch = useDispatch<AppDispatch>();
   const [updatedTaskStatusList, setUpdatedTaskStatusList] = useState<Task[]>(
@@ -61,15 +60,17 @@ const Tasks = () => {
   const updateStatusButton = document.querySelector(
     "#save-task-progress",
   ) as HTMLElement;
-  const taskListAndUpdatedTaskStatusListAreEqual = (
+
+  const areTasksUpdated = (
     taskList: Task[],
     updatedTaskStatusList: Task[],
-  ) => {
-    if (taskList.length !== updatedTaskStatusList.length) return false;
-
+  ): boolean => {
     for (let i = 0; i < taskList.length; i++) {
       const taskList1 = taskList[i];
-      const taskList2 = updatedTaskStatusList[i];
+      const taskList2 = updatedTaskStatusList.find(
+        (task) => task.id === taskList1.id,
+      ); //taskList2 is new array with updated status containing only tasks present in taskList (based on their id's)
+      if (!taskList2) continue;
 
       if (
         taskList1.status !== taskList2.status ||
@@ -81,31 +82,33 @@ const Tasks = () => {
     return true;
   };
 
-  if (
-    updatedTaskStatusList.length > 0 &&
-    !taskListAndUpdatedTaskStatusListAreEqual(updatedTaskStatusList, taskList)
-  ) {
+  if (!areTasksUpdated(taskList, updatedTaskStatusList)) {
     if (updateStatusButton) {
       updateStatusButton.style.background = "var(--orange)";
     }
   } else {
     if (updateStatusButton) {
       updateStatusButton.style.background = "var(--null)";
+      updateStatusButton.style.outline = "var(--null)";
     }
   }
 
   // Handle update task progress in the Data Base:
   const handleUpdateTasksStatus = async () => {
     console.log(
-      "Task List with updated status (from Parent: Tasks.tsx) - sent to DB in the req:",
+      "Updated Status Task List (from Parent: Tasks.tsx) [updatedTaskStatusList]:",
       updatedTaskStatusList,
+    );
+    console.log(
+      "Task List (task status not updated) (from Parent: Tasks.tsx) [taskList]:",
+      taskList,
     );
 
     const params: Task[] = updatedTaskStatusList;
 
     dispatch(updateTaskListStatus(params));
     console.log(
-      "Task List with updated status (from Parent: Tasks.tsx) - sent to Redux store to update the DB (updateTaskListStatus)",
+      "Updated Status Task List (from Parent: Tasks.tsx) - sent to Redux store to update the DB [updatedTaskStatusList]",
       params,
     );
   };
@@ -142,7 +145,7 @@ const Tasks = () => {
               <div
                 className="square center_square"
                 style={{
-                  borderColor: "transparent",
+                  borderColor: "var(--white)",
                 }}
               ></div>
               <h3> Description:</h3>
