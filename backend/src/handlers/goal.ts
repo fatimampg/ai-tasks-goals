@@ -1,3 +1,4 @@
+import { CATEGORY } from "@prisma/client";
 import prisma from "../db";
 import { NextFunction, Request, Response } from "express";
 
@@ -27,23 +28,26 @@ export const getGoals = async (
   }
 };
 
-// ------------- Get goals associated to a specific month -------------
+// ------------- Get goals associated to a specific month and year -------------
 export const getMonthlyGoals = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
+    const month = req.query.month ? Number(req.query.month) : undefined; //received as params
+    const year = req.query.year ? Number(req.query.year) : undefined; //received as params
+
     const goals = await prisma.goal.findMany({
       where: {
         belongsToId: req.body.user.id,
-        month: +req.body.month,
-        year: +req.body.year,
+        month: month,
+        year: year,
       },
     });
 
     if (!goals) {
-      res.json({ message: "No goals set for this month" });
+      res.json({ message: "No goals found for this month" });
     } else {
       res.json({ data: goals });
     }
@@ -100,24 +104,33 @@ export const createGoal = async (
   }
 };
 
-// ------------- Update a task -------------
+// ------------- Update a specific goal -------------
 export const updateGoal = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
+    const data: {
+      id: number; //remove
+      description: string;
+      month: number;
+      year: number;
+      category: CATEGORY;
+    } = {
+      id: req.body.id, //remove
+      description: req.body.description,
+      month: +req.body.month,
+      year: +req.body.year,
+      category: req.body.category,
+    };
+
     const updatedGoal = await prisma.goal.update({
       where: {
-        id: +req.params.id,
-        belongsToId: req.body.user.id,
+        id: +req.params.id, // sent as route param
+        belongsToId: req.body.user.id, // available in token
       },
-      data: {
-        description: req.body.description,
-        month: +req.body.month,
-        year: +req.body.year,
-        category: req.body.category,
-      },
+      data: data,
     });
     res.json(updatedGoal);
   } catch (e) {
