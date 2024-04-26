@@ -125,6 +125,29 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
           <div className="dropdown-content" ref={dropdownRef}>
             <h4> Month: {month}</h4>
             <h4> Year: {year}</h4>
+            <div className="task-progress">
+              <label> Achieved:</label>
+              <input
+                type="checkbox"
+                id="checkboxAchieved"
+                checked={isCheckedAchieved}
+                disabled
+              />
+              <label> In progress:</label>
+              <input
+                type="checkbox"
+                id="checkboxInProgress"
+                checked={isCheckedInProgress}
+                disabled
+              />
+              <label> Needs Improvement:</label>
+              <input
+                type="checkbox"
+                id="checkboxNeedsImprovement"
+                checked={isCheckedNeedsImprovement}
+                disabled
+              />
+            </div>
             <button
               className="dropdown-menu-button"
               onClick={() => setShowModal(true)}
