@@ -164,3 +164,89 @@
   align-items: center;
   margin-left: 0
 }
+.add-task-goal-button {
+    margin-top: 15px;
+    margin-bottom: 55px;
+}
+
+
+@media (max-width: 650px) {
+.sidebar-container {
+    background-color: white;
+    position: sticky;
+    padding-top: 50.91px;
+    overflow-y:unset;
+    width: 100vw;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+    grid-template-rows: 0.3fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+.sidebar__progress-button {
+   grid-area: 1 / 1 / 2 / 2;
+   margin-top: 5px
+}
+.sidebar__categories {
+    grid-area: 2 / 1 / 3 / 2;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.sidebar__goals-items, .sidebar__tasks-items {
+   grid-area: 1 / 2 / 3 / 3
+}
+.add-task-goal-button {
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+.sidebar__search-box {
+    margin-bottom: 10px;
+}
+.sidebar-container h1{
+    font-size: 1rem;
+}
+.sidebar-container label{
+    font-size: 14px !important;
+}
+
+.sidebar__month-input {
+    font-size: 14px;
+}
+.sidebar__month-input::placeholder {
+    font-size: 14px;
+}
+.sidebar-container li{
+    font-size: 14px;     
+}
+.sidebar__button-secondary {
+    font-size: 14px;
+    width: 142px;
+    height: 1.8rem;
+    margin: 7px 0px 7px 0px;
+}
+.sidebar__button-primary {
+    font-size: 14px;
+    width: 105px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    height: auto;
+    word-wrap: break-word;
+    padding: 5px
+}
+.sidebar__date-input {
+    font-size: 14px;
+    width: 100px;
+    margin-left: 5px;
+}
+
+.sidebar__tasks-items {
+    margin: 15px 10px auto 10px;
+}
+.sidebar__month-input {
+    font-size: 14px;
+    width: 100px;
+    height: 1.125rem;
+    margin: 10px 0px 10px 5px ;
+}
+}

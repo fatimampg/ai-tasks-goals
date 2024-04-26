@@ -267,12 +267,14 @@ const Sidebar = () => {
                 Search Goals
               </button>
             </div>
-            <button
-              className="sidebar__button-secondary"
-              onClick={() => setShowAddGoalModal(true)}
-            >
-              + Add new goal
-            </button>
+            <div className="add-task-goal-button">
+              <button
+                className="sidebar__button-secondary"
+                onClick={() => setShowAddGoalModal(true)}
+              >
+                + Add new goal
+              </button>
+            </div>
           </div>
         )}
         {location.pathname === "/tasks" && (
@@ -339,7 +341,7 @@ const Sidebar = () => {
                 <li>Pending</li>
               </div>
             </ul>
-            <div style={{ paddingTop: "15px", paddingBottom: "55px" }}>
+            <div className="add-task-goal-button">
               <button
                 className="sidebar__button-secondary"
                 onClick={() => setShowAddTaskModal(true)}

@@ -235,7 +235,7 @@ outline: 0.15rem solid var(--color-button-primary-bg)
 }
 
 
-@media (max-width: 550px) {
+@media (max-width: 650px) {
 .nav-bar {
   display: grid;
   grid-template-columns: 12rem 2.3rem 1fr;
@@ -247,11 +247,14 @@ outline: 0.15rem solid var(--color-button-primary-bg)
   z-index: 10;
   position: fixed;
 }
+.nav-text {
+  font-size: 16px;
+}
 .nav__logo-link {
   grid-area: logo;
   height: 2.75rem;
-
 }
+
 .menu {
   width: 1.4rem;
   height: 1.4rem;
@@ -276,13 +279,20 @@ vertical-align: middle;
 .nav-bar {
   grid-template-columns: 9.2rem 1fr 8rem;
 }
+.nav-text {
+  top: 2.3rem;
+  font-size: 14px;
+  line-height: 25px;
+  height: 20vh;
+}
+
 .nav__logo-link {
   grid-area: logo;
   height: 2.1rem;
 }
 .menu {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1.0rem;
+  height: 1.0rem;
 }
 .nav__profile-icon {
   height: 1.8rem;
@@ -308,8 +318,6 @@ vertical-align: middle;
   border-color: var(--dark-grey);
   flex-shrink: 0;
 }
-
-
 
 .dropdown-content__profile {
     background-color:var(--white);

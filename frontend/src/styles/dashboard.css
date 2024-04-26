@@ -145,20 +145,6 @@
     }  
 }
 
-@media (min-width: 950px) {
-    .dashboard__task-items.dashboard__card input[type="radio"],
-    .dashboard__task-items.dashboard__card input[type="text"] {
-        display: block;
-    }
-    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="radio"],
-    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="checkbox"],
-    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="text"] {
-        display: none;
-    }
-    .dropdown-content label {
-        display: none
-    }
-}
 
 
 
@@ -292,9 +278,9 @@
 #checkboxInProgress,
 #checkboxNeedsImprovement
  {
-    height: 15px;
-    width: 15px;
-    border: solid 1px var(--dark-grey);
+     height: 15px;
+     width: 15px;
+     border: solid 1px var(--dark-grey);
     accent-color: var(--dark-grey);
     margin-right: 38px;
     margin-left: 38px;
@@ -316,7 +302,7 @@
 }
 
 #modal:empty {
-  display: none;
+    display: none;
 }
 
 #modal > div {
@@ -340,7 +326,7 @@
     box-sizing: border-box; 
   }
 
-.modal__container select, .modal__container input {
+  .modal__container select, .modal__container input {
     height: 30px;
     width: 40%;
   }
@@ -348,13 +334,13 @@
     margin-left: 27px;
     
   }
-.modal__container textarea {
+  .modal__container textarea {
     height: 90px;
     min-width: 380px;
     width: 100%;
     padding-top: 5px;
 }
-  #modal .buttons button {
+#modal .buttons button {
     display: inline-block;
     margin-right: 15px;
   }
@@ -371,4 +357,100 @@
     margin-top: 0px;
 }
   
+@media (min-width: 950px) {
+    .dashboard__task-items.dashboard__card input[type="radio"],
+    .dashboard__task-items.dashboard__card input[type="text"] {
+        display: block;
+    }
+    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="radio"],
+    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="checkbox"],
+    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="text"] {
+        display: none;
+    }
+    .dropdown-content label {
+        display: none
+    }
+}
+
+@media (max-width: 650px) {
+.tasks-page {
+    margin: 0px
+}
+
+.dashboard__title-welcome h2 {
+    font-size: 1rem;
+}
+.dashboard__top-info h3 {
+    font-size: 14px;
+}
+.dashboard__task-items > h3 {
+    font-size: 14px;
+}
+.dashboard__main-container {
+    padding-left: 15px;
+}
+
+.dashboard__main-title-and-button button {
+    margin: 20px 10px auto auto;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 1.0rem;
+    width: 120px;
+    height: auto;
+    word-wrap:break-word;
+}
+
+.dashboard__top-info {
+    position: absolute;
+    width: 90%;
+    left:15px
+}
+
+.dashboard__list-container {
+    position: absolute;
+    margin-top: 250px;
+    width: 90%;
+    right:15px
+}
+.dashboard__list-container h2 {
+    font-size: 15px;
+}
+.icon__waving-hand{
+  height: 1.2rem;
+}
+#modal {
+    flex-wrap: wrap;
+}
+#modal > div {
+    font-size: 14px;
+    padding: 20px;
+}
+.modal__container select, .modal__container textarea, .modal__container input {
+    border: 1px solid #dddbda;
+    padding: 0 5px 0 5px; 
+  }
+.modal__container select {
+    margin: 0 0px 0px 5px;
+  }
+.modal__container select, .modal__container input {
+    width: 65%;
+}
+.modal__container .taskPriorityModal {
+    margin-left: 28px;
+}
+.modal__container .taskCategoryModal {
+    margin-left: 15px;
+}
+  .modal__container textarea {
+    margin: 5px 0px 0px 0px;
+    height: auto;
+    min-height: 100px;
+    min-width: 150px;
+}
+.modal__info-key-value h3 {
+    font-size: 14px;
+    padding-top: 5px;
+}
+}
+
 
