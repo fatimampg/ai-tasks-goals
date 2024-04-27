@@ -13,7 +13,7 @@ const SignIn = () => {
     password: "",
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setUserData({
       ...userData,
@@ -21,7 +21,7 @@ const SignIn = () => {
     });
   };
 
-  const handleSignIn = async (e) => {
+  const handleSignIn = async (e: any) => {
     e.preventDefault();
     if (userData.email && userData.password) {
       dispatch(signInUser(userData));

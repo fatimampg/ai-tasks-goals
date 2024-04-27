@@ -4,8 +4,6 @@ import axios from "axios";
 import "../styles/auth.css";
 
 const Register = () => {
-  //TO DO
-
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -15,7 +13,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     if (name !== "passwordConfirm") {
       setUserData({
@@ -27,7 +25,7 @@ const Register = () => {
     }
   };
 
-  const registerUser = async (e) => {
+  const registerUser = async (e: any) => {
     e.preventDefault();
     setError("");
 
@@ -53,7 +51,7 @@ const Register = () => {
       if (!newUser) {
         setError("Registration failed. Please try again.");
       }
-    } catch (error) {
+    } catch (error: any) {
       setError(error.response.data);
       console.log(error);
     }

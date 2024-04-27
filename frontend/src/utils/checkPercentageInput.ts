@@ -1,4 +1,4 @@
-const checkPercentageInput = (e) => {
+const checkPercentageInput = (e: any) => {
   const inputValue = e.target.value;
 
   const keyCode = e.keyCode || e.which;
