@@ -6,7 +6,7 @@ import { createNewUser, signIn, userName } from "./handlers/user";
 import cors from "cors";
 
 const app = express();
-// const allowedOrigins = ["http://localhost:..."];
+// const allowedOrigins = process.env.REACT_APP_URL;
 // const options: cors.CorsOptions = {
 //   origin: allowedOrigins,
 // };
@@ -30,6 +30,20 @@ app.get("/", (req, res, next) => {
 app.use("/api", protect, router); //reject when there is no bearer token
 app.post("/user", createNewUser);
 app.post("/signin", signIn);
+
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    process.env.REACT_APP_URL as string,
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS",
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 app.use((e: any, req: Request, res: Response, next: NextFunction) => {
   if (e.type === "auth") {
