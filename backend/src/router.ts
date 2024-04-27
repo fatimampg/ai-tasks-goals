@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { body } from "express-validator";
+import { NextFunction, Request, Response } from "express";
 import {
   createTask,
   deleteOneTask,
@@ -98,5 +99,10 @@ router.post(
 
 //Delete a specific goal
 router.delete("/goal/:id", handleErrors, deleteOneGoal);
+
+router.use((e: any, req: Request, res: Response, next: NextFunction) => {
+  console.log(e);
+  res.json({ message: "in router handler" });
+}); //
 
 export default router;
