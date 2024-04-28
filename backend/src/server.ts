@@ -7,18 +7,19 @@ import cors from "cors";
 
 const app = express();
 
-// const corsOptions = {
-//   origin: process.env.REACT_APP_URL,
-//   optionsSuccessStatus: 200,
-// };
-// app.use(cors(corsOptions));
+const corsOptions = {
+  origin: process.env.REACT_APP_URL,
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 app.use(morgan("dev")); //middleware to log requests
 app.use(express.json()); //allow client to send json
 app.use(express.urlencoded({ extended: true }));
 
 app.options("*", (req, res) => {
-  res.set("Access-Control-Allow-Origin", process.env.REACT_APP_URL);
+  const origin = req.headers.origin; // Get the origin from the request headers
+  res.set("Access-Control-Allow-Origin", origin);
   res.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.set(200).end();
