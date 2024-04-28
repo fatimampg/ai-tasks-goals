@@ -113,7 +113,7 @@ const Navbar = () => {
           {!isLoggedIn && (
             <button
               className="nav__button"
-              // onClick={handleRegister}
+              onClick={() => navigate("/register")}
             >
               Try for free
             </button>
@@ -143,7 +143,7 @@ const Navbar = () => {
                     <h4>
                       {" "}
                       Haven't got an account? <br /> Register{" "}
-                      <a href="/register">here</a>{" "}
+                      <a onClick={() => navigate("/register")}>here</a>{" "}
                     </h4>
                   </>
                 ) : (
