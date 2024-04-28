@@ -108,6 +108,10 @@ const TaskCard = ({
   };
   const handlePercentageChange = (e: any) => {
     const inputValue = e.target.value.trim(); //remove white spaces if added
+    if (inputValue > 100) {
+      alert("Percentage completed shouldn't be higher than 100%"); //for input using smartphone
+      setPercentageInput(0);
+    }
     const numberInputValue = parseFloat(inputValue);
     setPercentageInput(numberInputValue);
   };

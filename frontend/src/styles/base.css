@@ -275,7 +275,7 @@ vertical-align: middle;
 
 }
 
-@media (max-width: 370px) {
+@media (max-width: 390px) {
 .nav-bar {
   grid-template-columns: 9.2rem 1fr 8rem;
 }
@@ -298,9 +298,11 @@ vertical-align: middle;
   height: 1.8rem;
   width: 1.8rem;
   align-self: center;
+  padding-right: 0px;
 }
+
 }
-@media (max-width: 280px) {
+@media (max-width: 300px) {
 .nav-bar {
   grid-template-columns: 8.8rem 1fr 3rem;
 }
