@@ -20,6 +20,10 @@
     margin-top: 61.3px;
     margin-left:245px ;
 }
+.progress-page {
+    margin-top: 61.3px;
+    margin-left:245px ;
+}
   
 .dashboard__main-container {
     padding-left: 15px;
@@ -61,7 +65,7 @@
 }
 .dashboard__main-title { 
     padding-top: 40px;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
     font-weight: 700;
     font-family: AptosBold, sans-serif;
     color: var(--color-text-on-primary);
@@ -72,6 +76,7 @@
     gap: 10px;
     align-items: center;
     margin-bottom: 0px;
+    margin-top: 20px;
     color: var(--dark-grey);
 }
 
@@ -96,57 +101,6 @@
     padding: 10px 13px 10px 13px;
     text-align: center;
 } 
-
-@media (max-width: 950px) {
-    .dashboard__identifiers h3:nth-child(n+3), .dashboard__identifiers__goals h3:nth-child(n+3) {
-        display: none
-    }
-    .dashboard__task-items.dashboard__card input[type="radio"],
-    .dashboard__task-items.dashboard__card input[type="text"], 
-    .dashboard__task-items.dashboard__card input[type="checkbox"] {
-        display: none;
-    }
-    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="radio"],
-    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="checkbox"],
-    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="text"] {
-        display: inline-block;
-        vertical-align: middle;
-    }
-    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="radio"] {
-        margin-left: 15px;
-    }
-    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="text"] {
-        margin-bottom: 10px;
-        margin-left: 70px;
-    }
-    #checkboxAchieved,
-    #checkboxInProgress,
-    #checkboxNeedsImprovement
-    {
-        margin: 5px 5px 5px 0px !important;
-    }
-    .dropdown-content label {
-        font-family: Aptos, sans-serif;
-        font-size: 0.95rem; 
-        display: inline-block;
-        margin-right: 10px;
-        margin-bottom: 10px;
-    }
-    .dropdown-content label[id^='checkboxToDo_'] {
-        margin-right: 46px;
-    }
-    .dropdown-content {
-        width: 200px;
-    }
-    .task-progress {
-        display: inline-block;
-        text-align: left;
-        padding-left: 20px;
-    }  
-}
-
-
-
 
 .dashboard__identifiers__goals h3:nth-child(2), .dashboard__task-items h3:nth-child(2) {
     padding: 10px 6px 10px 6px;
@@ -372,11 +326,66 @@
     }
 }
 
+@media (max-width: 950px) {
+    .dashboard__identifiers h3:nth-child(n+3), .dashboard__identifiers__goals h3:nth-child(n+3) {
+        display: none
+    }
+    .dashboard__task-items.dashboard__card input[type="radio"],
+    .dashboard__task-items.dashboard__card input[type="text"], 
+    .dashboard__task-items.dashboard__card input[type="checkbox"] {
+        display: none;
+    }
+    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="radio"],
+    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="checkbox"],
+    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="text"] {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="radio"] {
+        margin-left: 15px;
+    }
+    .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="text"] {
+        margin-bottom: 10px;
+        margin-left: 70px;
+    }
+    #checkboxAchieved,
+    #checkboxInProgress,
+    #checkboxNeedsImprovement
+    {
+        margin: 5px 5px 5px 0px !important;
+    }
+    .dropdown-content label {
+        font-family: Aptos, sans-serif;
+        font-size: 0.95rem; 
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+    .dropdown-content label[id^='checkboxToDo_'] {
+        margin-right: 46px;
+    }
+    .dropdown-content {
+        width: 200px;
+    }
+    .task-progress {
+        display: inline-block;
+        text-align: left;
+        padding-left: 20px;
+    }  
+}
+
 @media (max-width: 650px) {
 .tasks-page {
     margin: 0px
 }
-
+.progress-page {
+    margin: 0px
+}
+.center_square {
+    align-items: center;
+    margin: 5px 5px 5px 20px;
+    display: flex
+}
 .dashboard__title-welcome h2 {
     font-size: 1rem;
 }
@@ -454,3 +463,15 @@
 }
 
 
+@media (max-width: 550px) {
+#menu_vertical {
+    padding: 10px 0px 10px 0px;
+    text-align: center; 
+        cursor: pointer;
+}
+.center_square {
+    align-items: center;
+    margin: 5px 5px 5px 15px;
+    display: flex
+}
+}

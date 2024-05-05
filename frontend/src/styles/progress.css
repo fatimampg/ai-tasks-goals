@@ -1,0 +1,56 @@
+@import './base.css';
+
+.progressSummary, .progressRecommendations {
+    font-family: var(--font-family);
+    font-size: 1rem;
+    min-height: 80px;
+    height: auto;
+    width: 100%;
+    color: var(--dark-grey);
+    border: solid var(--light-grey-bg);
+    background-color: var(--white);
+    line-height: 25px;
+    border: 1px solid #dddbda;
+    border-radius: 10px;
+    padding: 10px 20px;
+    box-sizing: border-box; 
+    margin-top: 10px;
+}
+
+.progress__info-key-value  {
+    padding: 20px 0px 0px 0px;
+}
+
+.dashboard__progress-top-info {
+    background-color: var(--main-color-bg);
+    padding-right: 25px;
+} 
+
+.dashboard__progress-list-container {
+    padding-right: 25px;
+    padding-bottom: 150px; 
+}
+
+.message-warning {
+    font-weight: 700;
+    font-family: var(--font-family);
+    color: var(--purple);
+}
+.message-warning-secondary {
+    font-weight: 400;
+    font-family: var(--font-family);
+    color: var(--dark-grey);
+    margin-top: 10px;
+}
+
+@media (max-width: 650px) {
+.dashboard__progress-top-info h3 {
+    font-size: 14px;
+}
+.dashboard__progress-top-info {
+    padding-right: 15px;
+} 
+.dashboard__progress-list-container {
+    padding-right: 15px;
+}
+}
