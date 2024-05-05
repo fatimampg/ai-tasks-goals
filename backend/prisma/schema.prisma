@@ -8,13 +8,14 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  createdAt DateTime @default(now())
-  email String @unique
-  name String
-  password String
-  tasks Task[]
-  goals Goal[]
+  id        String     @id @default(uuid())
+  createdAt DateTime   @default(now())
+  email     String     @unique
+  name      String
+  password  String
+  tasks     Task[]
+  goals     Goal[]
+  progress  Progress[]
 }
 
 enum TASK_STATUS {
@@ -30,18 +31,19 @@ enum TASK_PRIORITY {
 }
 
 model Task {
-  id Int @id @default(autoincrement())
-  description String @db.VarChar(255)
-  deadline DateTime 
-  belongsToId String
-  belongsTo User @relation(fields: [belongsToId], references: [id])
-  @@unique([id, belongsToId])
-  status TASK_STATUS @default(IN_PROGRESS)
+  id                  Int           @id @default(autoincrement())
+  description         String        @db.VarChar(255)
+  deadline            DateTime
+  belongsToId         String
+  belongsTo           User          @relation(fields: [belongsToId], references: [id])
+  status              TASK_STATUS   @default(IN_PROGRESS)
   percentageCompleted Int? //associated to status IN_PROGRESS
-  priority TASK_PRIORITY @default(MODERATE)
-  relatedGoal Goal? @relation(fields:[relatedGoalId], references: [id])
-  relatedGoalId Int?
-  category CATEGORY?
+  priority            TASK_PRIORITY @default(MODERATE)
+  relatedGoal         Goal?         @relation(fields: [relatedGoalId], references: [id])
+  relatedGoalId       Int?
+  category            CATEGORY?
+
+  @@unique([id, belongsToId])
 }
 
 enum GOAL_STATUS {
@@ -60,14 +62,25 @@ enum CATEGORY {
 }
 
 model Goal {
-  id Int @id @default(autoincrement())
-  description String @db.VarChar(255)
-  month Int
-  year Int
+  id          Int          @id @default(autoincrement())
+  description String       @db.VarChar(255)
+  month       Int
+  year        Int
   belongsToId String
-  belongsTo User @relation(fields: [belongsToId], references: [id])
+  belongsTo   User         @relation(fields: [belongsToId], references: [id])
+  tasks       Task[]
+  category    CATEGORY
+  status      GOAL_STATUS?
+
   @@unique([id, belongsToId])
-  tasks Task[]
-  category CATEGORY
-  status GOAL_STATUS?
+}
+
+model Progress {
+  id                  Int    @id @default(autoincrement())
+  month               Int
+  year                Int
+  summary             String
+  recommendations     String
+  progressBelongsToId String
+  belongsTo           User   @relation(fields: [progressBelongsToId], references: [id])
 }
