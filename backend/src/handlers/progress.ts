@@ -1,4 +1,4 @@
-import { Task, Goal } from "@prisma/client";
+import { Task, Goal, Progress } from "@prisma/client";
 import prisma from "../db";
 import { NextFunction, Request, Response } from "express";
 import { analyze } from "../modules/ai";
