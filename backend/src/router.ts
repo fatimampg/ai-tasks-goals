@@ -18,7 +18,14 @@ import {
   getMonthlyGoals,
   getOneGoal,
   updateGoal,
+  updateMonthlyGoalsStatus,
 } from "./handlers/goal";
+import {
+  getMonthlyProgress,
+  analyseProgress,
+  addProgress,
+  updateProgress,
+} from "./handlers/progress";
 import { userName } from "./handlers/user";
 
 const router = Router();
@@ -100,9 +107,48 @@ router.post(
 //Delete a specific goal
 router.delete("/goal/:id", handleErrors, deleteOneGoal);
 
+//Update status of a list of goals:
+router.put("/goallist", handleErrors, updateMonthlyGoalsStatus);
+
+//----------------- PROGRESS -------------------
+
+//Get Progress associated to a specific month:
+router.get("/progressmonth", handleErrors, getMonthlyProgress);
+
+//Add new progress to the database:
+router.post(
+  "/addprogress",
+  [
+    body("month").isInt(),
+    body("year").isInt(),
+    body("summary").isString(),
+    body("recommendations").isString(),
+  ],
+  handleErrors,
+  addProgress,
+);
+
+// Update a specific progress analysis in the database
+router.put(
+  "/progress/:id",
+  [
+    body("summary").isString(),
+    body("recommendations").isString(),
+    body("month").isInt(),
+    body("year").isInt(),
+  ],
+  handleErrors,
+  updateProgress,
+);
+
+// Request AI Prograss analysis
+router.post("/analyse", handleErrors, analyseProgress);
+
+// Error:
 router.use((e: any, req: Request, res: Response, next: NextFunction) => {
   console.log(e);
   res.json({ message: "in router handler" });
-}); //
+}); 
+
 
 export default router;

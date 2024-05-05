@@ -1,4 +1,4 @@
-import { CATEGORY } from "@prisma/client";
+import { CATEGORY, GOAL_STATUS } from "@prisma/client";
 import prisma from "../db";
 import { NextFunction, Request, Response } from "express";
 
@@ -155,6 +155,41 @@ export const deleteOneGoal = async (
     res.json({ data: deletedGoal });
   } catch (e) {
     console.log(e, "Unable to delete goal from the DB");
+    next(e);
+  }
+};
+
+// ------------- Update the status of a list of goals ------------
+export const updateMonthlyGoalsStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const goals: {
+      id: number; //remove
+      status: GOAL_STATUS;
+    }[] = req.body.data;
+
+    console.log("req.body", req.body);
+    console.log("req.body.data", req.body.data);
+
+    const updatedGoalsListStatus = await prisma.$transaction(
+      goals.map((goal) =>
+        prisma.goal.update({
+          where: {
+            id: goal.id,
+            belongsToId: req.body.user.id,
+          },
+          data: {
+            status: goal.status,
+          },
+        }),
+      ),
+    );
+    res.json(updatedGoalsListStatus);
+  } catch (e) {
+    console.log(e, "Unable to update goals status list");
     next(e);
   }
 };

@@ -38,12 +38,12 @@ export const getTasksTimeInterval = async (
     const gteDate = req.query.gte ? String(req.query.gte) : undefined;
     const lteDate = req.query.lte ? String(req.query.lte) : undefined;
 
-    console.log(
-      "Query param received (BE) - gteDate:",
-      gteDate,
-      "lteDate:",
-      lteDate,
-    );
+    // console.log(
+    //   "Query param received (BE) - gteDate:",
+    //   gteDate,
+    //   "lteDate:",
+    //   lteDate,
+    // );
     const tasks = await prisma.task.findMany({
       where: {
         belongsToId: req.body.user.id,
@@ -51,6 +51,9 @@ export const getTasksTimeInterval = async (
           gte: gteDate,
           lte: lteDate,
         },
+      },
+      orderBy: {
+        deadline: "asc",
       },
     });
     if (!tasks) {

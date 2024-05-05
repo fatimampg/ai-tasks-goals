@@ -2,28 +2,33 @@ import express, { NextFunction, Request, Response } from "express";
 import router from "./router";
 import morgan from "morgan";
 import { protect } from "./modules/auth";
-import { createNewUser, signIn, userName } from "./handlers/user";
+import { createNewUser, signIn } from "./handlers/user";
 import cors from "cors";
 
 const app = express();
 
-const corsOptions = {
-  origin: process.env.REACT_APP_URL,
-  optionsSuccessStatus: 200,
-};
+const stage = process.env.STAGE;
+
+const corsOptions =
+  stage === "local"
+    ? { origin: true, optionsSuccessStatus: 200 }
+    : { origin: process.env.REACT_APP_URL, optionsSuccessStatus: 200 };
+
 app.use(cors(corsOptions));
 
 app.use(morgan("dev")); //middleware to log requests
 app.use(express.json()); //allow client to send json
 app.use(express.urlencoded({ extended: true }));
 
-app.options("*", (req, res) => {
-  const origin = req.headers.origin; // Get origin request headers
-  res.set("Access-Control-Allow-Origin", origin);
-  res.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.set(200).end();
-});
+if (stage === "production") {
+  app.options("*", (req, res) => {
+    const origin = req.headers.origin; // Get origin request headers
+    res.set("Access-Control-Allow-Origin", origin);
+    res.set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set(200).end();
+  });
+}
 
 app.get("/", (req, res, next) => {
   console.log("hello from express");
