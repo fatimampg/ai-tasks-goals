@@ -95,13 +95,20 @@ const Navbar = () => {
           <li className="nav__list-item"> About </li>
           {isLoggedIn ? (
             <>
+              <li className="nav__list-item" onClick={() => navigate("/tasks")}>
+                {" "}
+                Tasks{" "}
+              </li>
               <li className="nav__list-item" onClick={() => navigate("/goals")}>
                 {" "}
                 Goals{" "}
               </li>
-              <li className="nav__list-item" onClick={() => navigate("/tasks")}>
+              <li
+                className="nav__list-item"
+                onClick={() => navigate("/progress")}
+              >
                 {" "}
-                Tasks{" "}
+                Progress{" "}
               </li>
             </>
           ) : null}

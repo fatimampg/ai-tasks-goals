@@ -18,9 +18,11 @@ const searchDatesSlice = createSlice({
   reducers: {
     storedTaskDateSearch: (state, action) => {
       state.taskDates = action.payload;
+
     },
     storedGoalMonthSearch: (state, action) => {
       state.goalsMonth = action.payload;
+      console.log("goalMonth on sarchDataSlice CCCC", state.goalsMonth); //not working!!! only when button is clicked
     },
   },
 });

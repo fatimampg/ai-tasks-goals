@@ -128,6 +128,34 @@ export const addGoal = createAsyncThunk(
   },
 );
 
+//Update the status of all goals (based on the result of the AI progress analysis):
+export const updateGoalListStatus = createAsyncThunk(
+  "goal/updateGoalListStatus",
+  async (params: Goal[], { getState, rejectWithValue }) => {
+    // in params is receiving updatedTaskStatusList
+    try {
+      const state = getState() as RootState;
+
+      if (!state || !state.auth || !state.auth.header) {
+        throw new Error("Authentication header not found in state");
+      }
+      const { header } = state.auth;
+
+      const response = await axios.put(
+        `${import.meta.env.VITE_REACT_APP_AUTH_URL}/api//goallist`,
+        { data: params },
+        { headers: header },
+      );
+
+      const updatedGoalList = response.data;
+
+      return updatedGoalList;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
 const goalsSlice = createSlice({
   name: "goals",
   initialState,
@@ -198,6 +226,25 @@ const goalsSlice = createSlice({
       .addCase(addGoal.rejected, (state, action) => {
         state.error =
           action.error.message || "There was an error while adding goal...";
+      })
+      .addCase(updateGoalListStatus.fulfilled, (state, action) => {
+        console.log("Goal status (list) updated successfully:", action.payload);
+        state.error = null;
+        //Ensure that only tasks between gte and lte are shown after saving task progress:
+        state.goalList.forEach((goalStoredRedux) => {
+          const updatedGoalStatus = action.payload.find(
+            (updatedGoal: Goal) => updatedGoal.id === goalStoredRedux.id,
+          );
+          if (updatedGoalStatus) {
+            Object.assign(goalStoredRedux, updatedGoalStatus);
+          }
+        });
+      })
+
+      .addCase(updateGoalListStatus.rejected, (state, action) => {
+        state.error =
+          action.error.message ||
+          "There was an error while trying to update goal status list (reducer)...";
       });
   },
 });

@@ -7,6 +7,7 @@ import Register from "./auth/Register";
 import SignIn from "./auth/SignIn";
 import { Provider } from "react-redux";
 import store from "./store";
+import Progress from "./pages/Progress";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/goals" element={<Goals />} />
             <Route path="/register" element={<Register />} />
             <Route path="/signin" element={<SignIn />} />
+            <Route path="/progress" element={<Progress />} />
             {/* <Route path="/profile" element={<Profile />} />
              */}
           </Routes>

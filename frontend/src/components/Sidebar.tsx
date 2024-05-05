@@ -40,7 +40,7 @@ const Sidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
 
-  // Store last search (dates) for tasks and goals:
+  // Get last search (dates) for tasks and goals:
   const taskDates = useSelector(
     (state: RootState) => state.searchDates.taskDates,
   );
@@ -49,8 +49,8 @@ const Sidebar = () => {
   if (taskDates) {
     startDateStored = formatDateToString(taskDates.gte);
     endDateStored = formatDateToString(taskDates.lte);
-    console.log("startDate2", startDateStored, typeof startDateStored);
-    console.log("endDate2", endDateStored, typeof endDateStored);
+    // console.log("startDate2", startDateStored, typeof startDateStored);
+    // console.log("endDate2", endDateStored, typeof endDateStored);
   }
 
   const goalsMonth = useSelector(
@@ -109,10 +109,18 @@ const Sidebar = () => {
 
   // Extract month and year from monthYear (format compatible with the DB):
   useEffect(() => {
-    console.log(monthYear);
+    // console.log("HERE IS MONTHYEAR", monthYear);
     const { month, year } = formatMonthYear(monthYear);
     setMonth(parseInt(month)); //parse month string into a number
     setYear(parseInt(year));
+    dispatch(
+      storedGoalMonthSearch({ month: parseInt(month), year: parseInt(year) }),
+    );
+    console.log(
+      "SIDEBAR: month and year dispatched into the search data slice",
+      parseInt(month),
+      parseInt(year),
+    );
   }, [monthYear]); //format: YYYY-MM
 
   const handleRequestTasks = async () => {
@@ -155,6 +163,21 @@ const Sidebar = () => {
       dispatch(storedGoalMonthSearch(params));
     }
   };
+  const handleRequestProgress = async () => {
+    if (!month || !year) {
+      alert("Please insert month and year");
+      console.log("Please insert month and year");
+      return;
+    } else {
+      const params: FetchGoalsParams = {
+        month: month,
+        year: year,
+      };
+      dispatch(fetchGoals(params));
+      dispatch(storedGoalMonthSearch(params));
+    }
+    //ADD REQUEST OF THE PROGRESS SUMMARY AND RECOMMENDATIONS
+  };
 
   const handleAddTask = () => {
     setShowAddTaskModal(false);
@@ -190,12 +213,69 @@ const Sidebar = () => {
   return (
     <div>
       <div className="sidebar-container">
-        <div className="sidebar__progress-button">
-          <button className="sidebar__button-primary">
-            {" "}
-            Check your progress!{" "}
-          </button>
-        </div>
+        {location.pathname === "/progress" && (
+          <>
+            {/* <div className="sidebar__progress-button">
+              <button
+                className="sidebar__button-primary"
+                onClick={handleRequestProgress}
+                style={{
+                  backgroundColor: monthYear
+                    ? "var(--orange)"
+                    : "var(--light-grey-bg)",
+                  borderColor: monthYear
+                    ? "var(--orange)"
+                    : "var(--light-grey-bg)",
+                }}
+              >
+                {" "}
+                Load progress analysis{" "}
+              </button>
+              <button
+                className="sidebar__button-primary"
+                onClick={handleRequestProgress}
+                style={{
+                  backgroundColor: monthYear
+                    ? "var(--purple)"
+                    : "var(--light-grey-bg)",
+                  borderColor: monthYear
+                    ? "var(--purple)"
+                    : "var(--light-grey-bg)",
+                }}
+              >
+                {" "}
+                Run new analysis{" "}
+              </button>
+            </div> */}
+
+            <div
+              className="sidebar__progress-items"
+              style={{ marginTop: "5px" }}
+            >
+              <div className="sidebar__search-box">
+                <div className="sidebar__insert--date">
+                  <label htmlFor="month" style={{ fontSize: "16px" }}>
+                    {" "}
+                    Month:
+                  </label>
+                  <input
+                    type="month"
+                    id="month"
+                    className="sidebar__month-input"
+                    value={monthYear}
+                    onChange={(e) => setMonthYear(e.target.value)}
+                  />
+                </div>
+                {/* <button
+                  className="sidebar__button-secondary"
+                  onClick={handleRequestGoals}
+                >
+                  List Goals
+                </button> */}
+              </div>
+            </div>
+          </>
+        )}
         <div className="sidebar__categories">
           <h3 style={{ paddingBottom: "5px" }}>Categories:</h3>
           <ul>
@@ -277,6 +357,7 @@ const Sidebar = () => {
             </div>
           </div>
         )}
+
         {location.pathname === "/tasks" && (
           <div className="sidebar__tasks-items">
             <h1>Tasks</h1>
