@@ -3,9 +3,10 @@ export function formatMonthYear(monthYear: string): {
   month: string;
   year: string;
 } {
+  console.log("before formatting monthYear", monthYear);
   const year = monthYear.slice(0, 4);
-  const month = monthYear.slice(6, 7);
-  console.log("year", year, "month", month);
+  const month = monthYear.slice(5, 7);
+  console.log("formatted year", year, "formatted month", month);
   return { month, year };
 }
 
