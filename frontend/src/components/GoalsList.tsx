@@ -5,7 +5,10 @@ const GoalsList = ({ goals }: { goals: Goal[] }) => {
   return (
     <div>
       {!goals.length ? (
-        <h2> No goals found for this month </h2>
+        <h3 style={{ fontStyle: "italic", color: "var(--dark-grey)" }}>
+          {" "}
+          No goals found for this month...{" "}
+        </h3>
       ) : (
         goals.map((goal: Goal) => <GoalCard key={goal.id} goal={goal} />)
       )}

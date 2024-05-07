@@ -22,7 +22,6 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
   const [updatedCategory, setUpdatedCategory] = useState<string>(
     category || "CAREER",
   );
-  const [updatedStatus, setUpdatedStatus] = useState<string>(status ?? ""); //Status will be updated based on the response of the AI model.
 
   // Handle clicking outside the dropdown menu:
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -45,19 +44,6 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
     };
   });
 
-  // Display checked box depending on the status fetched from DB:
-  let isCheckedAchieved;
-  let isCheckedInProgress;
-  let isCheckedNeedsImprovement;
-
-  if (status === "ACHIEVED") {
-    isCheckedAchieved = true;
-  } else if (status === "IN_PROGRESS") {
-    isCheckedInProgress = true;
-  } else {
-    isCheckedNeedsImprovement = true;
-  }
-
   const handleUpdateGoal = async () => {
     setShowModal(false);
 
@@ -70,7 +56,7 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
       month: monthF,
       year: yearF,
       category: updatedCategory,
-      status: updatedStatus,
+      status: status,
       belongsToId: goal.belongsToId,
       tasks: goal.tasks,
     };
@@ -98,19 +84,19 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
       <input
         type="checkbox"
         id="checkboxAchieved"
-        checked={isCheckedAchieved}
+        checked={status === "ACHIEVED"}
         disabled
       />
       <input
         type="checkbox"
         id="checkboxInProgress"
-        checked={isCheckedInProgress}
+        checked={status === "IN_PROGRESS"}
         disabled
       />
       <input
         type="checkbox"
         id="checkboxNeedsImprovement"
-        checked={isCheckedNeedsImprovement}
+        checked={status === "NEEDS_IMPROVEMENT"}
         disabled
       />
 
@@ -130,21 +116,21 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
               <input
                 type="checkbox"
                 id="checkboxAchieved"
-                checked={isCheckedAchieved}
+                checked={status === "ACHIEVED"}
                 disabled
               />
               <label> In progress:</label>
               <input
                 type="checkbox"
                 id="checkboxInProgress"
-                checked={isCheckedInProgress}
+                checked={status === "IN_PROGRESS"}
                 disabled
               />
               <label> Needs Improvement:</label>
               <input
                 type="checkbox"
                 id="checkboxNeedsImprovement"
-                checked={isCheckedNeedsImprovement}
+                checked={status === "NEEDS_IMPROVEMENT"}
                 disabled
               />
             </div>

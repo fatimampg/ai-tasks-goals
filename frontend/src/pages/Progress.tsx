@@ -15,11 +15,11 @@ import {
   FetchTasksParams,
   GoalStatusUpdate,
 } from "../types";
-import { RotatingLines } from "react-loader-spinner";
 import "../styles/sidebar.css";
 import "../styles/dashboard.css";
 import "../styles/progress.css";
 import menu_vertical from "../assets/icons/menu-vertical.svg";
+import { toast } from "../components/ToastManager";
 
 const Progress = () => {
   const [summary, setSummary] = useState("");
@@ -48,7 +48,6 @@ const Progress = () => {
     (state: RootState) => state.searchDates.goalsMonth,
   );
   useEffect(() => {
-    console.log("PROGRESS: goalsMonth CHECK in progress", goalsMonth);
     if (goalsMonth) {
       setMonth(goalsMonth?.month);
       setYear(goalsMonth?.year);
@@ -71,8 +70,13 @@ const Progress = () => {
   const handleLoadProgress = async () => {
     setIsDataLoading(true);
     if (!month || !year) {
-      alert("Please insert month and year");
-      console.log("Please insert month and year");
+      toast.show({
+        message: "Please select month and year.",
+        duration: 2500,
+        type: "error",
+      });
+      setIsDataLoading(false);
+      // console.log("Please insert month and year");
       return;
     } else {
       // 5.1. Request list of goals for that month-year:
@@ -451,7 +455,7 @@ const Progress = () => {
                     className="message-warning"
                     style={{ marginBottom: "24px" }}
                   >
-                    "Please choose the month you'd like to assess your progress
+                    Please choose the month you'd like to assess your progress
                     and click on "Load progress analysis":
                   </h2>
                 </>

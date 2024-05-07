@@ -5,12 +5,18 @@ import { Goal } from "../types";
 
 interface GoalsListState {
   goalList: Goal[];
-  error: string | null;
+  message: string | null;
+  typeMessage: "success" | "error" | null;
+  messageCounter: number;
+  isLoading: boolean;
 }
 
 const initialState: GoalsListState = {
   goalList: [],
-  error: null,
+  message: null,
+  typeMessage: null,
+  messageCounter: 0,
+  isLoading: false,
 };
 
 export const fetchGoals = createAsyncThunk(
@@ -163,23 +169,36 @@ const goalsSlice = createSlice({
     clearGoalList: (state) => {
       state.goalList = [];
     },
+    clearMessageCounter: (state) => {
+      state.messageCounter = 0;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchGoals.fulfilled, (state, action) => {
         state.goalList = action.payload;
-        state.error = null;
+        state.message = null;
+        state.typeMessage = null;
+        state.isLoading = false;
+        state.messageCounter = state.messageCounter + 1;
         console.log("Goals fetched successfully:", state.goalList);
       })
+      .addCase(fetchGoals.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(fetchGoals.rejected, (state, action) => {
-        state.error =
-          action.error.message || "There was an error while fetching goal list";
+        console.log("Goals not fetched", action.error.message);
+        state.message = "No goals were found for this month.";
+        state.typeMessage = "error";
+        state.isLoading = false;
       })
 
       .addCase(updateGoal.fulfilled, (state, action) => {
         console.log("Goal updated successfully:", action.payload);
-        state.error = null;
-
+        state.message = "Goal successfully updated.";
+        state.typeMessage = "success";
+        state.messageCounter = state.messageCounter + 1;
+        state.isLoading = false;
         const updatedGoal = action.payload;
         //1. If changes were made in month or year, then this goal should not be listed:
         state.goalList = state.goalList.filter((goal) => {
@@ -197,39 +216,62 @@ const goalsSlice = createSlice({
 
         console.log("Updated Goal List:", state.goalList);
       })
-
+      .addCase(updateGoal.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(updateGoal.rejected, (state, action) => {
-        state.error =
-          action.error.message ||
-          "There was an error while trying to update goal (reducer)...";
+        console.log("Goal not updated", action.error.message);
+        state.message = "Goal was not updated, please try again.";
+        state.typeMessage = "error";
+        state.messageCounter = state.messageCounter + 1;
+        state.isLoading = false;
       })
 
       .addCase(deleteGoal.fulfilled, (state, action) => {
         console.log("Goal deleted successfully:", action.payload);
-        state.error = null;
+        state.message = "Goal successfully deleted.";
+        state.typeMessage = "success";
+        state.messageCounter = state.messageCounter + 1;
+        state.isLoading = false;
         state.goalList = state.goalList.filter(
           (goal) => goal.id !== action.payload.id,
         ); //update goal list (exclude deleted goal)
         console.log("Updated goal list", state.goalList);
       })
+      .addCase(deleteGoal.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(deleteGoal.rejected, (state, action) => {
-        state.error =
-          action.error.message || "There was an error while deleting goal...";
+        console.log("Goal not deleted", action.error.message);
+        state.message = "Goal not deleted, please try again later.";
+        state.isLoading = false;
+        state.typeMessage = "error";
+        state.isLoading = false;
       })
 
       .addCase(addGoal.fulfilled, (state, action) => {
         console.log("Goal added successfully:", action.payload);
-        state.error = null;
+        state.message = "Goal successfully added.";
+        state.typeMessage = "success";
+        state.messageCounter = state.messageCounter + 1;
+        state.isLoading = false;
         state.goalList = [...state.goalList, action.payload]; //add new goal to the list
         console.log("Updated task list", state.goalList);
       })
-      .addCase(addGoal.rejected, (state, action) => {
-        state.error =
-          action.error.message || "There was an error while adding goal...";
+      .addCase(addGoal.pending, (state, action) => {
+        state.isLoading = true;
       })
+      .addCase(addGoal.rejected, (state, action) => {
+        console.log("Goal not added", action.error.message);
+        state.message = "Goal not added. Please try again later.";
+        state.typeMessage = "error";
+        state.isLoading = false;
+      })
+
       .addCase(updateGoalListStatus.fulfilled, (state, action) => {
+        state.isLoading = false;
         console.log("Goal status (list) updated successfully:", action.payload);
-        state.error = null;
+
         //Ensure that only tasks between gte and lte are shown after saving task progress:
         state.goalList.forEach((goalStoredRedux) => {
           const updatedGoalStatus = action.payload.find(
@@ -239,15 +281,26 @@ const goalsSlice = createSlice({
             Object.assign(goalStoredRedux, updatedGoalStatus);
           }
         });
+        state.message = "Goal progress status was successfully updated.";
+        state.typeMessage = "success";
+        state.messageCounter = state.messageCounter + 1;
       })
-
+      .addCase(updateGoalListStatus.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(updateGoalListStatus.rejected, (state, action) => {
-        state.error =
-          action.error.message ||
-          "There was an error while trying to update goal status list (reducer)...";
+        console.log(
+          "Goal progress status was not updated.",
+          action.error.message,
+        );
+        state.message =
+          "The goal progress status was not updated following the recent AI analysis. Please try to save the results again.";
+        state.typeMessage = "error";
+        state.messageCounter = state.messageCounter + 1;
+        state.isLoading = false;
       });
   },
 });
 
-export const { clearGoalList } = goalsSlice.actions;
+export const { clearGoalList, clearMessageCounter } = goalsSlice.actions;
 export default goalsSlice.reducer;

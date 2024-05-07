@@ -5,22 +5,49 @@ import { RootState } from "../store";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import GoalsList from "../components/GoalsList";
+import { clearMessageCounter } from "../store/goalsSlice";
 import { Goal } from "../types";
+import LoadingSpinner from "../components/LoadingSpinner";
 import "../styles/sidebar.css";
 import "../styles/dashboard.css";
 import waving_hand from "../assets/icons/waving-hand.svg";
 import menu_vertical from "../assets/icons/menu-vertical.svg";
+import { toast } from "../components/ToastManager";
 
 const Goals = () => {
   const [userName, setUserName] = useState("");
   //get taskList and header from Redux Store:
   const goalList = useSelector((state: RootState) => state.goals.goalList);
+  const isLoading = useSelector((state: RootState) => state.goals.isLoading);
 
   const header = useSelector((state: RootState) => state.auth.header);
   const dispatch = useDispatch<AppDispatch>();
-  // const [updatedTaskStatusList, setUpdatedTaskStatusList] = useState<Task[]>(
-  //   [],
-  // );
+
+  // Manage show toastmessages:
+  const typeMessage = useSelector(
+    (state: RootState) => state.goals.typeMessage,
+  );
+  const message = useSelector((state: RootState) => state.goals.message);
+  const messageCounter = useSelector(
+    (state: RootState) => state.goals.messageCounter,
+  );
+
+  useEffect(() => {
+    if (message && messageCounter !== 0) {
+      console.log("MESSAGE COUNTER", messageCounter);
+      toast.show({
+        message: message,
+        duration: 2500,
+        type: typeMessage,
+      });
+    }
+  }, [messageCounter, message, typeMessage]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearMessageCounter());
+    };
+  }, [dispatch]);
 
   //Request userName:
   const getUserName = async (header: { [key: string]: string }) => {
@@ -52,6 +79,7 @@ const Goals = () => {
 
   return (
     <div>
+      {isLoading && <LoadingSpinner />}
       <aside className="dashboard__sidebar">
         <Sidebar />
       </aside>
