@@ -7,6 +7,7 @@ import { fetchGoals, updateGoalListStatus } from "../store/goalsSlice";
 import { fetchTasks } from "../store/tasksSlice";
 import Sidebar from "../components/Sidebar";
 import GoalsList from "../components/GoalsList";
+import LoadingSpinner from "../components/LoadingSpinner";
 import {
   Goal,
   Task,
@@ -14,6 +15,7 @@ import {
   FetchTasksParams,
   GoalStatusUpdate,
 } from "../types";
+import { RotatingLines } from "react-loader-spinner";
 import "../styles/sidebar.css";
 import "../styles/dashboard.css";
 import "../styles/progress.css";
@@ -29,6 +31,7 @@ const Progress = () => {
   const [firstLoadProgress, setFirstLoadProgress] = useState(false);
   const [newAnalisisDone, setNewAnalisisDone] = useState(false);
   const [analysisRequested, setAnalysisRequested] = useState(false);
+  const [isDataLoading, setIsDataLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   // 1. Start with an empty array of goals:
@@ -66,6 +69,7 @@ const Progress = () => {
 
   // 5. LOAD PROGRESS ANALYSIS - Fetch previous AI progress analysis (summary and recommendations) for a specific month and year (in case it exists in the database):
   const handleLoadProgress = async () => {
+    setIsDataLoading(true);
     if (!month || !year) {
       alert("Please insert month and year");
       console.log("Please insert month and year");
@@ -114,8 +118,10 @@ const Progress = () => {
               "No progress analysis was made for this month. Run analysis and check the results!",
             );
           }
+          setIsDataLoading(false);
         } catch (error: any) {
           console.log(error);
+          setIsDataLoading(false);
         }
       };
       console.log("handleLoadProgress --> storedGoalList:", storeGoalList);
@@ -140,6 +146,7 @@ const Progress = () => {
   // 6. RUN NEW AI ANALYSIS: Request new AI progress analysis:
   const handleRequestNewProgress = async () => {
     try {
+      setIsDataLoading(true);
       setAnalysisRequested(true);
       if (!month || !year) {
         alert("Please insert month and year");
@@ -178,6 +185,7 @@ const Progress = () => {
         "Error fetching goals and tasks to be sent to progress analysis",
         error,
       );
+      setIsDataLoading(false);
     }
   };
 
@@ -287,10 +295,12 @@ const Progress = () => {
               updatedList,
             );
           }
+          setIsDataLoading(false);
 
           return analysis;
         } catch (error: any) {
           console.log(error);
+          setIsDataLoading(false);
         }
       };
       fetchNewProgress();
@@ -311,6 +321,7 @@ const Progress = () => {
 
   // 7. SAVE RESULTS - Save results from the AI analysis:
   const handleSaveResults = () => {
+    setIsDataLoading(true);
     console.log("SAVING RESULTS FROM THE LAST AI ANALYSIS");
     // 7.1. Send to the database the updated goals list (status):
     const params: Goal[] = updatedGoalList;
@@ -352,11 +363,13 @@ const Progress = () => {
               "Progress successfully stored/updated in the database",
               updatedProgress,
             );
+            setIsDataLoading(false);
           } catch (error: any) {
             console.log(
               "Error - progress summary and recommendation were not updated",
               error,
             );
+            setIsDataLoading(false);
           }
         };
         updateProgress();
@@ -386,11 +399,13 @@ const Progress = () => {
             );
             console.log("New Progress added into the database:", response.data);
             return addedNewProgress;
+            setIsDataLoading(false);
           } catch (error) {
             console.log(
               "Progress has not been updated. Please try again.",
               error,
             );
+            setIsDataLoading(false);
           }
         };
         addNewProgress();
@@ -422,6 +437,7 @@ const Progress = () => {
 
   return (
     <div>
+      {isDataLoading && <LoadingSpinner />}
       <aside className="dashboard__sidebar">
         <Sidebar />
       </aside>

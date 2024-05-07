@@ -14,6 +14,7 @@ import { RootState } from "../store";
 import type { AppDispatch } from "../store";
 import { formatMonthYear, formatDateToString } from "../utils/formatDate";
 import { Task, Goal } from "../types";
+import { toast } from "../components/ToastManager";
 
 export interface AddTasksParams {
   description: string;
@@ -125,8 +126,13 @@ const Sidebar = () => {
 
   const handleRequestTasks = async () => {
     if (!startDate || !endDate) {
-      alert("Please insert start and end date");
-      console.log("Please insert start and end date");
+      // alert("Please insert start and end date");
+      toast.show({
+        message: "Please select a start date and an end date.",
+        duration: 3500,
+        type: "error",
+      });
+      // console.log("Please insert start and end date");
       return;
     } else {
       const dateObjStartDate = new Date(startDate);
@@ -151,8 +157,13 @@ const Sidebar = () => {
 
   const handleRequestGoals = async () => {
     if (!month || !year) {
-      alert("Please insert month and year");
-      console.log("Please insert month and year");
+      toast.show({
+        message: "Please select month and year.",
+        duration: 3500,
+        type: "error",
+      });
+      // alert("Please insert month and year");
+      // console.log("Please insert month and year");
       return;
     } else {
       const params: FetchGoalsParams = {
@@ -162,21 +173,6 @@ const Sidebar = () => {
       dispatch(fetchGoals(params));
       dispatch(storedGoalMonthSearch(params));
     }
-  };
-  const handleRequestProgress = async () => {
-    if (!month || !year) {
-      alert("Please insert month and year");
-      console.log("Please insert month and year");
-      return;
-    } else {
-      const params: FetchGoalsParams = {
-        month: month,
-        year: year,
-      };
-      dispatch(fetchGoals(params));
-      dispatch(storedGoalMonthSearch(params));
-    }
-    //ADD REQUEST OF THE PROGRESS SUMMARY AND RECOMMENDATIONS
   };
 
   const handleAddTask = () => {
@@ -215,39 +211,6 @@ const Sidebar = () => {
       <div className="sidebar-container">
         {location.pathname === "/progress" && (
           <>
-            {/* <div className="sidebar__progress-button">
-              <button
-                className="sidebar__button-primary"
-                onClick={handleRequestProgress}
-                style={{
-                  backgroundColor: monthYear
-                    ? "var(--orange)"
-                    : "var(--light-grey-bg)",
-                  borderColor: monthYear
-                    ? "var(--orange)"
-                    : "var(--light-grey-bg)",
-                }}
-              >
-                {" "}
-                Load progress analysis{" "}
-              </button>
-              <button
-                className="sidebar__button-primary"
-                onClick={handleRequestProgress}
-                style={{
-                  backgroundColor: monthYear
-                    ? "var(--purple)"
-                    : "var(--light-grey-bg)",
-                  borderColor: monthYear
-                    ? "var(--purple)"
-                    : "var(--light-grey-bg)",
-                }}
-              >
-                {" "}
-                Run new analysis{" "}
-              </button>
-            </div> */}
-
             <div
               className="sidebar__progress-items"
               style={{ marginTop: "5px" }}
@@ -266,12 +229,6 @@ const Sidebar = () => {
                     onChange={(e) => setMonthYear(e.target.value)}
                   />
                 </div>
-                {/* <button
-                  className="sidebar__button-secondary"
-                  onClick={handleRequestGoals}
-                >
-                  List Goals
-                </button> */}
               </div>
             </div>
           </>

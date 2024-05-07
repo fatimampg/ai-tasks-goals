@@ -38,7 +38,9 @@
   --color-button-primary-text: white;
   --color-button-secondary-bg: white;
   --color-button-secondary-text: #FE914E;
-  --color-button-border: var(--color-main-button-background)
+  --color-button-border: var(--color-main-button-background);
+
+
 }
 
 @font-face {
@@ -387,6 +389,13 @@ vertical-align: middle;
 }
 .dropdown-menu-button-secondary__profile:hover, .dropdown-menu-button-secondary__profile:focus {
     background-color: var(--lightest-grey-bg) ;
+}
+
+.custom-loader {
+  position: fixed;
+  z-index: 2;
+  top: 50%;
+  left:50%;
 }
 
 

@@ -2,15 +2,18 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
 import { AppDispatch } from "../store";
-import { updateTaskListStatus } from "../store/tasksSlice";
+import { updateTaskListStatus, clearMessageCounter } from "../store/tasksSlice";
 import TasksList from "../components/TasksList";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import { Task } from "../types";
+import LoadingSpinner from "../components/LoadingSpinner";
+// import ToastMessage from "../components/Toast";
 import "../styles/sidebar.css";
 import "../styles/dashboard.css";
 import waving_hand from "../assets/icons/waving-hand.svg";
 import menu_vertical from "../assets/icons/menu-vertical.svg";
+import { toast } from "../components/ToastManager";
 
 const Tasks = () => {
   const [userName, setUserName] = useState("");
@@ -21,6 +24,37 @@ const Tasks = () => {
   const [updatedTaskStatusList, setUpdatedTaskStatusList] = useState<Task[]>(
     [],
   );
+  const isLoading = useSelector((state: RootState) => state.tasks.isLoading);
+
+  // Manage show toastmessages:
+  const typeMessage = useSelector(
+    (state: RootState) => state.tasks.typeMessage,
+  );
+  const message = useSelector((state: RootState) => state.tasks.message);
+  const messageCounter = useSelector(
+    (state: RootState) => state.tasks.messageCounter,
+  );
+
+  useEffect(() => {
+    if (message && messageCounter !== 0) {
+      console.log("MESSAGE COUNTER", messageCounter);
+      toast.show({
+        message: message,
+        duration: 2500,
+        type: typeMessage,
+      });
+    }
+  }, [messageCounter, message, typeMessage]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearMessageCounter());
+    };
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   console.log("MESSAGE", message);
+  // }, [message]);
 
   //Request userName:
   const getUserName = async (header: { [key: string]: string }) => {
@@ -115,6 +149,7 @@ const Tasks = () => {
 
   return (
     <div>
+      {isLoading && <LoadingSpinner />}
       <aside className="dashboard__sidebar">
         <Sidebar />
       </aside>

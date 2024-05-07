@@ -6,12 +6,18 @@ import { Task } from "../types";
 
 interface TaskListState {
   taskList: any[];
-  error: string | null;
+  message: string | null;
+  typeMessage: "success" | "error" | null;
+  messageCounter: number;
+  isLoading: boolean;
 }
 
 const initialState: TaskListState = {
   taskList: [],
-  error: null,
+  message: null,
+  typeMessage: null,
+  messageCounter: 0,
+  isLoading: false,
 };
 
 export const fetchTasks = createAsyncThunk(
@@ -27,11 +33,12 @@ export const fetchTasks = createAsyncThunk(
         throw new Error("Authentication header not found in state");
       }
       const { header } = state.auth;
-
+      const gteString = gte.toISOString();
+      const lteString = lte.toISOString();
       const response = await axios.get(
         `${import.meta.env.VITE_REACT_APP_AUTH_URL}/api/taskint`,
         {
-          params: { gte: gte.toISOString(), lte: lte.toISOString() },
+          params: { gte: gteString, lte: lteString },
           headers: header,
         },
       );
@@ -173,50 +180,103 @@ const tasksSlice = createSlice({
     clearTaskList: (state) => {
       state.taskList = [];
     },
+    clearMessageCounter: (state) => {
+      state.messageCounter = 0;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTasks.fulfilled, (state, action) => {
         state.taskList = action.payload;
-        state.error = null;
+        state.message = null;
+        state.typeMessage = null;
+        state.isLoading = false;
+        state.messageCounter = state.messageCounter + 1;
+        console.log("message counter", state.messageCounter);
         console.log("Tasks fetched successfully:", state.taskList);
       })
+      .addCase(fetchTasks.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(fetchTasks.rejected, (state, action) => {
-        state.error = action.error.message || "There was an error...";
+        console.log("Tasks not fetched", action.error.message);
+        state.message =
+          "It was not possible to get tasks within this time interval.";
+        state.typeMessage = "error";
+        state.isLoading = false;
+        state.messageCounter = state.messageCounter + 1;
+        console.log("message counter", state.messageCounter);
       })
 
       .addCase(updateTask.fulfilled, (state, action) => {
         console.log("Task updated successfully:", action.payload);
-        state.error = null;
+        state.message = "Task successfully updated.";
+        state.typeMessage = "success";
+        state.messageCounter = state.messageCounter + 1;
+        console.log("message counter", state.messageCounter);
         state.taskList = state.taskList.map((task) =>
           task.id === action.payload.id ? action.payload : task,
         ); //replace in the taskList, the updated task (matching its id) and leave the rest unchanged
+        state.isLoading = false;
         console.log("Updated Task List:", state.taskList);
       })
+      .addCase(updateTask.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(updateTask.rejected, (state, action) => {
-        state.error =
-          action.error.message ||
-          "There was an error while trying to update task (reducer)...";
+        console.log("Task not updated", action.error.message);
+        state.message = "Task was not updated, please try again.";
+        state.typeMessage = "error";
+        state.messageCounter = state.messageCounter + 1;
+        console.log("message counter", state.messageCounter);
+        state.isLoading = false;
       })
 
       .addCase(deleteTask.fulfilled, (state, action) => {
         console.log("Task deleted successfully:", action.payload);
-        state.error = null;
+        state.message = "Task successfully deleted.";
+        state.typeMessage = "success";
+        state.messageCounter = state.messageCounter + 1;
+        console.log("message counter", state.messageCounter);
         state.taskList = state.taskList.filter(
           (task) => task.id !== action.payload.id,
         ); //update task list (exclude deleted task)
+        state.isLoading = false;
         console.log("Updated task list", state.taskList);
+      })
+      .addCase(deleteTask.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteTask.rejected, (state, action) => {
+        // console.log("Task was not deleted:", action.payload);
+        console.log("Task not deleted", action.error.message);
+        state.message = "Task not deleted, please try again later.";
+        state.isLoading = false;
+        state.typeMessage = "error";
+        state.messageCounter = state.messageCounter + 1;
+        console.log("message counter", state.messageCounter);
       })
 
       .addCase(addTask.fulfilled, (state, action) => {
         console.log("Task added successfully:", action.payload);
-        state.error = null;
+        state.message = "Task successfully added.";
+        state.typeMessage = "success";
+        state.messageCounter = state.messageCounter + 1;
+        console.log("message counter", state.messageCounter);
         state.taskList = [...state.taskList, action.payload]; //add new task to the list
         console.log("Updated task list", state.taskList);
+        state.isLoading = false;
+      })
+      .addCase(addTask.pending, (state, action) => {
+        state.isLoading = true;
       })
       .addCase(addTask.rejected, (state, action) => {
-        state.error =
-          action.error.message || "There was an error while adding task...";
+        console.log("task not added", action.error.message);
+        state.message = "Task not added. Please try again later.";
+        state.typeMessage = "error";
+        state.messageCounter = state.messageCounter + 1;
+        console.log("message counter", state.messageCounter);
+        state.isLoading = false;
       })
 
       .addCase(updateTaskListStatus.fulfilled, (state, action) => {
@@ -224,7 +284,11 @@ const tasksSlice = createSlice({
           "Task status (list) updated successfully (all tasks searched until now):",
           action.payload,
         );
-        state.error = null;
+        state.message = "Changes in tasks progress status successfully made.";
+        state.typeMessage = "success";
+        state.messageCounter = state.messageCounter + 1;
+        console.log("message counter", state.messageCounter);
+        state.isLoading = false;
         //Ensure that only tasks between gte and lte are shown after saving task progress:
         state.taskList.forEach((taskStoredRedux) => {
           const updatedTaskStatus = action.payload.find(
@@ -235,14 +299,20 @@ const tasksSlice = createSlice({
           }
         });
       })
-
+      .addCase(updateTaskListStatus.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(updateTaskListStatus.rejected, (state, action) => {
-        state.error =
-          action.error.message ||
-          "There was an error while trying to update task status list (reducer)...";
+        console.log("Status of task list not updated", action.error.message);
+        state.message =
+          "Changes in task progress status were not made. Please try again.";
+        state.typeMessage = "error";
+        state.messageCounter = state.messageCounter + 1;
+        console.log("message counter", state.messageCounter);
+        state.isLoading = false;
       });
   },
 });
 
-export const { clearTaskList } = tasksSlice.actions;
+export const { clearTaskList, clearMessageCounter } = tasksSlice.actions;
 export default tasksSlice.reducer;
