@@ -155,7 +155,7 @@ background-color: var(--light-orange-bg);
 .home-container {
 width: 60%;
 }
-.home__board {
+.home__board, .home__note, .home__main-description {
   width: 67%;
 }
 .home-container .home__button {
@@ -188,7 +188,7 @@ width: 60%;
 .home__card > h4 {
   font-size: 0.95rem;
 }
-.home__board {
+.home__board, .home__main-description, .home__note {
   width: 82%;
   grid-column-gap: 0.625rem;
 }
