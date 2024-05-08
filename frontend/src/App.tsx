@@ -8,6 +8,7 @@ import SignIn from "./auth/SignIn";
 import { Provider } from "react-redux";
 import store from "./store";
 import Progress from "./pages/Progress";
+import Features from "./pages/Features";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/progress" element={<Progress />} />
+            <Route path="/features" element={<Features />} />
             {/* <Route path="/profile" element={<Profile />} />
              */}
           </Routes>

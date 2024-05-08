@@ -1,15 +1,24 @@
 @import './base.css';
+.home-page {
+    background-color: var(--main-color-bg);
 
+}
+.homepage__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .home-container {
-width: 70%;
-display: grid;
-grid-template-columns: 55% 45%;
-grid-column-gap: 0.85rem;
-grid-row-gap: 1.2rem;
-background-color: white;
-padding: 1.8rem 2.9rem;
-margin: 6.2rem auto 2.5rem auto;
-border-radius: 3.2rem;
+    width: 70%;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    grid-column-gap: 0.85rem;
+    grid-row-gap: 1.2rem;
+    background-color: white;
+    padding: 1.8rem 2.9rem;
+    margin: 7rem auto 2.5rem auto;
+    border-radius: 3.2rem;
 }
 
 .home__title{
@@ -49,7 +58,7 @@ border-radius: 3.2rem;
 
 .home__board {
   width: 78%;
-  margin: 0px auto 5.0rem auto;
+  margin: 0px auto 2.0rem auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
@@ -104,6 +113,42 @@ background-color: var(--light-orange-bg);
   color: black;
   padding: 10px 25px 25px 25px;
 }
+
+.home__main-description, .home__note {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  font-weight: 400;
+  padding: 35px;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+.home__main-description > h2 {
+  font-family: AptosBold, sans-serif;
+  font-weight: 700;
+  padding: 10px 0 30px 0;
+}
+.home__main-description > h3 {
+  font-family: var(--font-family);
+  font-weight: 400;
+  line-height: 25px;
+  padding: 0 0 10px 0;
+  text-align: justify;
+}
+
+.home__note > h3 {
+  font-family: var(--font-family);
+  font-weight: 400;
+  color: var(--dark-grey);
+  font-size: 14px;
+  line-height: 20px;
+  padding: 0 0 10px 0;
+  margin-bottom: 3rem;
+  text-align: justify;
+}
+
+
 
 
 @media (min-width: 1500px) {
@@ -177,6 +222,10 @@ border-radius: 2.5rem;
 .home__card > h4 {
   padding: 10px 20px 20px 20px;
 }
+.home__main-description, .home__note {
+  width: 88%;
+}
+
 }
 
 @media (max-width: 650px) {
@@ -198,8 +247,7 @@ border-radius: 1.875rem;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(4, 1fr);
-
-  margin: 0 auto 5rem auto;
+  margin: 0 auto 0.5rem auto;
 }
 
 .card1 {
@@ -236,6 +284,12 @@ grid-area: 3 / 1 / 4 / 2;
   padding: 20px 0 10px 20px;
 }
 
+.home__main-description > h2 {
+  font-size: 1rem;
+}
+.home__main-description, .home__note {
+  width: 85%;
+}
 }
 
 @media (max-width: 370px) {

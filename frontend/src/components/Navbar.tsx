@@ -92,20 +92,44 @@ const Navbar = () => {
           onClick={closeMenu}
         />
         <ul className="nav__list">
-          <li className="nav__list-item"> About </li>
+          <li
+            className="nav__list-item"
+            onClick={() => {
+              navigate("/features");
+              setMenuOpen(false);
+            }}
+          >
+            {" "}
+            Features{" "}
+          </li>
           {isLoggedIn ? (
             <>
-              <li className="nav__list-item" onClick={() => navigate("/tasks")}>
+              <li
+                className="nav__list-item"
+                onClick={() => {
+                  navigate("/tasks");
+                  setMenuOpen(false);
+                }}
+              >
                 {" "}
                 Tasks{" "}
               </li>
-              <li className="nav__list-item" onClick={() => navigate("/goals")}>
+              <li
+                className="nav__list-item"
+                onClick={() => {
+                  navigate("/goals");
+                  setMenuOpen(false);
+                }}
+              >
                 {" "}
                 Goals{" "}
               </li>
               <li
                 className="nav__list-item"
-                onClick={() => navigate("/progress")}
+                onClick={() => {
+                  navigate("/progress");
+                  setMenuOpen(false);
+                }}
               >
                 {" "}
                 Progress{" "}
@@ -120,7 +144,9 @@ const Navbar = () => {
           {!isLoggedIn && (
             <button
               className="nav__button"
-              onClick={() => navigate("/register")}
+              onClick={() => {
+                navigate("/register");
+              }}
             >
               Try for free
             </button>
