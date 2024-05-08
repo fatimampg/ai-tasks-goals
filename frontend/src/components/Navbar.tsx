@@ -73,7 +73,12 @@ const Navbar = () => {
 
   return (
     <nav className="nav-bar">
-      <NavLink to="/">
+      <NavLink
+        to="/"
+        onClick={() => {
+          setMenuOpen(false);
+        }}
+      >
         <img src={Logo} alt="logo svg" className="nav__logo-link" />
       </NavLink>
 
