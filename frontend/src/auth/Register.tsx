@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/auth.css";
+import { toast } from "../components/ToastManager";
 
 const Register = () => {
   const [userData, setUserData] = useState({
@@ -31,7 +32,12 @@ const Register = () => {
 
     if (userData.password !== passwordConfirm) {
       setError("Passwords don't match.");
-      alert("Passwords don't match.");
+      // alert("Passwords don't match.");
+      toast.show({
+        message: "Passwords don't match.",
+        duration: 2500,
+        type: "error",
+      });
       setUserData({
         ...userData,
         password: "",
@@ -48,12 +54,27 @@ const Register = () => {
       const newUser = await response.data;
       console.log(newUser);
       navigate("/");
+      toast.show({
+        message: "You are now registered. Please sign-in.",
+        duration: 2500,
+        type: "success",
+      });
       if (!newUser) {
         setError("Registration failed. Please try again.");
+        toast.show({
+          message: "Registration failed. Please try again.",
+          duration: 2500,
+          type: "error",
+        });
       }
     } catch (error: any) {
       setError(error.response.data);
       console.log(error);
+      toast.show({
+        message: "Registration failed. Please try again.",
+        duration: 2500,
+        type: "error",
+      });
     }
   };
 

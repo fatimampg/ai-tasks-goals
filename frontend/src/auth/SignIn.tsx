@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "../styles/auth.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../store";
-import { signInUser } from "../store/authSlice";
+import { signInUser, clearMessageCounter } from "../store/authSlice";
+import { toast } from "../components/ToastManager";
+import { RootState } from "../store";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -12,6 +14,28 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+  // Manage show toastmessages:
+  const typeMessage = useSelector((state: RootState) => state.auth.typeMessage);
+  const message = useSelector((state: RootState) => state.auth.message);
+  const messageCounter = useSelector(
+    (state: RootState) => state.auth.messageCounter,
+  );
+  useEffect(() => {
+    if (message && messageCounter !== 0) {
+      console.log("MESSAGE COUNTER", messageCounter);
+      toast.show({
+        message: message,
+        duration: 2500,
+        type: typeMessage,
+      });
+    }
+  }, [messageCounter, message, typeMessage]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearMessageCounter());
+    };
+  }, [dispatch]);
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;

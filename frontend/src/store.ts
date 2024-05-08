@@ -11,6 +11,12 @@ const store = configureStore({
     goals: goalsReducer,
     searchDates: dateSearchReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["searchDates/storedTaskDateSearch"],
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

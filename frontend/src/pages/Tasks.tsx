@@ -8,7 +8,6 @@ import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import { Task } from "../types";
 import LoadingSpinner from "../components/LoadingSpinner";
-// import ToastMessage from "../components/Toast";
 import "../styles/sidebar.css";
 import "../styles/dashboard.css";
 import waving_hand from "../assets/icons/waving-hand.svg";

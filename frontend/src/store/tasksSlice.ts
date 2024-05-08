@@ -201,7 +201,7 @@ const tasksSlice = createSlice({
       .addCase(fetchTasks.rejected, (state, action) => {
         console.log("Tasks not fetched", action.error.message);
         state.message =
-          "It was not possible to get tasks within this time interval.";
+          "No tasks with deadline between these dates where found.";
         state.typeMessage = "error";
         state.isLoading = false;
         state.messageCounter = state.messageCounter + 1;
@@ -271,7 +271,7 @@ const tasksSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(addTask.rejected, (state, action) => {
-        console.log("task not added", action.error.message);
+        console.log("Task not added", action.error.message);
         state.message = "Task not added. Please try again later.";
         state.typeMessage = "error";
         state.messageCounter = state.messageCounter + 1;

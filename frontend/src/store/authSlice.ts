@@ -5,18 +5,24 @@ import {
   handleResponse,
 } from "../utils/authHandler";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 interface SignInState {
   header: { [key: string]: string };
-  error: string | null | { message: string };
+  // error: string | null | { message: string };
+  message: string | null;
+  typeMessage: "success" | "error" | null;
+  messageCounter: number;
+  isLoading: boolean;
 }
 
 const storedToken = localStorage.getItem("token");
 const initialState: SignInState = {
   header: { Authorization: storedToken ? `Bearer ${storedToken}` : "" },
-  error: null,
+  // error: null,
+  message: null,
+  typeMessage: null,
+  messageCounter: 0,
+  isLoading: false,
 };
 
 export const signInUser = createAsyncThunk(
@@ -63,25 +69,38 @@ const authSlice = createSlice({
       state.header = { Authorization: "" };
       localStorage.removeItem("token");
     },
+    clearMessageCounter: (state) => {
+      state.messageCounter = 0;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(signInUser.fulfilled, (state, action) => {
-        // state.token = action.payload;
         state.header = action.payload;
-        state.error = null;
+        state.message = "Sign-in successful";
+        state.typeMessage = "success";
+        state.isLoading = false;
+        state.messageCounter = state.messageCounter + 1;
         console.log("token given and auth header created");
       })
       .addCase(signInUser.rejected, (state, action) => {
         if (isErrorPayload(action.payload)) {
-          state.error = action.payload.message;
-          console.log("state.error", state.error);
+          // state.error = action.payload.message;
+          state.message = action.payload.message;
+          state.typeMessage = "error";
+          state.isLoading = false;
+          state.messageCounter = state.messageCounter + 1;
+          console.log("state.error", action.payload.message);
         } else {
-          state.error = "Error occurred while trying to Sign In";
-          console.log("state.error", state.error);
+          state.message =
+            "It was not possible to sign in. Check your email and password and try again.";
+          state.typeMessage = "error";
+          state.isLoading = false;
+          state.messageCounter = state.messageCounter + 1;
+          console.log("state.error", state.message);
         }
       });
   },
 });
-export const { signOutUser } = authSlice.actions;
+export const { signOutUser, clearMessageCounter } = authSlice.actions;
 export default authSlice.reducer;
