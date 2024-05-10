@@ -1,0 +1,249 @@
+@import '../base.css';
+
+.nav-bar {
+  display: grid;
+  grid-template-columns: 12.22rem 1fr 13rem;
+  grid-template-rows: 1fr;
+  grid-template-areas: "logo items profile";
+  grid-column-gap: 1.1rem;
+  align-items: center;
+  padding: 0.25rem 1rem;
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--main-color-bg);
+  box-shadow:  0 0.11rem 0.22rem rgba(0, 0, 0, 0.1);
+}
+.nav__logo-link {
+  grid-area: logo;
+  height: 2.9rem;
+  margin-top: 0.12rem;
+}
+.nav__list {
+  grid-area: items;
+  list-style: none;
+  display: flex;
+  justify-self: start;
+  color: var(--dark-grey);
+  padding-left: 2.8rem;
+  }
+.nav__list-item {
+  margin-right: 2rem;
+  cursor: pointer 
+}
+.nav__list-item:hover {
+  font-weight: 700;
+  transition: font-weight 0.2s ease-in-out;
+}
+.nav__right-column {
+  display: flex;
+  justify-self: end;
+  gap: 0.6rem;
+  margin-right: 0.6rem;
+}
+.nav__profile-icon {
+  grid-area: profile;
+  height: 2.3rem;
+  width: 2.3rem;
+  cursor: pointer; 
+  padding-right: 1.5rem;
+  position: relative;
+}
+.nav__button {
+  padding: 0.4rem 0.8rem 0.4rem 0.8rem;
+  color:white;
+  font-size: 1.0rem;
+  font-weight: 400;
+  background-color: var(--color-button-primary-bg);
+  border-radius: 0.6rem;
+  border: 0.25rem solid var(--color-button-border);
+  box-sizing: border-box;
+  cursor: pointer; 
+  transition: outline 0.1s linear;
+  vertical-align: middle;
+}
+.nav__button:hover, .nav__button:focus {
+  outline: 0.15rem solid var(--color-button-primary-bg)
+}
+.menu {
+  display: none;
+  cursor: pointer;
+  }
+.close {
+  display: none;
+  cursor: pointer;
+  align-self: self-end;
+  padding-right: 1.8rem;
+}
+.square {
+  width: 0.5rem; 
+  height: 0.5rem; 
+  border-radius: 0.25rem; 
+  background-color: transparent; 
+  border: 0.1875rem solid;
+  border-color: var(--dark-grey);
+  flex-shrink: 0;
+}
+.dropdown-content__profile {
+  background-color:var(--white);
+  text-align: center;
+  border: 0.0625rem solid var(--light-grey-bg);
+  display: block;
+  position: absolute;
+  top: 100%; /* Position below the menu button */
+  right:3.125rem;
+  min-width: 15.625rem;
+  z-index: 1;
+  color: black;
+  border-radius: 0.625rem;
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.1), 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.06);
+  transition: outline 0.1s linear;
+}
+.dropdown-content__profile h4 {
+  display: block;
+  margin: 1.25rem auto;
+  font-size: 0.98rem;
+  color: var(--dark-grey);
+  font-family: Aptos, sans-serif;
+}
+.dropdown-content__profile h4 a {
+  text-decoration: underline;
+}
+.icon__dropdown {
+  width: 1.5625rem;
+  height: 1.875rem;
+  margin-right: 0.9375rem;
+}
+.dropdown-content__profile button{
+    display: block;
+    margin: 1.25rem auto 0rem auto;
+}
+.dropdown-content__profile .button.button--primary {
+  width: 12.5rem;
+  margin-inline-end: auto;
+  margin-top: 1.875rem;
+}
+.dropdown-menu-button-secondary__profile {
+  display: flex;
+  align-items: center;
+  text-align: start;
+  gap: 0.9375rem;
+  margin-bottom: 0.9375rem;
+  width: 100%;
+  background-color: var(--white);
+  color: var(--dark-grey);
+  font-size: 1rem;
+  padding: 0.625rem 1.875rem;
+}
+.icon__dropdown,
+.dropdown-menu-button-secondary__profile {
+  vertical-align: middle; 
+}
+.dropdown-menu-button-secondary__profile:hover, .dropdown-menu-button-secondary__profile:focus {
+  background-color: var(--lightest-grey-bg) ;
+}
+
+@media (max-width: 800px) {
+  .menu {
+    display: block;
+    text-align: center;
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  .nav-text {
+    position: absolute;
+    width: 100vw;
+    height: 20vh;
+    background: #ECECEC;
+    top: 3.1rem;
+    left: -100%;
+    padding-top: 0.9rem;
+    transition: top 0.2s linear;
+  }
+  .nav--visible {
+    left: 0%;
+  }
+  .nav__list {
+    flex-direction: column;
+    justify-content: space-around;
+    height: 85%;
+    align-items: start;
+    padding-left: 1.2rem;
+  } 
+}
+
+@media (max-width: 650px) {
+  .nav-bar {
+    display: grid;
+    grid-template-columns: 12rem 2.3rem 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "logo items profile";
+    grid-column-gap: 0.3rem;
+    align-items: center;
+    padding: 0 0.6rem;
+    z-index: 10;
+    position: fixed;
+  }
+  .nav-text {
+    font-size: 1rem;
+  }
+  .nav__logo-link {
+    grid-area: logo;
+    height: 2.75rem;
+  }
+  .menu {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+  .nav__button {
+    padding: 0.22rem 0.5rem 0.22rem 0.5rem;
+    color:white;
+    font-size: 0.8rem;
+    background-color: var(--color-button-primary-bg);
+    border-radius: 0.6rem;
+    border: 0.3rem solid var(--color-button-border);
+    box-sizing: border-box;
+    cursor: pointer; 
+    transition: outline 0.1s linear;
+    vertical-align: middle;
+  }
+}
+
+@media (max-width: 390px) {
+  .nav-bar {
+    grid-template-columns: 9.2rem 1fr 8rem;
+  }
+  .nav-text {
+    top: 2.3rem;
+    font-size: 0.875rem;
+    line-height: 1.5625rem;
+    height: 20vh;
+  }
+
+  .nav__logo-link {
+    grid-area: logo;
+    height: 2.1rem;
+  }
+  .menu {
+    width: 1.0rem;
+    height: 1.0rem;
+  }
+  .nav__profile-icon {
+    height: 1.8rem;
+    width: 1.8rem;
+    align-self: center;
+    padding-right: 0rem;
+  }
+}
+
+@media (max-width: 300px) {
+  .nav-bar {
+    grid-template-columns: 8.8rem 1fr 3rem;
+  }
+  .nav__button {
+    display: none;
+  }
+}
+

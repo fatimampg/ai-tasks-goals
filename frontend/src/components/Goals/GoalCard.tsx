@@ -1,21 +1,18 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import Modal from "./Modal";
+import { deleteGoal, updateGoal } from "../../store/goalsSlice";
+import { AppDispatch } from "../../store";
+import Modal from "../Modal";
 import GoalAddEditModal from "./GoalAddEditModal";
-import { deleteGoal, updateGoal } from "../store/goalsSlice";
-import { AppDispatch } from "../store";
-import { Goal } from "../types";
-
-import menu_vertical from "../assets/icons/menu-vertical.svg";
+import { Goal } from "../../types";
+import menu_vertical from "../../assets/icons/menu-vertical.svg";
 
 const GoalCard = ({ goal }: { goal: Goal }) => {
   const { id, description, month, year, belongsToId, category, status } = goal;
-  const dispatch = useDispatch<AppDispatch>(); // TypeScript infer the type of the dispacth function
-  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModal] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  //State of inputs that will be updated in the DB using a button in this component:
+
   const [updatedDescription, setUpdatedDescription] = useState(description);
   const [updatedMonth, setUpdatedMonth] = useState<number>(month);
   const [updatedYear, setUpdatedYear] = useState<number>(year);
@@ -46,10 +43,8 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
 
   const handleUpdateGoal = async () => {
     setShowModal(false);
-
     const monthF = updatedMonth;
     const yearF = updatedYear;
-
     const params: Goal = {
       id: id,
       description: updatedDescription,
@@ -60,9 +55,7 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
       belongsToId: goal.belongsToId,
       tasks: goal.tasks,
     };
-
     dispatch(updateGoal(params));
-    // console.log("params sent to Redux store - action: updateGoal", params);
   };
 
   const handleCloseEditGoal = () => {
@@ -150,7 +143,6 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
         {showModal ? (
           <Modal>
             <GoalAddEditModal
-              //Pass current values into GoalEditAddModal:
               updatedDescription={updatedDescription}
               updatedCategory={updatedCategory}
               updatedMonth={updatedMonth}

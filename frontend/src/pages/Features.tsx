@@ -1,13 +1,8 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import "../styles/features.css";
+import "./features.css";
 import ai from "../assets/images/ai.jpg";
 
 const Features = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-
   return (
     <div className="features-page">
       <Navbar />

@@ -1,5 +1,5 @@
 import GoalCard from "./GoalCard";
-import { Goal } from "../types";
+import { Goal } from "../../types";
 
 const GoalsList = ({ goals }: { goals: Goal[] }) => {
   return (

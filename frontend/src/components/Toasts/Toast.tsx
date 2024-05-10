@@ -1,7 +1,7 @@
-import "../styles/toast.css";
+import "./toast.css";
 import { useEffect } from "react";
-import success from "../assets/icons/success-icon.svg";
-import error from "../assets/icons/error-icon.svg";
+import success from "../../assets/icons/success-icon.svg";
+import error from "../../assets/icons/error-icon.svg";
 
 export interface ToastProps {
   id: string;

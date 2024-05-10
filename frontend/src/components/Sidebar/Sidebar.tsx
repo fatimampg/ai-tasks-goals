@@ -1,41 +1,31 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import Modal from "./Modal";
-import TaskAddEditModal from "./TaskAddEditModal";
-import GoalAddEditModal from "./GoalAddEditModal";
-import { fetchTasks, addTask } from "../store/tasksSlice";
-import { fetchGoals, addGoal } from "../store/goalsSlice";
+import { fetchTasks, addTask } from "../../store/tasksSlice";
+import { fetchGoals, addGoal } from "../../store/goalsSlice";
 import {
   storedTaskDateSearch,
   storedGoalMonthSearch,
-} from "../store/searchDatesSlice";
-import { RootState } from "../store";
-import type { AppDispatch } from "../store";
-import { formatMonthYear, formatDateToString } from "../utils/formatDate";
-import { Task, Goal } from "../types";
-import { toast } from "../components/ToastManager";
-
-export interface AddTasksParams {
-  description: string;
-  priority: string;
-  category: string;
-  deadline: Date;
-}
-export interface AddGoalsParams {
-  description: string;
-  month: number;
-  year: number;
-  category: string;
-}
-export interface FetchGoalsParams {
-  month: number;
-  year: number;
-}
-export interface FetchTasksParams {
-  gte: Date;
-  lte: Date;
-}
+} from "../../store/searchDatesSlice";
+import { RootState } from "../../store";
+import type { AppDispatch } from "../../store";
+import Modal from "../Modal";
+import TaskAddEditModal from "../Tasks/TaskAddEditModal";
+import GoalAddEditModal from "../Goals/GoalAddEditModal";
+import Categories from "./Categories";
+import MonthInput from "./MonthInput";
+import { toast } from "../Toasts/ToastManager";
+import { formatMonthYear, formatDateToString } from "../../utils/formatDate";
+import {
+  Task,
+  Goal,
+  AddTasksParams,
+  AddGoalsParams,
+  FetchGoalsParams,
+  FetchTasksParams,
+} from "../../types";
+import "./sidebar.css";
+import DateStartEndInput from "./DateStartEndInput";
 
 const Sidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -50,8 +40,6 @@ const Sidebar = () => {
   if (taskDates) {
     startDateStored = formatDateToString(taskDates.gte);
     endDateStored = formatDateToString(taskDates.lte);
-    // console.log("startDate2", startDateStored, typeof startDateStored);
-    // console.log("endDate2", endDateStored, typeof endDateStored);
   }
 
   const goalsMonth = useSelector(
@@ -67,8 +55,6 @@ const Sidebar = () => {
   const [monthYear, setMonthYear] = useState(monthYearStored ?? "");
   const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
   const [year, setYear] = useState<number>(new Date().getFullYear());
-  const [showAddTaskModal, setShowAddTaskModal] = useState(false);
-  const [showAddGoalModal, setShowAddGoalModal] = useState(false);
 
   const [updatedDescription, setUpdatedDescription] = useState("");
   const [updatedDeadline, setUpdatedDeadline] = useState<Date>(new Date());
@@ -85,6 +71,9 @@ const Sidebar = () => {
   const [numberTasksCompleted, setNumberTasksCompleted] = useState(0);
   const [numberTasksInProgress, setNumberTasksInProgress] = useState(0);
   const [numberTasksToDo, setNumberTasksToDo] = useState(0);
+
+  const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+  const [showAddGoalModal, setShowAddGoalModal] = useState(false);
 
   // Count number of tasks completed, in progress and to do:
   const countTaskStatus = (taskList: Task[]) => {
@@ -110,34 +99,25 @@ const Sidebar = () => {
 
   // Extract month and year from monthYear (format compatible with the DB):
   useEffect(() => {
-    // console.log("HERE IS MONTHYEAR", monthYear);
     const { month, year } = formatMonthYear(monthYear);
-    setMonth(parseInt(month)); //parse month string into a number
+    setMonth(parseInt(month));
     setYear(parseInt(year));
     dispatch(
       storedGoalMonthSearch({ month: parseInt(month), year: parseInt(year) }),
-    );
-    console.log(
-      "SIDEBAR: month and year dispatched into the search data slice",
-      parseInt(month),
-      parseInt(year),
     );
   }, [monthYear]); //format: YYYY-MM
 
   const handleRequestTasks = async () => {
     if (!startDate || !endDate) {
-      // alert("Please insert start and end date");
       toast.show({
         message: "Please select a start date and an end date.",
         duration: 3500,
         type: "error",
       });
-      // console.log("Please insert start and end date");
       return;
     } else {
       const dateObjStartDate = new Date(startDate);
       const dateObjEndDate = new Date(endDate);
-
       if (
         isNaN(dateObjStartDate.getTime()) ||
         isNaN(dateObjEndDate.getTime())
@@ -145,7 +125,6 @@ const Sidebar = () => {
         console.log("Invalid date format");
         return;
       }
-
       const params: FetchTasksParams = {
         gte: dateObjStartDate,
         lte: dateObjEndDate,
@@ -162,8 +141,6 @@ const Sidebar = () => {
         duration: 3500,
         type: "error",
       });
-      // alert("Please insert month and year");
-      // console.log("Please insert month and year");
       return;
     } else {
       const params: FetchGoalsParams = {
@@ -188,9 +165,7 @@ const Sidebar = () => {
       category: updatedCategory,
       deadline: dateObjDeadline,
     };
-
     dispatch(addTask(params));
-    // console.log("params sent to Redux store - action: addTasks", params);
   };
 
   const handleAddGoal = () => {
@@ -201,9 +176,7 @@ const Sidebar = () => {
       year: updatedYear,
       category: updatedCategory,
     };
-
     dispatch(addGoal(params));
-    console.log("params sent to Redux store - action: addGoal", params);
   };
 
   return (
@@ -215,101 +188,28 @@ const Sidebar = () => {
               className="sidebar__progress-items"
               style={{ marginTop: "5px" }}
             >
-              <div className="sidebar__search-box">
-                <div className="sidebar__insert--date">
-                  <label htmlFor="month" style={{ fontSize: "16px" }}>
-                    {" "}
-                    Month:
-                  </label>
-                  <input
-                    type="month"
-                    id="month"
-                    className="sidebar__month-input"
-                    value={monthYear}
-                    onChange={(e) => setMonthYear(e.target.value)}
-                  />
-                </div>
-              </div>
+              <MonthInput monthYear={monthYear} setMonthYear={setMonthYear} />
             </div>
           </>
         )}
-        <div className="sidebar__categories">
-          <h3 style={{ paddingBottom: "5px" }}>Categories:</h3>
-          <ul>
-            <div className="sidebar__icon-title-pair">
-              <div
-                className="square"
-                style={{ borderColor: "var(--CAREER)" }}
-              ></div>
-              <li>Career</li>
-            </div>
-            <div className="sidebar__icon-title-pair">
-              <div
-                className="square"
-                style={{ borderColor: "var(--PERSONAL_DEVELOPMENT)" }}
-              ></div>
-              <li>Personal development</li>
-            </div>
-            <div className="sidebar__icon-title-pair">
-              <div
-                className="square"
-                style={{ borderColor: "var(--HEALTH_AND_WELLNESS)" }}
-              ></div>
-              <li>Health and wellness</li>
-            </div>
-            <div className="sidebar__icon-title-pair">
-              <div
-                className="square"
-                style={{ borderColor: "var(--FINANCIAL)" }}
-              ></div>
-              <li>Financial</li>
-            </div>
-            <div className="sidebar__icon-title-pair">
-              <div
-                className="square"
-                style={{ borderColor: "var(--FAMILY_AND_FRIENDS)" }}
-              ></div>
-              <li>Family and friends</li>
-            </div>
-            <div className="sidebar__icon-title-pair">
-              <div
-                className="square"
-                style={{ borderColor: "var(--LEISURE)" }}
-              ></div>
-              <li>Leisure</li>
-            </div>
-          </ul>
-        </div>
+        <Categories />
+
         {location.pathname === "/goals" && (
           <div className="sidebar__goals-items">
             <h1>Goals</h1>
-            <div className="sidebar__search-box">
-              <div className="sidebar__insert--date">
-                <label htmlFor="month" style={{ fontSize: "16px" }}>
-                  {" "}
-                  Month:
-                </label>
-                <input
-                  type="month"
-                  id="month"
-                  className="sidebar__month-input"
-                  value={monthYear}
-                  onChange={(e) => setMonthYear(e.target.value)}
-                />
-              </div>
-              <button
-                className="sidebar__button-secondary"
-                onClick={handleRequestGoals}
-              >
-                Search Goals
-              </button>
-            </div>
+            <MonthInput monthYear={monthYear} setMonthYear={setMonthYear} />
+            <button
+              className="sidebar__button-secondary"
+              onClick={handleRequestGoals}
+            >
+              Search Goals
+            </button>
             <div className="add-task-goal-button">
               <button
                 className="sidebar__button-secondary"
                 onClick={() => setShowAddGoalModal(true)}
               >
-                + Add new goal
+                Add new goal
               </button>
             </div>
           </div>
@@ -318,53 +218,13 @@ const Sidebar = () => {
         {location.pathname === "/tasks" && (
           <div className="sidebar__tasks-items">
             <h1>Tasks</h1>
-            <div className="sidebar__search-box">
-              <div className="sidebar__text-date-pair">
-                <label htmlFor="date_start" style={{ fontSize: "16px" }}>
-                  {" "}
-                  From:
-                </label>
-                <input
-                  type="date"
-                  id="date_start"
-                  name="date-start"
-                  className="sidebar__date-input"
-                  value={startDate}
-                  onChange={(e) => {
-                    setStartDate(e.target.value);
-                    console.log("startDate", e.target.value);
-                  }}
-                />
-              </div>
-              <div className="sidebar__text-date-pair">
-                <label
-                  htmlFor="date_end"
-                  style={{ fontSize: "16px", paddingRight: "19px" }}
-                >
-                  {" "}
-                  to:
-                </label>
-                <input
-                  type="date"
-                  id="date_end"
-                  name="date_end"
-                  className="sidebar__date-input"
-                  value={endDate}
-                  onChange={(e) => {
-                    setEndDate(e.target.value);
-                    console.log("endDate", e.target.value);
-                  }}
-                />
-              </div>
-              <button
-                className="sidebar__button-secondary"
-                style={{ marginTop: "15px" }}
-                onClick={handleRequestTasks}
-              >
-                {" "}
-                Search tasks{" "}
-              </button>
-            </div>
+            <DateStartEndInput
+              startDate={startDate}
+              endDate={endDate}
+              setStartDate={setStartDate}
+              setEndDate={setEndDate}
+              handleRequestTasks={handleRequestTasks}
+            />
             <ul>
               <div className="sidebar__icon-title-pair">
                 <li>{numberTasksCompleted}</li>
@@ -384,8 +244,7 @@ const Sidebar = () => {
                 className="sidebar__button-secondary"
                 onClick={() => setShowAddTaskModal(true)}
               >
-                {" "}
-                + Add new task{" "}
+                Add new task
               </button>
             </div>
           </div>
@@ -395,12 +254,10 @@ const Sidebar = () => {
         {showAddTaskModal ? (
           <Modal>
             <TaskAddEditModal
-              //Pass current values into TaskEditAddModal:
               updatedDescription={updatedDescription}
               updatedPriority={updatedPriority}
               updatedCategory={updatedCategory}
               updatedDeadline={updatedDeadline}
-              //Pass functions set... to TaskEditAddModal to update the values (here) by the ones obtained in TaskEditAddModal:
               onUpdateDescription={setUpdatedDescription}
               onUpdatePriority={setUpdatedPriority}
               onUpdateCategory={setUpdatedCategory}

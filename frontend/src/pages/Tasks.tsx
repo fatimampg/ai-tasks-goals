@@ -1,22 +1,18 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store";
-import { AppDispatch } from "../store";
+import { RootState, AppDispatch } from "../store";
 import { updateTaskListStatus, clearMessageCounter } from "../store/tasksSlice";
-import TasksList from "../components/TasksList";
-import Sidebar from "../components/Sidebar";
-import axios from "axios";
-import { Task } from "../types";
+import TasksList from "../components/Tasks/TasksList";
+import Sidebar from "../components/Sidebar/Sidebar";
+import TasksIdentifiers from "../components/Tasks/TasksIdentifiers";
+import DashboardHeader from "../components/DashboardHeader";
 import LoadingSpinner from "../components/LoadingSpinner";
-import "../styles/sidebar.css";
-import "../styles/dashboard.css";
-import waving_hand from "../assets/icons/waving-hand.svg";
-import menu_vertical from "../assets/icons/menu-vertical.svg";
-import { toast } from "../components/ToastManager";
+import { toast } from "../components/Toasts/ToastManager";
+import { Task } from "../types";
+import "../components/Sidebar/sidebar.css";
+import "./tasksAndGoals.css";
 
 const Tasks = () => {
-  const [userName, setUserName] = useState("");
-  //get taskList and header from Redux Store:
   const taskList = useSelector((state: RootState) => state.tasks.taskList);
   const header = useSelector((state: RootState) => state.auth.header);
   const dispatch = useDispatch<AppDispatch>();
@@ -25,7 +21,7 @@ const Tasks = () => {
   );
   const isLoading = useSelector((state: RootState) => state.tasks.isLoading);
 
-  // Manage show toastmessages:
+  // Manage show toast messages:
   const typeMessage = useSelector(
     (state: RootState) => state.tasks.typeMessage,
   );
@@ -50,39 +46,6 @@ const Tasks = () => {
       dispatch(clearMessageCounter());
     };
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   console.log("MESSAGE", message);
-  // }, [message]);
-
-  //Request userName:
-  const getUserName = async (header: { [key: string]: string }) => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_AUTH_URL}/api/username`,
-        {
-          headers: header,
-        },
-      );
-      const userName = response.data.userName;
-      // console.log("userName:", userName);
-      setUserName(userName);
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getUserName(header);
-  }, [header]);
-
-  // Get current date:
-  const currentDate = new Date();
-  const formattedDate = currentDate.toLocaleDateString("en-us", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
 
   // Callback function to get updated tasks from TaskList:
   const handleUpdateTasksTopParent = (updatedNewTaskList: Task[]) => {
@@ -126,24 +89,9 @@ const Tasks = () => {
     }
   }
 
-  // Handle update task progress in the Data Base:
   const handleUpdateTasksStatus = async () => {
-    console.log(
-      "Updated Status Task List (from Parent: Tasks.tsx) [updatedTaskStatusList]:",
-      updatedTaskStatusList,
-    );
-    console.log(
-      "Task List (task status not updated) (from Parent: Tasks.tsx) [taskList]:",
-      taskList,
-    );
-
     const params: Task[] = updatedTaskStatusList;
-
     dispatch(updateTaskListStatus(params));
-    console.log(
-      "Updated Status Task List (from Parent: Tasks.tsx) - sent to Redux store to update the DB [updatedTaskStatusList]",
-      params,
-    );
   };
 
   return (
@@ -152,19 +100,10 @@ const Tasks = () => {
       <aside className="dashboard__sidebar">
         <Sidebar />
       </aside>
-      <div className="tasks-page">
+      <div className="main-page">
         <div className="dashboard__main-container">
           <div className="dashboard__top-info">
-            <div className="dashboard__title-welcome">
-              <h2> Hello {userName}</h2>
-              <img
-                src={waving_hand}
-                alt="waving-hand"
-                className="icon__waving-hand"
-              />
-            </div>
-
-            <h3 className="dashboard__sub-title">Today, {formattedDate}</h3>
+            <DashboardHeader header={header} />
             <div className="dashboard__main-title-and-button">
               <h2 className="dashboard__main-title"> Tasks:</h2>
               <button
@@ -175,25 +114,7 @@ const Tasks = () => {
                 Save Task Progress
               </button>
             </div>
-            <div className="dashboard__identifiers">
-              <div
-                className="square center_square"
-                style={{
-                  borderColor: "var(--white)",
-                }}
-              ></div>
-              <h3> Description:</h3>
-              <h3> To do:</h3>
-              <h3>
-                {" "}
-                In progress
-                <br />
-                [% completed]:
-              </h3>
-              <h3> Done:</h3>
-              <img src={menu_vertical} alt="menu_vertical" id="menu_vertical" />
-            </div>
-            {/* Get updated tasks (status and % completed) from TaskList.tsx */}
+            <TasksIdentifiers />
           </div>
           <div className="dashboard__list-container">
             <TasksList

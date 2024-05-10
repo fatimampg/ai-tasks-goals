@@ -1,3 +1,4 @@
+// Allow input within the range (0-100)
 const checkPercentageInput = (e: any) => {
   const inputValue = e.target.value;
 
@@ -13,7 +14,6 @@ const checkPercentageInput = (e: any) => {
     keyCode === 39 || // Right arrow
     keyCode === 46 // Delete
   ) {
-    // Allow input within the range (0-100)
     if (
       (inputValue === "" && keyCode !== 46) || // Allow empty input
       (parseInt(inputValue + e.key) >= 0 && parseInt(inputValue + e.key) <= 100)

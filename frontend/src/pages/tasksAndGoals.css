@@ -1,14 +1,13 @@
-@import './base.css';
+@import '../base.css';
 
 .dashboard__main-title-and-button {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-
 .dashboard__main-title-and-button button {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
     font-family: AptosBold, sans-serif;
     font-weight: 700;
     font-size: 1.05rem;
@@ -16,38 +15,34 @@
 .dashboard__sidebar {
     height: 100%;
 }
-.tasks-page {
-    margin-top: 61.3px;
-    margin-left:245px ;
+.main-page {
+    margin-top: 3.83125rem;
+    margin-left:15.3125rem ;
 }
 .progress-page {
-    margin-top: 61.3px;
-    margin-left:245px ;
+    margin-top: 3.83125rem;
+    margin-left:15.3125rem ;
 }
-  
 .dashboard__main-container {
-    padding-left: 15px;
+    padding-left: 0.9375rem;
 }
-
 .dashboard__top-info {
     position: fixed;
     z-index: 2;
     background-color: var(--main-color-bg);
-    width: calc(100% - 290px); 
-    padding-right: 20px;
+    width: calc(100% - 18.125rem); 
+    padding-right: 1.25rem;
 }
-
 .dashboard__list-container {
     position: absolute;
-    margin-top: 250px;
-    width: calc(100% - 285px); 
-    right: 20px;
-    padding-bottom: 150px;
+    margin-top: 15.625rem;
+    width: calc(100% - 17.8125rem); 
+    right: 1.25rem;
+    padding-bottom: 9.375rem;
     
 }
-
 .dashboard__title-welcome { 
-    padding-top: 35px;
+    padding-top: 2.1875rem;
     font-weight: 700;
     font-family: AptosBold, sans-serif;
     display: flex;
@@ -56,161 +51,140 @@
     color: var(--color-text-on-primary);
 }
 .icon__waving-hand{
-  height: 1.5rem;
-  padding-left: 10px;
+    height: 1.5rem;
+    padding-left: 0.625rem;
 }
 .dashboard__sub-title { 
-    padding-top: 10px;
+    padding-top: 0.625rem;
     color: var(--color-text-on-primary);
 }
 .dashboard__main-title { 
-    padding-top: 40px;
-    padding-bottom: 15px;
+    padding-top: 2.5rem;
+    padding-bottom: 0.9375rem;
     font-weight: 700;
     font-family: AptosBold, sans-serif;
     color: var(--color-text-on-primary);
 }
-
-.dashboard__identifiers, .dashboard__identifiers__goals {
+.dashboard__identifiers--tasks, .dashboard__identifiers--goals {
     display: flex;
-    gap: 10px;
+    gap: 0.625rem;
     align-items: center;
-    margin-bottom: 0px;
-    margin-top: 20px;
+    margin-bottom: 0rem;
+    margin-top: 1.25rem;
     color: var(--dark-grey);
 }
-
 .dashboard__task-items {
     display: flex;
-    gap: 10px;
+    gap: 0.625rem;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 0.9375rem;
 }
 .dashboard__card {
     background-color: var(--white);
-    border-radius: 10px;
+    border-radius: 0.625rem;
 }
-.dashboard__identifiers h3:nth-child(2), .dashboard__task-items h3:nth-child(2) {
-    padding: 10px 10px 10px 5px;
+.dashboard__identifiers--tasks h3:nth-child(2), .dashboard__task-items h3:nth-child(2) {
+    padding: 0.625rem 0.625rem 0.625rem 0.3125rem;
     margin-right: auto;
-
-
 }
-
-.dashboard__identifiers h3:nth-child(n+3) {
-    padding: 10px 13px 10px 13px;
+.dashboard__identifiers--tasks h3:nth-child(n+3) {
+    padding: 0.625rem 0.8125rem 0.625rem 0.8125rem;
     text-align: center;
 } 
-
-.dashboard__identifiers__goals h3:nth-child(2), .dashboard__task-items h3:nth-child(2) {
-    padding: 10px 6px 10px 6px;
+.dashboard__identifiers--goals h3:nth-child(2), .dashboard__task-items h3:nth-child(2) {
+    padding: 0.625rem 0.375rem 0.625rem 0.375rem;
     margin-right: auto;
-    
 }
-
-.dashboard__identifiers__goals h3:nth-child(n+3) {
-    padding: 10px 6px 10px 6px;
+.dashboard__identifiers--goals h3:nth-child(n+3) {
+    padding: 0.625rem 0.375rem 0.625rem 0.375rem;
     text-align: center;
 } 
-
 #menu_vertical {
-    padding: 10px 2px 10px 2px;
+    padding: 0.625rem 0.125rem 0.625rem 0.125rem;
     text-align: center; 
-        cursor: pointer;
+    cursor: pointer;
 }
-
 .dashboard__task-items input{
     text-align: center;
 } 
-
 .dashboard__task-items.dashboard__card input[type="radio"] { 
-    height: 15px;
-    width: 15px;
-    border: solid 1px var(--dark-grey);
+    height: 0.9375rem;
+    width: 0.9375rem;
+    border: solid 0.0625rem var(--dark-grey);
     accent-color: var(--dark-grey);}
-
 .dashboard__task-items.dashboard__card input[type="radio"]:first-of-type {
-    margin-left: 0px;
-    margin-right: 38px;
+    margin-left: 0rem;
+    margin-right: 2.375rem;
 }
 .dashboard__task-items.dashboard__card input[type="radio"]:last-of-type {
-    margin-left: 0px;
-    margin-right: 25px;
+    margin-left: 0rem;
+    margin-right: 1.5625rem;
 }
-
 .dashboard__task-items.dashboard__card input[type="text"] {
-    margin-left: 0px;
-    margin-right: 47px;
-    height: 25px;
-    width: 75px;  
-    font-size: 16px;
+    margin-left: 0rem;
+    margin-right: 2.9375rem;
+    height: 1.5625rem;
+    width: 4.6875rem;  
+    font-size: 1rem;
     color: var(--dark-grey);
-    border: solid 1px var(--dark-grey);
-    border-radius: 5px;
+    border: solid 0.0625rem var(--dark-grey);
+    border-radius: 0.3125rem;
 }
-
 .dashboard__task-description {
-    min-width: 150px;
+    min-width: 9.375rem;
     word-wrap:break-word;
 }
-
 .center_square {
     align-items: center;
-    margin: 5px 5px 5px 20px;
+    margin: 0.3125rem 0.3125rem 0.3125rem 1.25rem;
     display: flex
 }
-
 .task__menu {
-   position: relative;
-
+    position: relative;
 }
 .dropdown-content {
     background-color:var(--main-color-bg);
     font-family: Aptos, sans-serif;
     font-size: 1.0rem;
     text-align: center;
-    border: 1px solid #dddbda;
+    border: 0.0625rem solid #dddbda;
     display: block;
     position: absolute;
     top: 100%; /* Position below the menu button */
     right:0;
-    min-width: 160px;
+    min-width: 10rem;
     z-index: 1;
     color: black;
-    border-radius: 10px;
+    border-radius: 0.625rem;
 }
 .dropdown-content h4 {
     display: block;
-    margin: 5px auto;
+    margin: 0.3125rem auto;
     font-family: Aptos, sans-serif;
 }
-
 .dropdown-content h4:last-of-type {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
-
 .dropdown-content button{
     display: block;
-    margin: 10px auto;
+    margin: 0.625rem auto;
 }
-
 .dropdown-content h4:nth-child(1){
-    margin-top: 15px;
+    margin-top: 0.9375rem;
 }
-
 .dropdown-menu-button {
     font-size: 0.9rem;
     color: var(--dark-grey);
     background-color: var(--white) ;
     padding: 0 0.9rem;
-    height: 25px;
+    height: 1.5625rem;
     border-radius: 0.5rem;
     border: 0.22rem solid var(--color-button-border);
     box-sizing: border-box; 
     cursor: pointer;
     transition: outline 0.1s linear;
     vertical-align: middle;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
     transition: outline 0.1s linear;
     vertical-align: middle;
     user-select: none;
@@ -218,29 +192,24 @@
     touch-action: manipulation;
 }
 .dropdown-menu-button:last-child {
-    margin-bottom: 15px;
+    margin-bottom: 0.9375rem;
 }
-
 .dropdown-menu-button:hover, .dropdown-menu-button:focus {
     outline: 0.125rem solid var(--color-button-primary-bg);
     background-color: var(--color-button-primary-bg) ;
     color: var(--white)
 }
-
-
 #checkboxAchieved,
 #checkboxInProgress,
 #checkboxNeedsImprovement
  {
-     height: 15px;
-     width: 15px;
-     border: solid 1px var(--dark-grey);
+     height: 0.9375rem;
+     width: 0.9375rem;
+     border: solid 0.0625rem var(--dark-grey);
     accent-color: var(--dark-grey);
-    margin-right: 38px;
-    margin-left: 38px;
+    margin-right: 2.375rem;
+    margin-left: 2.375rem;
 }
-
-
 #modal {
     background-color: rgba(0, 0, 0, 0.7);
     position: fixed;
@@ -258,57 +227,52 @@
 #modal:empty {
     display: none;
 }
-
 #modal > div {
     background-color:var(--main-color-bg);
     font-family: Aptos, sans-serif;
     font-size: 1.0rem;
-    padding: 40px;
+    padding: 2.5rem;
     text-align: center;
-    border-radius: 20px;
+    border-radius: 1.25rem;
 }
-  
 .modal__container select, .modal__container textarea, .modal__container input {
     color: var(--dark-grey);
     border: solid var(--light-grey-bg);
     background-color: var(--white);
-    margin: 0 0px 5px 15px;
-    line-height: 20px;
-    border: 1px solid #dddbda;
-    border-radius: 4px;
-    padding: 0 10px 0 10px;
+    margin: 0 0rem 0.3125rem 0.9375rem;
+    line-height: 1.25rem;
+    border: 0.0625rem solid #dddbda;
+    border-radius: 0.25rem;
+    padding: 0 0.625rem 0 0.625rem;
     box-sizing: border-box; 
   }
-
-  .modal__container select, .modal__container input {
-    height: 30px;
+.modal__container select, .modal__container input {
+    height: 1.875rem;
     width: 40%;
   }
 .modal__container .taskPriorityModal {
-    margin-left: 27px;
-    
-  }
-  .modal__container textarea {
-    height: 90px;
-    min-width: 380px;
+    margin-left: 1.6875rem;
+}
+.modal__container textarea {
+    height: 5.625rem;
+    min-width: 23.75rem;
     width: 100%;
-    padding-top: 5px;
+    padding-top: 0.3125rem;
 }
 #modal .buttons button {
     display: inline-block;
-    margin-right: 15px;
-  }
-  
+    margin-right: 0.9375rem;
+}
 .modal__info-key-value {
     display: flex;
     flex-direction: row; 
-    gap: "20px";
+    /* gap: 1.25rem; */
     text-justify: start;
     justify-content: start;  
-    margin: 20px auto;
+    margin: 1.25rem auto;
 }
 .modal__info-key-value:first-child {
-    margin-top: 0px;
+    margin-top: 0rem;
 }
   
 @media (min-width: 950px) {
@@ -327,7 +291,7 @@
 }
 
 @media (max-width: 950px) {
-    .dashboard__identifiers h3:nth-child(n+3), .dashboard__identifiers__goals h3:nth-child(n+3) {
+    .dashboard__identifiers--tasks h3:nth-child(n+3), .dashboard__identifiers--goals h3:nth-child(n+3) {
         display: none
     }
     .dashboard__task-items.dashboard__card input[type="radio"],
@@ -342,136 +306,138 @@
         vertical-align: middle;
     }
     .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="radio"] {
-        margin-left: 15px;
+        margin-left: 0.9375rem;
     }
     .dashboard__task-items.dashboard__card .task__menu .dropdown-content input[type="text"] {
-        margin-bottom: 10px;
-        margin-left: 70px;
+        margin-bottom: 0.625rem;
+        margin-left: 4.375rem;
     }
     #checkboxAchieved,
     #checkboxInProgress,
     #checkboxNeedsImprovement
     {
-        margin: 5px 5px 5px 0px !important;
+        margin: 0.3125rem 0.3125rem 0.3125rem 0rem !important;
     }
     .dropdown-content label {
         font-family: Aptos, sans-serif;
         font-size: 0.95rem; 
         display: inline-block;
-        margin-right: 10px;
-        margin-bottom: 10px;
+        margin-right: 0.625rem;
+        margin-bottom: 0.625rem;
     }
     .dropdown-content label[id^='checkboxToDo_'] {
-        margin-right: 46px;
+        margin-right: 2.875rem;
     }
     .dropdown-content {
-        width: 200px;
+        width: 12.5rem;
     }
     .task-progress {
         display: inline-block;
         text-align: left;
-        padding-left: 20px;
+        padding-left: 1.25rem;
     }  
 }
 
 @media (max-width: 650px) {
-.tasks-page {
-    margin: 0px
+    .main-page {
+        margin: 0rem
+    }
+    .progress-page {
+        margin: 0rem
+    }
+    .center_square {
+        align-items: center;
+        margin: 0.3125rem 0.3125rem 0.3125rem 1.25rem;
+        display: flex
+    }
+    .dashboard__title-welcome h2 {
+        font-size: 1rem;
+    }
+    .dashboard__top-info h3 {
+        font-size: 0.875rem;
+    }
+    .dashboard__task-items > h3 {
+        font-size: 0.875rem;
+    }
+    .dashboard__main-container {
+        padding-left: 0.9375rem;
+    }
+    .dashboard__main-title-and-button button {
+        margin: 1.25rem 0.625rem auto auto;
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 1.0rem;
+        width: 7.5rem;
+        height: auto;
+        word-wrap:break-word;
+    }
+    .dashboard__top-info {
+        position: absolute;
+        width: 90%;
+        left:0.9375rem
+    }
+    .dashboard__list-container {
+        position: absolute;
+        margin-top: 15.625rem;
+        width: 90%;
+        left:1.6rem;
+    }
+    .dashboard__list-container h2 {
+        font-size: 0.9375rem;
+    }
+    .icon__waving-hand{
+        height: 1.2rem;
+    }
+    #modal {
+        flex-wrap: wrap;
+    }
+    #modal > div {
+        font-size: 0.875rem;
+        padding: 1.25rem;
+    }
+    .modal__container select, .modal__container textarea, .modal__container input {
+        border: 0.0625rem solid #dddbda;
+        padding: 0 0.3125rem 0 0.3125rem; 
+    }
+    .modal__container select {
+        margin: 0 0rem 0rem 0.3125rem;
+    }
+    .modal__container select, .modal__container input {
+        width: 65%;
+    }
+    .modal__container .taskPriorityModal {
+        margin-left: 1.75rem;
+    }
+    .modal__container .taskCategoryModal {
+        margin-left: 0.9375rem;
+    }
+    .modal__container textarea {
+        margin: 0.3125rem 0rem 0rem 0rem;
+        height: auto;
+        min-height: 6.25rem;
+        min-width: 9.375rem;
+    }
+    .modal__info-key-value h3 {
+        font-size: 0.875rem;
+        padding-top: 0.3125rem;
+    }
 }
-.progress-page {
-    margin: 0px
-}
-.center_square {
-    align-items: center;
-    margin: 5px 5px 5px 20px;
-    display: flex
-}
-.dashboard__title-welcome h2 {
-    font-size: 1rem;
-}
-.dashboard__top-info h3 {
-    font-size: 14px;
-}
-.dashboard__task-items > h3 {
-    font-size: 14px;
-}
-.dashboard__main-container {
-    padding-left: 15px;
-}
-
-.dashboard__main-title-and-button button {
-    margin: 20px 10px auto auto;
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 1.0rem;
-    width: 120px;
-    height: auto;
-    word-wrap:break-word;
-}
-
-.dashboard__top-info {
-    position: absolute;
-    width: 90%;
-    left:15px
-}
-
-.dashboard__list-container {
-    position: absolute;
-    margin-top: 250px;
-    width: 90%;
-    right:15px
-}
-.dashboard__list-container h2 {
-    font-size: 15px;
-}
-.icon__waving-hand{
-  height: 1.2rem;
-}
-#modal {
-    flex-wrap: wrap;
-}
-#modal > div {
-    font-size: 14px;
-    padding: 20px;
-}
-.modal__container select, .modal__container textarea, .modal__container input {
-    border: 1px solid #dddbda;
-    padding: 0 5px 0 5px; 
-  }
-.modal__container select {
-    margin: 0 0px 0px 5px;
-  }
-.modal__container select, .modal__container input {
-    width: 65%;
-}
-.modal__container .taskPriorityModal {
-    margin-left: 28px;
-}
-.modal__container .taskCategoryModal {
-    margin-left: 15px;
-}
-  .modal__container textarea {
-    margin: 5px 0px 0px 0px;
-    height: auto;
-    min-height: 100px;
-    min-width: 150px;
-}
-.modal__info-key-value h3 {
-    font-size: 14px;
-    padding-top: 5px;
-}
-}
-
 
 @media (max-width: 550px) {
-#menu_vertical {
-    padding: 10px 0px 10px 0px;
-    text-align: center; 
+    #menu_vertical {
+        padding: 0.625rem 0rem 0.625rem 0rem;
+        text-align: center; 
         cursor: pointer;
+    }
+    .center_square {
+        align-items: center;
+        margin: 0.3125rem 0.3125rem 0.3125rem 0.9375rem;
+        display: flex
+    }
 }
-.center_square {
-    align-items: center;
-    margin: 5px 5px 5px 15px;
-    display: flex
-}
+
+@media (max-width: 350px) {
+    .dashboard__list-container {
+        left:1rem;
+    }
 }

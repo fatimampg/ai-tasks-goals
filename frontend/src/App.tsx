@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Tasks from "./pages/Tasks";
 import Goals from "./pages/Goals";
-import Homepage from "./pages/Homepage";
+import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
 import Register from "./auth/Register";
 import SignIn from "./auth/SignIn";
@@ -19,15 +19,13 @@ function App() {
             <Navbar />
           </header>
           <Routes>
-            <Route path="/" element={<Homepage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/goals" element={<Goals />} />
             <Route path="/register" element={<Register />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/progress" element={<Progress />} />
             <Route path="/features" element={<Features />} />
-            {/* <Route path="/profile" element={<Profile />} />
-             */}
           </Routes>
         </div>
       </Provider>

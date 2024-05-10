@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
-import { AddTasksParams } from "../components/Sidebar";
+import { AddTasksParams } from "../components/Sidebar/Sidebar";
 import { Task } from "../types";
 
 interface TaskListState {
@@ -76,7 +76,6 @@ export const updateTask = createAsyncThunk(
       );
 
       const updatedTask = response.data;
-      // console.log("response.data - updateTask (tasksSlice)", response.data);
 
       return updatedTask;
     } catch (error: any) {
@@ -129,10 +128,6 @@ export const deleteTask = createAsyncThunk(
       );
 
       const deletedTask = response.data.data;
-      // console.log(
-      //   "response.data.data - deleteTask (taskSlice)",
-      //   response.data.data,
-      // );
       return deletedTask;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -160,12 +155,7 @@ export const addTask = createAsyncThunk(
         },
         { headers: header },
       );
-
       const addedTask = response.data.data;
-      // console.log(
-      //   "response.data.data - addedTasks (tasksSlice)",
-      //   response.data.data,
-      // );
       return addedTask;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -192,8 +182,6 @@ const tasksSlice = createSlice({
         state.typeMessage = null;
         state.isLoading = false;
         state.messageCounter = state.messageCounter + 1;
-        console.log("message counter", state.messageCounter);
-        console.log("Tasks fetched successfully:", state.taskList);
       })
       .addCase(fetchTasks.pending, (state, action) => {
         state.isLoading = true;
@@ -205,66 +193,52 @@ const tasksSlice = createSlice({
         state.typeMessage = "error";
         state.isLoading = false;
         state.messageCounter = state.messageCounter + 1;
-        console.log("message counter", state.messageCounter);
       })
 
       .addCase(updateTask.fulfilled, (state, action) => {
-        console.log("Task updated successfully:", action.payload);
         state.message = "Task successfully updated.";
         state.typeMessage = "success";
         state.messageCounter = state.messageCounter + 1;
-        console.log("message counter", state.messageCounter);
         state.taskList = state.taskList.map((task) =>
           task.id === action.payload.id ? action.payload : task,
         ); //replace in the taskList, the updated task (matching its id) and leave the rest unchanged
         state.isLoading = false;
-        console.log("Updated Task List:", state.taskList);
       })
       .addCase(updateTask.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(updateTask.rejected, (state, action) => {
-        console.log("Task not updated", action.error.message);
         state.message = "Task was not updated, please try again.";
         state.typeMessage = "error";
         state.messageCounter = state.messageCounter + 1;
-        console.log("message counter", state.messageCounter);
         state.isLoading = false;
       })
 
       .addCase(deleteTask.fulfilled, (state, action) => {
-        console.log("Task deleted successfully:", action.payload);
         state.message = "Task successfully deleted.";
         state.typeMessage = "success";
         state.messageCounter = state.messageCounter + 1;
-        console.log("message counter", state.messageCounter);
         state.taskList = state.taskList.filter(
           (task) => task.id !== action.payload.id,
         ); //update task list (exclude deleted task)
         state.isLoading = false;
-        console.log("Updated task list", state.taskList);
       })
       .addCase(deleteTask.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(deleteTask.rejected, (state, action) => {
-        // console.log("Task was not deleted:", action.payload);
         console.log("Task not deleted", action.error.message);
         state.message = "Task not deleted, please try again later.";
         state.isLoading = false;
         state.typeMessage = "error";
         state.messageCounter = state.messageCounter + 1;
-        console.log("message counter", state.messageCounter);
       })
 
       .addCase(addTask.fulfilled, (state, action) => {
-        console.log("Task added successfully:", action.payload);
         state.message = "Task successfully added.";
         state.typeMessage = "success";
         state.messageCounter = state.messageCounter + 1;
-        console.log("message counter", state.messageCounter);
-        state.taskList = [...state.taskList, action.payload]; //add new task to the list
-        console.log("Updated task list", state.taskList);
+        state.taskList = [...state.taskList, action.payload];
         state.isLoading = false;
       })
       .addCase(addTask.pending, (state, action) => {
@@ -275,19 +249,13 @@ const tasksSlice = createSlice({
         state.message = "Task not added. Please try again later.";
         state.typeMessage = "error";
         state.messageCounter = state.messageCounter + 1;
-        console.log("message counter", state.messageCounter);
         state.isLoading = false;
       })
 
       .addCase(updateTaskListStatus.fulfilled, (state, action) => {
-        console.log(
-          "Task status (list) updated successfully (all tasks searched until now):",
-          action.payload,
-        );
         state.message = "Changes in tasks progress status successfully made.";
         state.typeMessage = "success";
         state.messageCounter = state.messageCounter + 1;
-        console.log("message counter", state.messageCounter);
         state.isLoading = false;
         //Ensure that only tasks between gte and lte are shown after saving task progress:
         state.taskList.forEach((taskStoredRedux) => {
@@ -308,7 +276,6 @@ const tasksSlice = createSlice({
           "Changes in task progress status were not made. Please try again.";
         state.typeMessage = "error";
         state.messageCounter = state.messageCounter + 1;
-        console.log("message counter", state.messageCounter);
         state.isLoading = false;
       });
   },

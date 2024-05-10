@@ -8,7 +8,6 @@ import axios from "axios";
 
 interface SignInState {
   header: { [key: string]: string };
-  // error: string | null | { message: string };
   message: string | null;
   typeMessage: "success" | "error" | null;
   messageCounter: number;
@@ -18,7 +17,6 @@ interface SignInState {
 const storedToken = localStorage.getItem("token");
 const initialState: SignInState = {
   header: { Authorization: storedToken ? `Bearer ${storedToken}` : "" },
-  // error: null,
   message: null,
   typeMessage: null,
   messageCounter: 0,
@@ -31,7 +29,6 @@ export const signInUser = createAsyncThunk(
     userData: { email: string; password: string },
     { rejectWithValue },
   ) => {
-    //rejectWithValue - redux toolkit helper function to handle errors
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_REACT_APP_AUTH_URL}/signin`,
@@ -39,8 +36,7 @@ export const signInUser = createAsyncThunk(
       );
       const { token } = response.data;
       storeTokenInLocalStorage(token);
-      const header = authHeader(token); // (this returns { Authorization: `Bearer ${token}` });
-      console.log(header);
+      const header = authHeader(token); // (returns { Authorization: `Bearer ${token}` });
       return header;
     } catch (error: any) {
       if (
@@ -50,7 +46,7 @@ export const signInUser = createAsyncThunk(
       ) {
         return rejectWithValue({ message: error.response.data.message });
       }
-      return rejectWithValue({ message: error.response.data.message }); // Pass error message to the reducer
+      return rejectWithValue({ message: error.response.data.message });
     }
   },
 );
@@ -81,11 +77,9 @@ const authSlice = createSlice({
         state.typeMessage = "success";
         state.isLoading = false;
         state.messageCounter = state.messageCounter + 1;
-        console.log("token given and auth header created");
       })
       .addCase(signInUser.rejected, (state, action) => {
         if (isErrorPayload(action.payload)) {
-          // state.error = action.payload.message;
           state.message = action.payload.message;
           state.typeMessage = "error";
           state.isLoading = false;

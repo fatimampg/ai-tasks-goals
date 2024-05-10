@@ -1,18 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import Logo from "../assets/images/Logo.svg";
-import profileIcon from "../assets/icons/profile-user.svg";
-import menu from "../assets/icons/menu.svg";
-import close from "../assets/icons/close.svg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
-import my_profile from "../assets/icons/my-profile.svg";
-import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../store";
 import { signOutUser } from "../store/authSlice";
 import { clearTaskList } from "../store/tasksSlice";
 import { clearGoalList } from "../store/goalsSlice";
-import { Goal } from "../types";
+import "./navbar.css";
+import Logo from "../assets/images/Logo.svg";
+import profileIcon from "../assets/icons/profile-user.svg";
+import my_profile from "../assets/icons/my-profile.svg";
+import menu from "../assets/icons/menu.svg";
+import close from "../assets/icons/close.svg";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,16 +35,14 @@ const Navbar = () => {
     }
   };
   useEffect(() => {
-    // console.log("profileDropdownMenuOpen", profileDropdownMenuOpen);
     document.addEventListener("mousedown", handleClickOutsideMenu);
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideMenu);
     };
   }, []);
-  //--------------------------
 
+  // Check signed in state based on the auth header:
   const header = useSelector((state: RootState) => state.auth.header);
-  console.log("header", header);
   useEffect(() => {
     if (header && header.Authorization) {
       setIsLoggedIn(true);
@@ -61,9 +58,7 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-  // ----------- sign out:
   const handleSignOut = () => {
-    // console.log("signout");
     dispatch(signOutUser());
     dispatch(clearTaskList());
     dispatch(clearGoalList());
@@ -192,10 +187,7 @@ const Navbar = () => {
                     >
                       LOG OUT
                     </button>
-                    <button
-                      className="dropdown-menu-button-secondary__profile"
-                      // onClick={() => navigate("/profile")}
-                    >
+                    <button className="dropdown-menu-button-secondary__profile">
                       <img
                         src={my_profile}
                         alt="my profile icon"

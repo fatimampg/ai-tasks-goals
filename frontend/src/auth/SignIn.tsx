@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/auth.css";
+import "./auth.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../store";
 import { signInUser, clearMessageCounter } from "../store/authSlice";
-import { toast } from "../components/ToastManager";
+import { toast } from "../components/Toasts/ToastManager";
 import { RootState } from "../store";
 
 const SignIn = () => {
@@ -22,7 +22,6 @@ const SignIn = () => {
   );
   useEffect(() => {
     if (message && messageCounter !== 0) {
-      console.log("MESSAGE COUNTER", messageCounter);
       toast.show({
         message: message,
         duration: 2500,
@@ -58,19 +57,8 @@ const SignIn = () => {
   // console.log(header, "header");
 
   useEffect(() => {
-    if (error !== null) {
-      const signInMessage = document.querySelector(
-        ".signin-message",
-      ) as HTMLElement;
-      if (signInMessage) {
-        signInMessage.style.display = "block";
-      }
-    }
-  }, [error]);
-
-  useEffect(() => {
     if (header && header.Authorization) {
-      navigate("/tasks");
+      navigate("/");
     }
   }, [header]);
 
@@ -97,7 +85,6 @@ const SignIn = () => {
             value={userData.password}
             onChange={handleInputChange}
           />
-          <div>{error && <h4 className="signin-message"> {error}</h4>}</div>
           <button type="submit" className="button button--primary">
             SIGN IN
           </button>

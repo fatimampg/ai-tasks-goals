@@ -8,22 +8,22 @@ export interface ToastOptions {
   duration?: number;
 }
 
-// Manage having several toast messages (array of toast messages):
+// Manage several toast messages:
 export class ToastManager {
-  private containerRef: HTMLDivElement; // (only accessible within this class)
-  private toasts: ToastProps[] = []; // array of toast messages
+  private containerRef: HTMLDivElement;
+  private toasts: ToastProps[] = [];
   private root: any;
 
   constructor() {
-    const body = document.getElementsByTagName("body")[0] as HTMLBodyElement; //get body of HTML
-    const toastContainer = document.createElement("div") as HTMLDivElement; //create new div for the container
-    toastContainer.id = "toast-container-main"; //assign this ID to new container
+    const body = document.getElementsByTagName("body")[0] as HTMLBodyElement;
+    const toastContainer = document.createElement("div") as HTMLDivElement;
+    toastContainer.id = "toast-container-main";
     body.insertAdjacentElement("beforeend", toastContainer); //append the container to the end of the body
     this.containerRef = toastContainer;
     this.root = createRoot(this.containerRef);
   }
   public show(options: ToastOptions): void {
-    const toastId = Math.random().toString(36).substring(2, 8); //generate random string with length (extract characters from index 2 to 8)
+    const toastId = Math.random().toString(36).substring(2, 8); //generate random string and extract characters from index 2 to 8.
     const toast: ToastProps = {
       id: toastId,
       ...options,

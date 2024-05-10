@@ -54,12 +54,10 @@ export const updateGoal = createAsyncThunk(
   async (params: Goal, { getState, rejectWithValue }) => {
     try {
       const state = getState() as RootState;
-
       if (!state || !state.auth || !state.auth.header) {
         throw new Error("Authentication header not found in state");
       }
       const { header } = state.auth;
-      console.log("/api/goal/${params.id}`", `/api/goal/${params.id}`);
       const response = await axios.put(
         `${import.meta.env.VITE_REACT_APP_AUTH_URL}/api/goal/${params.id}`,
         {
@@ -90,7 +88,6 @@ export const deleteGoal = createAsyncThunk(
         throw new Error("Authentication header not found in state");
       }
       const { header } = state.auth;
-      console.log("/api/goal/${id}`", `/api/goal/${id}`);
       const response = await axios.delete(
         `${import.meta.env.VITE_REACT_APP_AUTH_URL}/api/goal/${id}`,
         { headers: header },
@@ -126,7 +123,6 @@ export const addGoal = createAsyncThunk(
       );
 
       const addedGoal = response.data.data;
-      // console.log("response.data.data - addedGoal (goalsSlice)", response.data.data );
       return addedGoal;
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -181,7 +177,6 @@ const goalsSlice = createSlice({
         state.typeMessage = null;
         state.isLoading = false;
         state.messageCounter = state.messageCounter + 1;
-        console.log("Goals fetched successfully:", state.goalList);
       })
       .addCase(fetchGoals.pending, (state, action) => {
         state.isLoading = true;
@@ -194,7 +189,6 @@ const goalsSlice = createSlice({
       })
 
       .addCase(updateGoal.fulfilled, (state, action) => {
-        console.log("Goal updated successfully:", action.payload);
         state.message = "Goal successfully updated.";
         state.typeMessage = "success";
         state.messageCounter = state.messageCounter + 1;
@@ -213,8 +207,6 @@ const goalsSlice = createSlice({
         state.goalList = state.goalList.map((goal) =>
           goal.id === updatedGoal.id ? updatedGoal : goal,
         );
-
-        console.log("Updated Goal List:", state.goalList);
       })
       .addCase(updateGoal.pending, (state, action) => {
         state.isLoading = true;
@@ -228,15 +220,13 @@ const goalsSlice = createSlice({
       })
 
       .addCase(deleteGoal.fulfilled, (state, action) => {
-        console.log("Goal deleted successfully:", action.payload);
         state.message = "Goal successfully deleted.";
         state.typeMessage = "success";
         state.messageCounter = state.messageCounter + 1;
         state.isLoading = false;
         state.goalList = state.goalList.filter(
           (goal) => goal.id !== action.payload.id,
-        ); //update goal list (exclude deleted goal)
-        console.log("Updated goal list", state.goalList);
+        );
       })
       .addCase(deleteGoal.pending, (state, action) => {
         state.isLoading = true;
@@ -250,13 +240,11 @@ const goalsSlice = createSlice({
       })
 
       .addCase(addGoal.fulfilled, (state, action) => {
-        console.log("Goal added successfully:", action.payload);
         state.message = "Goal successfully added.";
         state.typeMessage = "success";
         state.messageCounter = state.messageCounter + 1;
         state.isLoading = false;
-        state.goalList = [...state.goalList, action.payload]; //add new goal to the list
-        console.log("Updated task list", state.goalList);
+        state.goalList = [...state.goalList, action.payload];
       })
       .addCase(addGoal.pending, (state, action) => {
         state.isLoading = true;
@@ -270,7 +258,6 @@ const goalsSlice = createSlice({
 
       .addCase(updateGoalListStatus.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log("Goal status (list) updated successfully:", action.payload);
 
         //Ensure that only tasks between gte and lte are shown after saving task progress:
         state.goalList.forEach((goalStoredRedux) => {

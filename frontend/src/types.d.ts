@@ -21,7 +21,6 @@ export interface Goal {
   status?: string;
 }
 
-
 export interface AddTasksParams {
   description: string;
   priority: string;

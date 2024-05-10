@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { deleteTask, updateTask } from "../store/tasksSlice";
-import { AppDispatch } from "../store";
-import Modal from "./Modal";
+import { deleteTask, updateTask } from "../../store/tasksSlice";
+import { AppDispatch } from "../../store";
+import Modal from "../Modal";
 import TaskAddEditModal from "./TaskAddEditModal";
-import { Task } from "../types";
-import checkPercentageInput from "../utils/checkPercentageInput";
-import menu_vertical from "../assets/icons/menu-vertical.svg";
+import { Task } from "../../types";
+import checkPercentageInput from "../../utils/checkPercentageInput";
+import menu_vertical from "../../assets/icons/menu-vertical.svg";
 
 const TaskCard = ({
   task,
-  onUpdatefromTaskCardToTaskList, // triggered when status and %completed change - send updated task status to the parent component (TasksList) (passed as prop)
+  onUpdatefromTaskCardToTaskList, // triggered when status change - send updated task status to the parent component (TasksList)
 }: {
   task: Task;
   onUpdatefromTaskCardToTaskList: (
@@ -20,9 +20,7 @@ const TaskCard = ({
   ) => void;
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
 
-  //to TypeScript infer the type of the dispacth function:
   const dispatch = useDispatch<AppDispatch>();
   const {
     id,
@@ -36,7 +34,7 @@ const TaskCard = ({
     category,
   } = task;
 
-  //Task status will be updated in the DB based on these inputs --> done by clicking on the SAVE TASK PROGRESS button located in parent component Tasks.tsx (to allow updating the status of all tasks at once):
+  // Task status update:
   const [updatedStatus, setUpdatedStatus] = useState("");
   const [updatedPercentageCompleted, setUpdatedPercentageCompleted] = useState<
     number | null
@@ -48,14 +46,13 @@ const TaskCard = ({
   );
   //To be passed into TaskList.tsx:
   useEffect(() => {
-    //Send updated data to parent (TaskList):
     onUpdatefromTaskCardToTaskList(id, {
       status: updatedStatus,
       percentageCompleted: updatedPercentageCompleted,
     });
   }, [updatedStatus, updatedPercentageCompleted]);
 
-  //State of inputs that will be updated in the DB using a button in this component:
+  //State of inputs that will be updated in the DB within this component:
   const [updatedDescription, setUpdatedDescription] = useState(description);
   const [updatedDeadline, setUpdatedDeadline] = useState<Date>(deadline);
   const [updatedPriority, setUpdatedPriority] = useState<string>(priority);
@@ -98,7 +95,6 @@ const TaskCard = ({
   useEffect(() => {
     setUpdatedStatus(selectedOption);
   }, [selectedOption]);
-
   useEffect(() => {
     setUpdatedPercentageCompleted(percentageInput);
   }, [percentageInput]);
@@ -125,10 +121,6 @@ const TaskCard = ({
 
   const handleRemoveTask = () => {
     dispatch(deleteTask(task.id));
-    // console.log(
-    //   "id from the task to remove - sent to Redux store - action: deleteTasks",
-    //   task.id,
-    // );
   };
 
   const handleUpdateTask = async () => {
@@ -150,9 +142,7 @@ const TaskCard = ({
       belongsToId: task.belongsToId,
       relatedGoalId: task.relatedGoalId,
     };
-
     dispatch(updateTask(params));
-    // console.log("params sent to Redux store - action: updateTasks", params);
   };
 
   const handleCloseEditTask = () => {
@@ -169,9 +159,7 @@ const TaskCard = ({
           borderColor: `var(--${category})`,
         }}
       ></div>
-
       <h3 className="dashboard__task-description">{description}</h3>
-
       <input
         type="radio"
         id={`checkboxToDo_${id}`}
@@ -257,7 +245,6 @@ const TaskCard = ({
                 checked={selectedOption === "COMPLETED"}
               />
             </div>
-
             <button
               className="dropdown-menu-button"
               onClick={() => setShowModal(true)}
@@ -274,12 +261,10 @@ const TaskCard = ({
         {showModal ? (
           <Modal>
             <TaskAddEditModal
-              //Pass current values into TaskEditAddModal:
               updatedDescription={updatedDescription}
               updatedPriority={updatedPriority}
               updatedCategory={updatedCategory}
               updatedDeadline={updatedDeadline}
-              //Pass functions set... to TaskEditAddModal to update the values (here) by the ones obtained in TaskEditAddModal:
               onUpdateDescription={setUpdatedDescription}
               onUpdatePriority={setUpdatedPriority}
               onUpdateCategory={setUpdatedCategory}

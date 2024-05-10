@@ -1,46 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { formatMonthYear } from "../utils/formatDate";
-
-interface GoalAddEditModalProps {
+interface TaskAddEditModalProps {
   updatedDescription: string;
+  updatedDeadline: Date;
+  updatedPriority: string;
   updatedCategory: string;
-  updatedMonth: number;
-  updatedYear: number;
   onUpdateDescription: (value: string) => void;
+  onUpdatePriority: (value: string) => void;
   onUpdateCategory: (value: string) => void;
-  onUpdateMonth: (value: number) => void;
-  onUpdateYear: (value: number) => void;
+  onUpdateDeadline: (value: Date) => void;
   onSave: () => void;
   onClose: () => void;
 }
 
-const GoalAddEditModal: React.FC<GoalAddEditModalProps> = (
-  props: GoalAddEditModalProps,
+const TaskAddEditModal: React.FC<TaskAddEditModalProps> = (
+  props: TaskAddEditModalProps,
 ) => {
   const {
     updatedDescription,
+    updatedDeadline,
+    updatedPriority,
     updatedCategory,
-    updatedMonth,
-    updatedYear,
     onUpdateDescription,
+    onUpdatePriority,
     onUpdateCategory,
-    onUpdateMonth,
-    onUpdateYear,
+    onUpdateDeadline,
     onSave,
     onClose,
   } = props;
-
-  //Format updatedMonth and updatedYear to be displayed as initial value) ("YYYY-MM"):
-  const fomattedMonth =
-    updatedMonth < 10 ? `0${updatedMonth}` : `${updatedMonth}`;
-  const monthYearFormat = `${updatedYear}-${fomattedMonth}`;
-
-  //Extract from input (year-month) the month and year and update values to be sent to the DB:
-  const handleMonthYearChange = (e: any) => {
-    const { month, year } = formatMonthYear(e.target.value);
-    onUpdateMonth(parseInt(month));
-    onUpdateYear(parseInt(year));
-  };
 
   return (
     <div>
@@ -50,8 +35,8 @@ const GoalAddEditModal: React.FC<GoalAddEditModalProps> = (
           <textarea
             form=""
             maxLength={150}
-            name="goalDescription"
-            id="goalDescription"
+            name="taskDescription"
+            id="taskDescription"
             wrap="soft"
             className="taskDescriptionModal"
             value={updatedDescription}
@@ -59,7 +44,20 @@ const GoalAddEditModal: React.FC<GoalAddEditModalProps> = (
             placeholder="Enter description (max. 150 chars.)"
           />
         </div>
-
+        <div className="modal__info-key-value">
+          <h3>Priority:</h3>
+          <select
+            id="priority"
+            name="priority"
+            className="taskPriorityModal"
+            value={updatedPriority}
+            onChange={(e) => onUpdatePriority(e.target.value)}
+          >
+            <option value="LOW">Low</option>
+            <option value="MODERATE">Moderate</option>
+            <option value="HIGH">High</option>
+          </select>
+        </div>
         <div className="modal__info-key-value">
           <h3>Category:</h3>
           <select
@@ -80,13 +78,17 @@ const GoalAddEditModal: React.FC<GoalAddEditModalProps> = (
 
         <div className="modal__info-key-value">
           <h3>Deadline:</h3>
-
           <input
-            type="month"
-            id="month"
-            className="sidebar__month-input"
-            value={monthYearFormat.toString()}
-            onChange={(e) => handleMonthYearChange(e)}
+            type="date"
+            id="deadline"
+            name="deadline"
+            className="taskDeadlineModal"
+            value={new Date(updatedDeadline).toISOString().split("T")[0]} // Date obj to ISOString ("YYYY-MM-DDTHH:mm:ss.sssZ") - select the 1st part ("YYYY-MM-DD").
+            onChange={(e) => {
+              const selectedDate = new Date(e.target.value);
+              onUpdateDeadline(selectedDate);
+              console.log(e.target.value);
+            }}
           />
         </div>
       </div>
@@ -101,4 +103,4 @@ const GoalAddEditModal: React.FC<GoalAddEditModalProps> = (
   );
 };
 
-export default GoalAddEditModal;
+export default TaskAddEditModal;

@@ -6,7 +6,6 @@ export const storeTokenInLocalStorage = (token: string): void => {
 // Create authorization header object (including token) to be sent as header in http requests:
 export const authHeader = (token: string): { [key: string]: string } => {
   if (token) {
-    console.log("authHeader added", token);
     return { Authorization: `Bearer ${token}` };
   } else {
     return {};
@@ -15,11 +14,10 @@ export const authHeader = (token: string): { [key: string]: string } => {
 
 // Handle unauthorized responses:
 export const handleResponse = async (response: Response): Promise<any> => {
-  // Promise that resolves to a value of type any
   try {
     const text: string = await response.text();
 
-    const data = text && JSON.parse(text); // convert JSON into JScript obj
+    const data = text && JSON.parse(text);
 
     if (!response.ok) {
       if (
@@ -28,13 +26,13 @@ export const handleResponse = async (response: Response): Promise<any> => {
       ) {
         console.log("Unauthorized response, logging out.");
       }
-      const error = (data && data.message) || response.statusText; //if data doesn't contain message, use the status text from the http response.
+      const error = (data && data.message) || response.statusText;
       throw error;
     }
 
     return data;
   } catch (error) {
-    console.log("Ooops...", error);
+    console.log("There was an error...", error);
     return error;
   }
 };

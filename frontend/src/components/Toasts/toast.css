@@ -1,33 +1,30 @@
-@import './base.css';
+@import '../../base.css';
 
 .toast-message__icon {
-  height: 20px;
-  margin-right: 10px;
+  height: 1.25rem;
+  margin-right: 0.625rem;
 }
-
-
 #toast-container-main {
   position: fixed;
-  top: 10px;
+  top: 0.625rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 0.3125rem;
 }
-
 #toast-container-main > div {
   font-family: var(--font-family);
   font-weight: 400;
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: black;
   background-color: var(--white);
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
   border-radius: 0.5rem;
   border: 0.22rem solid var(--color-button-border);
   width: 100%;
-  padding: 10px 15px 10px 10px;
+  padding: 0.625rem 0.9375rem 0.625rem 0.625rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -38,11 +35,11 @@
 
 @keyframes slide-in {
   from {
-    transform: translateX(30px);
+    transform: translateX(1.875rem);
     opacity: 0;
   }
   to {
-    transform: translateX(0px);
+    transform: translateX(0rem);
     opacity: 1;
   }
 }
