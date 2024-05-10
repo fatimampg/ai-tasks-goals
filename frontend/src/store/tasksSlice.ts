@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../store";
-import { AddTasksParams } from "../components/Sidebar/Sidebar";
+import { AddTasksParams } from "../types";
 import { Task } from "../types";
 
 interface TaskListState {
