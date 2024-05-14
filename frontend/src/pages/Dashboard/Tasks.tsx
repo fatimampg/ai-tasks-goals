@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../store";
-import { updateTaskListStatus, clearMessageCounter } from "../store/tasksSlice";
-import TasksList from "../components/Tasks/TasksList";
-import Sidebar from "../components/Sidebar/Sidebar";
-import TasksIdentifiers from "../components/Tasks/TasksIdentifiers";
-import DashboardHeader from "../components/DashboardHeader";
-import LoadingSpinner from "../components/LoadingSpinner";
-import { toast } from "../components/Toasts/ToastManager";
-import { Task } from "../types";
-import "../components/Sidebar/sidebar.css";
+import { RootState, AppDispatch } from "../../store";
+import {
+  updateTaskListStatus,
+  clearMessageCounter,
+} from "../../store/tasksSlice";
+import TasksList from "../../components/Tasks/TasksList";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import TasksIdentifiers from "../../components/Tasks/TasksIdentifiers";
+import DashboardHeader from "../../components/DashboardHeader";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { toast } from "../../components/Toasts/ToastManager";
+import { Task } from "../../types";
+import "../../components/Sidebar/sidebar.css";
 import "./tasksAndGoals.css";
 
 const Tasks = () => {

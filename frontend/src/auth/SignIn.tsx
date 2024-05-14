@@ -97,10 +97,10 @@ const SignIn = () => {
             <h4> Not registered? </h4>
             <button onClick={() => navigate("/register")}>REGISTER </button>
           </div>
-          <div className="register__signin-forward">
+          {/* <div className="register__signin-forward">
             <h4> Forgot password? </h4>
             <button onClick={() => navigate("/")}>TO DO </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

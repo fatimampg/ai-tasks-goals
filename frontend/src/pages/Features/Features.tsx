@@ -1,6 +1,6 @@
-import Navbar from "../components/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import "./features.css";
-import ai from "../assets/images/ai.jpg";
+import ai from "../../assets/images/ai.jpg";
 
 const Features = () => {
   return (

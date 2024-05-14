@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Tasks from "./pages/Tasks";
-import Goals from "./pages/Goals";
-import HomePage from "./pages/HomePage";
-import Navbar from "./components/Navbar";
+import Tasks from "./pages/Dashboard/Tasks";
+import Goals from "./pages/Dashboard/Goals";
+import HomePage from "./pages/HomePage/HomePage";
+import Navbar from "./components/Navbar/Navbar";
 import Register from "./auth/Register";
 import SignIn from "./auth/SignIn";
 import { Provider } from "react-redux";
 import store from "./store";
-import Progress from "./pages/Progress";
-import Features from "./pages/Features";
+import Progress from "./pages/Progress/Progress";
+import Features from "./pages/Features/Features";
 
 function App() {
   return (

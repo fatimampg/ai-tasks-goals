@@ -1,7 +1,7 @@
-import Navbar from "../components/Navbar";
-import Header from "../components/Home/Header";
-import CardBoard from "../components/Home/CardBoard";
-import Summary from "../components/Home/Summary";
+import Navbar from "../../components/Navbar/Navbar";
+import Header from "../../components/Home/Header";
+import CardBoard from "../../components/Home/CardBoard";
+import Summary from "../../components/Home/Summary";
 import "./homePage.css";
 
 const Homepage = () => {

@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../store";
-import { RootState } from "../store";
-import { clearMessageCounter } from "../store/goalsSlice";
-import Sidebar from "../components/Sidebar/Sidebar";
-import GoalsList from "../components/Goals/GoalsList";
-import GoalsIdentifiers from "../components/Goals/GoalsIdentifiers";
-import DashboardHeader from "../components/DashboardHeader";
-import { toast } from "../components/Toasts/ToastManager";
-import LoadingSpinner from "../components/LoadingSpinner";
+import { AppDispatch } from "../../store";
+import { RootState } from "../../store";
+import { clearMessageCounter } from "../../store/goalsSlice";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import GoalsList from "../../components/Goals/GoalsList";
+import GoalsIdentifiers from "../../components/Goals/GoalsIdentifiers";
+import DashboardHeader from "../../components/DashboardHeader";
+import { toast } from "../../components/Toasts/ToastManager";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import "./tasksAndGoals.css";
 
 const Goals = () => {

@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store";
-import type { AppDispatch } from "../store";
-import { signOutUser } from "../store/authSlice";
-import { clearTaskList } from "../store/tasksSlice";
-import { clearGoalList } from "../store/goalsSlice";
+import { RootState } from "../../store";
+import type { AppDispatch } from "../../store";
+import { signOutUser } from "../../store/authSlice";
+import { clearTaskList } from "../../store/tasksSlice";
+import { clearGoalList } from "../../store/goalsSlice";
 import "./navbar.css";
-import Logo from "../assets/images/Logo.svg";
-import profileIcon from "../assets/icons/profile-user.svg";
-import my_profile from "../assets/icons/my-profile.svg";
-import menu from "../assets/icons/menu.svg";
-import close from "../assets/icons/close.svg";
+import Logo from "../../assets/images/Logo.svg";
+import profileIcon from "../../assets/icons/profile-user.svg";
+import my_profile from "../../assets/icons/my-profile.svg";
+import menu from "../../assets/icons/menu.svg";
+import close from "../../assets/icons/close.svg";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

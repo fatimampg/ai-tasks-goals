@@ -1,25 +1,25 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { AppDispatch } from "../store";
-import { RootState } from "../store";
-import { fetchGoals, updateGoalListStatus } from "../store/goalsSlice";
-import { fetchTasks } from "../store/tasksSlice";
-import Sidebar from "../components/Sidebar/Sidebar";
-import GoalsList from "../components/Goals/GoalsList";
-import GoalsIdentifiers from "../components/Goals/GoalsIdentifiers";
-import LoadingSpinner from "../components/LoadingSpinner";
-import { toast } from "../components/Toasts/ToastManager";
+import { AppDispatch } from "../../store";
+import { RootState } from "../../store";
+import { fetchGoals, updateGoalListStatus } from "../../store/goalsSlice";
+import { fetchTasks } from "../../store/tasksSlice";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import GoalsList from "../../components/Goals/GoalsList";
+import GoalsIdentifiers from "../../components/Goals/GoalsIdentifiers";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { toast } from "../../components/Toasts/ToastManager";
 import {
   Goal,
   Task,
   FetchGoalsParams,
   FetchTasksParams,
   GoalStatusUpdate,
-} from "../types";
-import "../components/Sidebar/sidebar.css";
+} from "../../types";
+import "../../components/Sidebar/sidebar.css";
 import "./progress.css";
-import "./tasksAndGoals.css";
+import "../Dashboard/tasksAndGoals.css";
 
 const Progress = () => {
   const [summary, setSummary] = useState("");

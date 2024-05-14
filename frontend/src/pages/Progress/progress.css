@@ -1,4 +1,4 @@
-@import '../base.css';
+@import '../../base.css';
 
 .progressSummary, .progressRecommendations {
     font-family: var(--font-family);
