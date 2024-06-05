@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteTask, updateTask } from "../../store/tasksSlice";
 import { AppDispatch } from "../../store";
@@ -202,7 +201,11 @@ const TaskCard = ({
           onClick={handleMenuToggle}
         />
         {menuOpen && (
-          <div className="dropdown-content" ref={dropdownRef}>
+          <div
+            className="dropdown-content"
+            data-testid="dropdown-content"
+            ref={dropdownRef}
+          >
             <h4> Priority: {priority}</h4>
             <h4> Deadline: {formattedDeadline}</h4>
             <div className="task-progress">
