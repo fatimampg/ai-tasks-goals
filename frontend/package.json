@@ -37,6 +37,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/expect": "^1.6.0",
     "@vitest/ui": "^1.6.0",
+    "cypress": "^13.11.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react-hooks": "^4.6.0",
