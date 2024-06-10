@@ -2,8 +2,17 @@ import express, { NextFunction, Request, Response } from "express";
 import router from "./router";
 import morgan from "morgan";
 import { protect } from "./modules/auth";
-import { createNewUser, signIn } from "./handlers/user";
+import {
+  addUserTests,
+  createNewUser,
+  deleteUserTests,
+  signIn,
+} from "./handlers/user";
 import cors from "cors";
+import { config as dotenvConfig } from "dotenv";
+import config from "./config/index";
+
+dotenvConfig();
 
 const app = express();
 
@@ -11,8 +20,16 @@ const stage = process.env.STAGE;
 
 const corsOptions =
   stage === "local"
-    ? { origin: true, optionsSuccessStatus: 200 }
-    : { origin: process.env.REACT_APP_URL, optionsSuccessStatus: 200 };
+    ? {
+        origin: "http://localhost:5173",
+        optionsSuccessStatus: 200,
+        credentials: true,
+      }
+    : {
+        origin: process.env.REACT_APP_URL,
+        optionsSuccessStatus: 200,
+        credentials: true,
+      };
 
 app.use(cors(corsOptions));
 
@@ -39,6 +56,10 @@ app.get("/", (req, res, next) => {
 app.use("/api", protect, router); //reject when there is no bearer token
 app.post("/user", createNewUser);
 app.post("/signin", signIn);
+if (config.enableTestRoutes) {
+  app.post("/tests/add", addUserTests);
+  app.delete("/tests/delete", deleteUserTests);
+}
 
 app.use((e: any, req: Request, res: Response, next: NextFunction) => {
   if (e.type === "auth") {

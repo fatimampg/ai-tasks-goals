@@ -86,7 +86,107 @@ export const userName = async (
       res.json({ userName: user.name });
     }
   } catch (e) {
-    console.log(e, "Unable to tget user name");
+    console.log(e, "Unable to get user name");
     next(e);
+  }
+};
+
+// FOR TESTING ONLY:
+export const deleteUserTests = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const existingUser = await prisma.user.findUnique({
+      where: { email: req.body.email },
+    });
+
+    if (existingUser) {
+      await prisma.task.deleteMany({
+        where: { belongsToId: existingUser.id },
+      });
+      await prisma.goal.deleteMany({
+        where: { belongsToId: existingUser.id },
+      });
+      await prisma.progress.deleteMany({
+        where: { progressBelongsToId: existingUser.id },
+      });
+      await prisma.user.delete({
+        where: { id: existingUser.id },
+      });
+      res.json({ message: "user deleted from the database" });
+    }
+  } catch (error) {
+    console.log(error, "Unable to delete user from the DB");
+    next(error);
+  }
+};
+
+// FOR TESTING ONLY:
+export const addUserTests = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const existingUser = await prisma.user.findUnique({
+      where: { email: req.body.email },
+    });
+
+    if (!existingUser) {
+      const user = await prisma.user.upsert({
+        where: { email: req.body.email },
+        update: {},
+        create: {
+          email: req.body.email,
+          name: "userTest",
+          password: await hashPassword("passwordtest"),
+          tasks: {
+            create: [
+              {
+                description: "task 1",
+                deadline: new Date(),
+                status: "TO_DO",
+                percentageCompleted: 0,
+                priority: "MODERATE",
+                category: "CAREER",
+              },
+              {
+                description: "task 2",
+                deadline: new Date(),
+                status: "IN_PROGRESS",
+                percentageCompleted: 50,
+                priority: "HIGH",
+                category: "LEISURE",
+              },
+            ],
+          },
+          goals: {
+            create: [
+              {
+                description: "goal 1",
+                month: 6,
+                year: 2024,
+                category: "CAREER",
+                status: "NEEDS_IMPROVEMENT",
+              },
+              {
+                description: "goal 2",
+                month: 6,
+                year: 2024,
+                category: "LEISURE",
+                status: "IN_PROGRESS",
+              },
+            ],
+          },
+        },
+      });
+      const token = createJWT(user);
+      res.json({ token: token });
+    }
+  } catch (error) {
+    console.log(error, "Unable to delete user from the DB");
+    next(error);
   }
 };
