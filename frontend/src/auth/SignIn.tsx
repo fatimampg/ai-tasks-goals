@@ -53,9 +53,9 @@ const SignIn = () => {
   };
 
   const error = useSelector((state: any) => state.auth.error);
-  // console.log(error, "error");
+
   const header = useSelector((state: any) => state.auth.header);
-  // console.log(header, "header");
+
   const isLoading = useSelector((state: any) => state.auth.isLoading);
 
   useEffect(() => {
@@ -79,6 +79,8 @@ const SignIn = () => {
               className="register__email-input"
               value={userData.email}
               onChange={handleInputChange}
+              required
+              data-testid="sign-in-email"
             />
             <label htmlFor="password"> Password: </label>
             <input
@@ -88,19 +90,26 @@ const SignIn = () => {
               className="register__password-input"
               value={userData.password}
               onChange={handleInputChange}
+              required
+              data-testid="sign-in-password"
             />
-            <button type="submit" className="button button--primary">
+            <button
+              type="submit"
+              data-testid="sign-in-submit"
+              className="button button--primary"
+            >
               SIGN IN
             </button>
           </form>
           <div className="register__signin-forward">
             <h4> Not registered? </h4>
-            <button onClick={() => navigate("/register")}>REGISTER </button>
+            <button
+              data-testid="redirect-register"
+              onClick={() => navigate("/register")}
+            >
+              REGISTER{" "}
+            </button>
           </div>
-          {/* <div className="register__signin-forward">
-            <h4> Forgot password? </h4>
-            <button onClick={() => navigate("/")}>TO DO </button>
-          </div> */}
         </div>
       </div>
     </div>

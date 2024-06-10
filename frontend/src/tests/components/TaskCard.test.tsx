@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import { describe } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { Task } from "../../types";
 import TaskCard from "../../components/Tasks/TaskCard";
 

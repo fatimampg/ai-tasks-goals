@@ -35,3 +35,31 @@
 //     }
 //   }
 // }
+
+
+declare namespace Cypress {
+  interface Chainable<Subject> {
+    createUser(email: string): Chainable<any>;
+    deleteUser(email: string): Chainable<any>;
+  }
+}
+
+Cypress.Commands.add("createUser", (email) => {
+  cy.request({
+    method: "POST",
+    url: "http://localhost:3001/tests/add",
+    body: { email },
+  }).then((response) => {
+    expect(response.status).to.eq(200);
+  });
+});
+
+Cypress.Commands.add("deleteUser", (email) => {
+  cy.request({
+    method: "DELETE",
+    url: "http://localhost:3001/tests/delete",
+    body: { email },
+  }).then((response) => {
+    expect(response.status).to.eq(200);
+  });
+});

@@ -98,6 +98,8 @@ const Register = () => {
               className="register__email-input"
               value={userData.name}
               onChange={handleInputChange}
+              required
+              data-testid="register-name"
             />
             <label htmlFor="email"> Email: </label>
             <input
@@ -107,6 +109,8 @@ const Register = () => {
               className="register__email-input"
               value={userData.email}
               onChange={handleInputChange}
+              required
+              data-testid="register-email"
             />
             <label htmlFor="password"> Password: </label>
             <input
@@ -116,6 +120,8 @@ const Register = () => {
               className="register__password-input"
               value={userData.password}
               onChange={handleInputChange}
+              required
+              data-testid="register-password"
             />
             <label htmlFor="passwordConfirm"> Confirm password: </label>
             <input
@@ -125,14 +131,25 @@ const Register = () => {
               className="register__password-input"
               value={passwordConfirm}
               onChange={handleInputChange}
+              required
+              data-testid="register-passwordConfirm"
             />
-            <button type="submit" className="button button--primary">
+            <button
+              type="submit"
+              data-testid="register-submit"
+              className="button button--primary"
+            >
               REGISTER
             </button>
           </form>
           <div className="register__signin-forward">
             <h4> Already have an account?</h4>
-            <button onClick={() => navigate("/signin")}>SIGN IN </button>
+            <button
+              data-testid="redirect-signin"
+              onClick={() => navigate("/signin")}
+            >
+              SIGN IN{" "}
+            </button>
           </div>
         </div>
       </div>
