@@ -116,6 +116,8 @@ export const deleteUserTests = async (
         where: { id: existingUser.id },
       });
       res.json({ message: "user deleted from the database" });
+    } else {
+      res.json({ message: "user doesn't exist in the database" });
     }
   } catch (error) {
     console.log(error, "Unable to delete user from the DB");
