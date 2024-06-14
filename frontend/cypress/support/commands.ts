@@ -41,6 +41,7 @@ declare namespace Cypress {
   interface Chainable<Subject> {
     createUser(email: string): Chainable<any>;
     deleteUser(email: string): Chainable<any>;
+    signinUser(email: string, password: string): Chainable<any>;
   }
 }
 
@@ -59,6 +60,16 @@ Cypress.Commands.add("deleteUser", (email) => {
     method: "DELETE",
     url: "http://localhost:3001/tests/delete",
     body: { email },
+  }).then((response) => {
+    expect(response.status).to.eq(200);
+  });
+});
+
+Cypress.Commands.add("signinUser", (email, password) => {
+  cy.request({
+    method: "POST",
+    url: "http://localhost:3001/signin",
+    body: { email, password },
   }).then((response) => {
     expect(response.status).to.eq(200);
   });

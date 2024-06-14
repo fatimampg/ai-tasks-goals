@@ -85,12 +85,6 @@ const Navbar = () => {
       />
 
       <div className={`nav-text ${isMenuOpen ? "nav--visible" : ""}`}>
-        <img
-          src={close}
-          alt="close icon"
-          className="close"
-          onClick={closeMenu}
-        />
         <ul className="nav__list">
           <li
             className="nav__list-item"
@@ -184,6 +178,7 @@ const Navbar = () => {
                     <button
                       className="button button--primary"
                       onClick={handleSignOut}
+                      data-testid="logout-button"
                     >
                       LOG OUT
                     </button>
