@@ -1,10 +1,12 @@
-# AI TASKS AND GOALS MANAGER:
+# AI Tasks and Goals Manager
 
 ### Full-stack application designed to assist users align tasks with predefined goals, thereby boosting productivity and goal achievement.
 
 > (*Web application under development*)
 
 > [Check out a short demo video of the app!](https://go.screenpal.com/watch/cZh62tVLfXn)
+
+<br/>
 
 ## Technologies and Features
 ### Frontend:
@@ -37,6 +39,7 @@
         - A brief overview of the monthly progress is provided, as well as suggestions to enhance productivity.
 
 
+<br/>
 
 Here are some screenshots of the web application to illustrate some of its features:
 
