@@ -13,7 +13,7 @@ const parser = StructuredOutputParser.fromZodSchema(
     recommendations: z
       .string()
       .describe(
-        "Based on the analysis of tasks progress and goals, and priority set for each task, give specific recommendations to help me complete uncessussful tasks and achieve the related unmet goals.",
+        "Based on the analysis of tasks progress and goals, and priority set for each task, give specific recommendations to help me complete unsuccessful tasks and achieve the related unmet goals.",
       ),
     status: z.array(
       z.object({

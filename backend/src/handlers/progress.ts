@@ -10,8 +10,8 @@ export const getMonthlyProgress = async (
   next: NextFunction,
 ) => {
   try {
-    const month = req.query.month ? Number(req.query.month) : undefined; //received as params
-    const year = req.query.year ? Number(req.query.year) : undefined; //received as params
+    const month = req.query.month ? Number(req.query.month) : undefined;
+    const year = req.query.year ? Number(req.query.year) : undefined;
 
     const progress = await prisma.progress.findMany({
       where: {
@@ -99,7 +99,7 @@ export const updateProgress = async (
   }
 };
 
-//----------- Request new AI progress analysis ---------------
+//----------- Request new AI progress analysis  ---------------
 
 export const analyseProgress = async (
   req: Request,
@@ -107,7 +107,40 @@ export const analyseProgress = async (
   next: NextFunction,
 ) => {
   try {
-    const { tasks, goals } = req.body;
+    const month = req.query.month ? Number(req.query.month) : undefined;
+    const year = req.query.year ? Number(req.query.year) : undefined;
+
+    if (!month || !year) {
+      res.status(400).json({
+        message: "Month and year are required to perform the analysis.",
+      });
+      return;
+    }
+
+    const startMonth = String(month).padStart(2, "0");
+    const startDate = `${year}-${startMonth}-01T00:00:00.000Z`;
+    const lastDay = new Date(year, month, 0).getDate();
+    const endDate = `${year}-${startMonth}-${lastDay}T23:59:59.999Z`;
+
+    const [tasks, goals] = await prisma.$transaction([
+      prisma.task.findMany({
+        where: {
+          belongsToId: req.body.user.id,
+          deadline: {
+            gte: startDate,
+            lte: endDate,
+          },
+        },
+      }),
+      prisma.goal.findMany({
+        where: {
+          belongsToId: req.body.user.id,
+          month: Number(month),
+          year: Number(year),
+        },
+      }),
+    ]);
+
     const combinedData = {
       tasks: tasks.map((task: Task) => ({
         id: task.id,
@@ -129,16 +162,12 @@ export const analyseProgress = async (
         category: goal.category,
       })),
     };
+    console.log("combined data sent for analysis", combinedData);
     const jsonStringCombinedData = JSON.stringify(combinedData);
-
-    console.log("jsonStringCombinedData", jsonStringCombinedData);
     const analysis = await analyze(jsonStringCombinedData);
-
-    console.log("FROM THE BE: result of the AI analysis", analysis);
-
     res.json({ data: analysis });
   } catch (e) {
-    console.log(e, "Unable to analyse tasks and goals lists");
+    console.log("Error analysis progress", e);
     next(e);
   }
 };

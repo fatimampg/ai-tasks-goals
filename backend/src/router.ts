@@ -141,14 +141,13 @@ router.put(
   updateProgress,
 );
 
-// Request AI Prograss analysis
-router.post("/analyse", handleErrors, analyseProgress);
+// Request AI Progress analysis
+router.get("/analyse", handleErrors, analyseProgress);
 
 // Error:
 router.use((e: any, req: Request, res: Response, next: NextFunction) => {
   console.log(e);
   res.json({ message: "in router handler" });
-}); 
-
+});
 
 export default router;
