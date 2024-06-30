@@ -14,8 +14,6 @@ const TasksList = ({
     [],
   );
 
-  // const [updatedTaskListChild, setUpdatedTaskListChild] = useState<Task[]>([]);
-
   useEffect(() => {
     setTaskList(tasks);
     setCumulativeUpdatedTasks(tasks);
@@ -25,7 +23,7 @@ const TasksList = ({
     taskId: number,
     updatedTaskData: Partial<Task>,
   ) => {
-    // All changes made in task status (received individually - per task) are collected in the cumulativeUpdaredTasks array and the updates for all tasks are sent to the DB at once (in Tasks.tsx):
+    // Changes in tasks status are sent to the DB at once in Tasks.tsx:
     const updatedTaskIndex = cumulativeUpdatedTasks.findIndex(
       (task) => task.id === taskId,
     );
@@ -35,10 +33,10 @@ const TasksList = ({
         ...updatedNewTaskList[updatedTaskIndex],
         ...updatedTaskData,
       };
-      //store in cumulativeUpdatedTasks array all changes made until now:
+      //store in cumulativeUpdatedTasks array all changes made in each task status:
       setCumulativeUpdatedTasks(updatedNewTaskList);
 
-      // Call the onUpdateTaskList callback to propagate the update:
+      // Propagate the status updates into Tasks.tsx:
       onUpdatefromTaskListoTasks(updatedNewTaskList);
     }
   };
@@ -52,7 +50,7 @@ const TasksList = ({
           <TaskCard
             key={task.id}
             task={task}
-            //Get updated task (individually) from TaskCard and send the updated array of tasks into Task.tsx (parent component):
+            //Get updated task status (individually) from TaskCard:
             onUpdatefromTaskCardToTaskList={(taskId, updatedTaskData) => {
               handleUpdateTaskList(taskId, updatedTaskData);
             }}

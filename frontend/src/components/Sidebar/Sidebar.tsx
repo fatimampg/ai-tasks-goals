@@ -16,14 +16,7 @@ import Categories from "./Categories";
 import MonthInput from "./MonthInput";
 import { toast } from "../Toasts/ToastManager";
 import { formatMonthYear, formatDateToString } from "../../utils/formatDate";
-import {
-  Task,
-  Goal,
-  AddTasksParams,
-  AddGoalsParams,
-  FetchGoalsParams,
-  FetchTasksParams,
-} from "../../types";
+import { Task, AddTasksParams, AddGoalsParams } from "../../types";
 import "./sidebar.css";
 import DateStartEndInput from "./DateStartEndInput";
 
@@ -31,7 +24,6 @@ const Sidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
 
-  // Get last search (dates) for tasks and goals:
   const taskDates = useSelector(
     (state: RootState) => state.searchDates.taskDates,
   );
@@ -125,9 +117,10 @@ const Sidebar = () => {
         console.log("Invalid date format");
         return;
       }
-      const params: FetchTasksParams = {
-        gte: dateObjStartDate,
-        lte: dateObjEndDate,
+
+      const params: { gte: Date; lte: Date } = {
+        gte: dateObjStartDate as Date,
+        lte: dateObjEndDate as Date,
       };
       dispatch(fetchTasks(params));
       dispatch(storedTaskDateSearch(params));
@@ -143,9 +136,9 @@ const Sidebar = () => {
       });
       return;
     } else {
-      const params: FetchGoalsParams = {
-        month: month,
-        year: year,
+      const params: { month: number; year: number } = {
+        month: month as number,
+        year: year as number,
       };
       dispatch(fetchGoals(params));
       dispatch(storedGoalMonthSearch(params));

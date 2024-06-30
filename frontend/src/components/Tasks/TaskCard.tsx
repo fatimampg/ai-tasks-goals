@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { deleteTask, updateTask } from "../../store/tasksSlice";
 import { AppDispatch } from "../../store";
@@ -10,7 +10,7 @@ import menu_vertical from "../../assets/icons/menu-vertical.svg";
 
 const TaskCard = ({
   task,
-  onUpdatefromTaskCardToTaskList, // triggered when status change - send updated task status to the parent component (TasksList)
+  onUpdatefromTaskCardToTaskList, // triggered when task status change
 }: {
   task: Task;
   onUpdatefromTaskCardToTaskList: (
@@ -33,7 +33,6 @@ const TaskCard = ({
     category,
   } = task;
 
-  // Task status update:
   const [updatedStatus, setUpdatedStatus] = useState("");
   const [updatedPercentageCompleted, setUpdatedPercentageCompleted] = useState<
     number | null
@@ -43,7 +42,6 @@ const TaskCard = ({
       ? Number(percentageCompleted)
       : 0,
   );
-  //To be passed into TaskList.tsx:
   useEffect(() => {
     onUpdatefromTaskCardToTaskList(id, {
       status: updatedStatus,
@@ -51,7 +49,6 @@ const TaskCard = ({
     });
   }, [updatedStatus, updatedPercentageCompleted]);
 
-  //State of inputs that will be updated in the DB within this component:
   const [updatedDescription, setUpdatedDescription] = useState(description);
   const [updatedDeadline, setUpdatedDeadline] = useState<Date>(deadline);
   const [updatedPriority, setUpdatedPriority] = useState<string>(priority);
@@ -90,7 +87,6 @@ const TaskCard = ({
     }
   }, [status, percentageCompleted]);
 
-  // Update status (to be sent to the DB):
   useEffect(() => {
     setUpdatedStatus(selectedOption);
   }, [selectedOption]);
@@ -98,17 +94,16 @@ const TaskCard = ({
     setUpdatedPercentageCompleted(percentageInput);
   }, [percentageInput]);
 
-  const handleRadioChange = (e: any) => {
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(e.target.value);
   };
-  const handlePercentageChange = (e: any) => {
-    const inputValue = e.target.value.trim(); //remove white spaces if added
+  const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = parseFloat(e.target.value.trim()); //remove white spaces
     if (inputValue > 100) {
-      alert("Percentage completed shouldn't be higher than 100%"); //for input using smartphone
+      alert("Percentage completed shouldn't be higher than 100%"); //for mobile devices
       setPercentageInput(0);
     }
-    const numberInputValue = parseFloat(inputValue);
-    setPercentageInput(numberInputValue);
+    setPercentageInput(inputValue);
   };
 
   //Clear %input in case another option (besides IN_PROGRESS) is selected:
@@ -144,10 +139,6 @@ const TaskCard = ({
     dispatch(updateTask(params));
   };
 
-  const handleCloseEditTask = () => {
-    setShowModal(false);
-  };
-
   const formattedDeadline = new Date(deadline).toLocaleDateString();
 
   return (
@@ -166,6 +157,7 @@ const TaskCard = ({
         value="TO_DO"
         onChange={handleRadioChange}
         checked={selectedOption === "TO_DO"}
+        data-testid="radioToDo"
       />
       <input
         type="radio"
@@ -174,6 +166,7 @@ const TaskCard = ({
         value="IN_PROGRESS"
         onChange={handleRadioChange}
         checked={selectedOption === "IN_PROGRESS"}
+        data-testid="radioInProgress"
       />
       <input
         type="text"
@@ -184,6 +177,7 @@ const TaskCard = ({
         onChange={handlePercentageChange}
         disabled={selectedOption !== "IN_PROGRESS"}
         onKeyDown={checkPercentageInput}
+        data-testid="percentageCompleted"
       />
       <input
         type="radio"
@@ -192,6 +186,7 @@ const TaskCard = ({
         value="COMPLETED"
         onChange={handleRadioChange}
         checked={selectedOption === "COMPLETED"}
+        data-testid="radioCompleted"
       />
       <div className="task__menu">
         <img

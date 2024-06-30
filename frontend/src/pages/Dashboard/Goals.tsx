@@ -17,7 +17,7 @@ const Goals = () => {
   const header = useSelector((state: RootState) => state.auth.header);
   const dispatch = useDispatch<AppDispatch>();
 
-  // Manage show toastmessages:
+  // Toastmessages:
   const typeMessage = useSelector(
     (state: RootState) => state.goals.typeMessage,
   );
