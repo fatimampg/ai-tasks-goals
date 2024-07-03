@@ -6,6 +6,7 @@
 
 > [Check out a short demo video of the app!](https://go.screenpal.com/watch/cZh62tVLfXn)
 
+> (*This web application is a personnal project designed to showcase its capabilities and the integration of the OpenAI GPT-4 model. It is not intended for actual use or commercial purposes. Please do not enter any sensitive or personnal information. For more details on the usage of the OpenAI model, refer to Open AI's Usage Policies.*)
 <br/>
 
 ## Technologies and Features
