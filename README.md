@@ -4,9 +4,7 @@
 
 > (*Web application under development*)
 
-> [Check out a short demo video of the app!](https://go.screenpal.com/watch/cZh62tVLfXn)
-
-> (*This web application is a personnal project designed to showcase its capabilities and the integration of the OpenAI GPT-4 model. It is not intended for actual use or commercial purposes. Please do not enter any sensitive or personnal information. For more details on the usage of the OpenAI model, refer to Open AI's Usage Policies.*)
+> (*This web application is a personnal project designed to showcase its capabilities and the integration of the OpenAI GPT-4 model. Please do not enter any sensitive or personnal information. For more details on the usage of the OpenAI model, refer to Open AI's Usage Policies.*)
 <br/>
 
 ## Technologies and Features
@@ -17,8 +15,8 @@
 - **User Authentication**: JWT authentication with Node.js and password hashing with bcrypt.
 - **LLM**: integrated GPT-4 model from OpenAI. Structured approach using Zod and Langchain to support consistency of the results and ensure compatibility between the AI-generated data and the database.
 ### Testing: 
-- **Unit Testing**: Vitest and React Testing Library *(under development)*.
-- **End-to-End and Component Testing**: Cypress *(under development)*.
+- **Unit and Integration Tests**: Vitest and React Testing Library *(under development)*.
+- **End-to-End Tests**: Cypress *(under development)*.
 
 <br/>
 
@@ -38,12 +36,3 @@
     - **Insights and Tagging**: (results of the analysis)
         - Each goal is tagged as "Needs improvement", "In Progress" or "Achieved".
         - A brief overview of the monthly progress is provided, as well as suggestions to enhance productivity.
-
-
-<br/>
-
-Here are some screenshots of the web application to illustrate some of its features:
-
-![Dashboard_Tasks](https://github.com/fatimampg/ai-tasks-goals/assets/142017021/09ddb190-8b8e-4f51-8e96-cbbe1e08c1dc)
-
-![Dashboard_Results](https://github.com/fatimampg/ai-tasks-goals/assets/142017021/d1e18ee7-9442-4141-8116-7e733fdcd982)
