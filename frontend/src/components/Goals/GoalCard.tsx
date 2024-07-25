@@ -79,18 +79,21 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
         id="checkboxAchieved"
         checked={status === "ACHIEVED"}
         disabled
+        data-testid="checkboxAchieved"
       />
       <input
         type="checkbox"
         id="checkboxInProgress"
         checked={status === "IN_PROGRESS"}
         disabled
+        data-testid="checkboxInProgress"
       />
       <input
         type="checkbox"
         id="checkboxNeedsImprovement"
         checked={status === "NEEDS_IMPROVEMENT"}
         disabled
+        data-testid="checkboxNeedsImprovement"
       />
 
       <div className="task__menu">
@@ -101,7 +104,11 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
           onClick={handleMenuToggle}
         />
         {menuOpen && (
-          <div className="dropdown-content" ref={dropdownRef}>
+          <div
+            className="dropdown-content"
+            ref={dropdownRef}
+            data-testid="dropdown-content"
+          >
             <h4> Month: {month}</h4>
             <h4> Year: {year}</h4>
             <div className="task-progress">

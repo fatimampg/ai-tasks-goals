@@ -2,7 +2,7 @@ import { RotatingLines } from "react-loader-spinner";
 import "../base.css";
 
 const LoadingSpinner = () => (
-  <div className="custom-loader">
+  <div className="custom-loader" data-testid="loading-spinner">
     <RotatingLines
       strokeColor="var(--orange)"
       width="50"

@@ -152,6 +152,7 @@ const Navbar = () => {
             className="nav__profile-icon"
             id="profile_icon"
             onClick={handleProfileMenuToggle}
+            data-testid="profile"
           />
           <div ref={dropdownRef}>
             {profileDropdownMenuOpen && (

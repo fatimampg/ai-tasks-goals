@@ -24,9 +24,9 @@ const DateStartEndInput = ({
           name="date-start"
           className="sidebar__date-input"
           value={startDate}
+          data-testid="startDate"
           onChange={(e) => {
             setStartDate(e.target.value);
-            // console.log("startDate", e.target.value);
           }}
         />
       </div>
@@ -44,9 +44,9 @@ const DateStartEndInput = ({
           name="date_end"
           className="sidebar__date-input"
           value={endDate}
+          data-testid="endDate"
           onChange={(e) => {
             setEndDate(e.target.value);
-            // console.log("endDate", e.target.value);
           }}
         />
       </div>

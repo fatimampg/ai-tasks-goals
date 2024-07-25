@@ -29,10 +29,14 @@ const Sidebar = () => {
   );
   let startDateStored: string | null = null;
   let endDateStored: string | null = null;
-  if (taskDates) {
+  if (taskDates && taskDates.gte && taskDates.lte) {
     startDateStored = formatDateToString(taskDates.gte);
     endDateStored = formatDateToString(taskDates.lte);
   }
+  // if (taskDates) {
+  //   startDateStored = formatDateToString(taskDates.gte);
+  //   endDateStored = formatDateToString(taskDates.lte);
+  // }
 
   const goalsMonth = useSelector(
     (state: RootState) => state.searchDates.goalsMonth,
@@ -220,15 +224,19 @@ const Sidebar = () => {
             />
             <ul>
               <div className="sidebar__icon-title-pair">
-                <li>{numberTasksCompleted}</li>
+                <li data-testid="count-taskCompleted">
+                  {numberTasksCompleted}
+                </li>
                 <li>Completed</li>
               </div>
               <div className="sidebar__icon-title-pair">
-                <li>{numberTasksInProgress}</li>
+                <li data-testid="count-taskInProgress">
+                  {numberTasksInProgress}
+                </li>
                 <li>In progress</li>
               </div>
               <div className="sidebar__icon-title-pair">
-                <li>{numberTasksToDo}</li>
+                <li data-testid="count-taskToDo">{numberTasksToDo}</li>
                 <li>Pending</li>
               </div>
             </ul>

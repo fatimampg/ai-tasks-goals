@@ -37,7 +37,7 @@ const DashboardHeader = ({ header }: DashboardHeaderParams) => {
   return (
     <>
       <div className="dashboard__title-welcome">
-        <h2> Hello {userName}</h2>
+        <h2 data-testid="username"> Hello {userName}</h2>
         <img
           src={waving_hand}
           alt="waving-hand"

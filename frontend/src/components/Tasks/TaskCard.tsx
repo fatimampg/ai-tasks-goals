@@ -157,7 +157,7 @@ const TaskCard = ({
         value="TO_DO"
         onChange={handleRadioChange}
         checked={selectedOption === "TO_DO"}
-        data-testid="radioToDo"
+        data-testid={`radioToDo_${id}`}
       />
       <input
         type="radio"
@@ -166,7 +166,7 @@ const TaskCard = ({
         value="IN_PROGRESS"
         onChange={handleRadioChange}
         checked={selectedOption === "IN_PROGRESS"}
-        data-testid="radioInProgress"
+        data-testid={`radioInProgress_${id}`}
       />
       <input
         type="text"
@@ -177,7 +177,7 @@ const TaskCard = ({
         onChange={handlePercentageChange}
         disabled={selectedOption !== "IN_PROGRESS"}
         onKeyDown={checkPercentageInput}
-        data-testid="percentageCompleted"
+        data-testid={`percentageCompleted_${id}`}
       />
       <input
         type="radio"
@@ -186,7 +186,7 @@ const TaskCard = ({
         value="COMPLETED"
         onChange={handleRadioChange}
         checked={selectedOption === "COMPLETED"}
-        data-testid="radioCompleted"
+        data-testid={`radioCompleted_${id}`}
       />
       <div className="task__menu">
         <img
@@ -269,6 +269,7 @@ const TaskCard = ({
               onUpdateDeadline={setUpdatedDeadline}
               onSave={handleUpdateTask}
               onClose={() => setShowModal(false)}
+              data-testid="task-edit-modal"
             />
           </Modal>
         ) : null}
