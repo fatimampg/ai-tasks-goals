@@ -14,7 +14,8 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/tests/setup.ts",
-    "src/tests/components/...",
-    "cypress"
+    "src/tests/components/**/*",
+    "cypress",
+    "src/tests/pages"
   ]
 }
