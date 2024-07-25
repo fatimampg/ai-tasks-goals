@@ -1,3 +1,13 @@
+export interface User {
+  id: string;
+  createdAt: Date;
+  email: string;
+  name: string;
+  password: string;
+  tasks: Task[];
+  goals: Goal[];
+  progress: Progress[];
+}
 export interface Task {
   id: number;
   description: string;
