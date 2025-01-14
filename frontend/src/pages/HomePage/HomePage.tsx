@@ -3,6 +3,7 @@ import Header from "../../components/Home/Header";
 import CardBoard from "../../components/Home/CardBoard";
 import Summary from "../../components/Home/Summary";
 import "./homePage.css";
+import Scope from "../../components/Home/Scope";
 
 const Homepage = () => {
   return (
@@ -12,8 +13,9 @@ const Homepage = () => {
         <Header />
         <CardBoard />
         <Summary />
-        <div className="home__note">
-          <h3>
+        <Scope />
+        <section className="home__note">
+          <p>
             This web app is a personal project, not intended for comercial use.
             It integrates OpenAI GPT-4 model for enhanced functionality. No
             sensitive information should be added. Learn about OpenAI's
@@ -25,8 +27,8 @@ const Homepage = () => {
               OpenAI Usage Policies
             </a>
             .
-          </h3>
-        </div>
+          </p>
+        </section>
       </div>
     </div>
   );

@@ -35,9 +35,11 @@ const Progress = () => {
     }
   }, [goalsMonth]);
   const header = useSelector((state: RootState) => state.auth.header);
+  const isSideBarOpen = useSelector((state: RootState) => state.searchDates.sidebarOpen);
   const storeGoalList = useSelector((state: RootState) => state.goals.goalList);
   const [displayedGoalList, setDisplayedGoalList] =
     useState<Goal[]>(storeGoalList);
+  
   useEffect(() => {
     setDisplayedGoalList(storeGoalList);
   }, [storeGoalList]);
@@ -175,87 +177,79 @@ const Progress = () => {
       <aside className="dashboard__sidebar">
         <Sidebar />
       </aside>
-      <div className="main-page">
+      <div className={`main-page-progress ${!isSideBarOpen ? '' : 'slide-up'}`}>
         <div className="dashboard__main-container">
           <div className="dashboard__progress-top-info">
             <div className="dashboard__title-welcome">
               {!firstLoadProgress ? (
                 <>
-                  <h2
+                  <h4
                     className="message-warning"
-                    style={{ marginBottom: "24px" }}
                   >
                     Please choose the month you'd like to assess your progress
                     and click on "Load progress analysis":
-                  </h2>
+                  </h4>
                 </>
               ) : (
                 <div style={{ flexDirection: "row" }}>
                   <h2 className="message-warning">
                     {previousAnalysisExists
                       ? "Results obtained from the previous analysis:"
-                      : "AI progress analysis has not been done for this month:"}
-                  </h2>
-                  <h4 className="message-warning-secondary">
-                    (If changes were made in task progress, it is recommended to
-                    reanalize the progress by clicking on the "Run new AI
-                    analysis" button).
-                  </h4>
+                      : "AI progress analysis has not performed for this month."}
+                    </h2>
+                    {previousAnalysisExists && (
+                      <h4 className="message-warning-secondary">
+                        (If changes were made in task progress, it is recommended to
+                        reanalize the progress by clicking on the "Run new AI
+                        analysis" button).
+                      </h4>
+                    )}
                 </div>
               )}
             </div>
-            <div className="sidebar__progress-button">
+            <div className="progress-container-buttons">
               <button
-                className="sidebar__button-primary"
+                className="button button--primary"
+                id="load-progress-button"
                 onClick={handleLoadProgress}
-                style={{
-                  backgroundColor: !firstLoadProgress
-                    ? "var(--color-button-primary-bg)"
-                    : "var(--light-grey-bg)",
-                  borderColor: !firstLoadProgress
-                    ? "var(--color-button-primary-bg)"
-                    : !firstLoadProgress
-                      ? "var(--color-button-primary-bg)"
-                      : "var(--light-grey-bg)",
-                }}
+                disabled={firstLoadProgress}
               >
                 {" "}
                 Load progress analysis{" "}
               </button>
-              <button
-                className="sidebar__button-primary"
-                onClick={handleRequestNewAnalysis}
-                style={{
-                  display: !firstLoadProgress ? "none" : "initial",
-                }}
-              >
-                {firstLoadProgress && previousAnalysisExists
-                  ? "Run new AI analysis"
-                  : "Run AI analysis"}
-              </button>
-              <button
-                className="sidebar__button-primary"
-                onClick={handleSaveResults}
-                style={{
-                  display: !firstLoadProgress ? "none" : "initial",
-                  backgroundColor: newResultsToBeSaved
-                    ? "var(--purple)"
-                    : "var(--light-grey-bg)",
-                  borderColor: newResultsToBeSaved
-                    ? "var(--purple)"
-                    : "var(--light-grey-bg)",
-                }}
-              >
-                Save results
-              </button>
+              {displayedGoalList.length > 0 && (
+                <>
+                  <button
+                    className="button button--primary"
+                    onClick={handleRequestNewAnalysis}
+                    style={{
+                      display: !firstLoadProgress ? "none" : "initial",
+                    }}
+                  >
+                    {firstLoadProgress && previousAnalysisExists
+                      ? "Run new AI analysis"
+                      : "Run AI analysis"}
+                  </button>
+                  <button
+                    className="button button--primary"
+                    onClick={handleSaveResults}
+                    style={{
+                      display: !firstLoadProgress ? "none" : "initial",
+                    }}
+                    disabled={!newResultsToBeSaved}
+                  >
+                    Save results
+                  </button>
+                </>
+              )}
             </div>
             <div className="progress__info-key-value">
               <h3>Summary:</h3>
-              <h3 className="progressSummary">{summary}</h3>
+              <p className="progressSummary">{summary}</p>
             </div>
             <div className="progress__info-key-value">
               <h3>Recommendations:</h3>
-              <h3 className="progressRecommendations">{recommendations}</h3>
+              <p className="progressRecommendations">{recommendations}</p>
             </div>
             {newResultsToBeSaved && (
               <h3 className="message-warning" style={{ paddingTop: "35px" }}>
@@ -267,9 +261,11 @@ const Progress = () => {
               <GoalsIdentifiers />
             </div>
           </div>
-          <div className="dashboard__progress-list-container">
-            <GoalsList goals={displayedGoalList} />
-          </div>
+          {firstLoadProgress && (
+            <div className="dashboard__progress-list-container">
+              <GoalsList goals={displayedGoalList} />
+            </div>
+          )}
         </div>
       </div>
     </div>

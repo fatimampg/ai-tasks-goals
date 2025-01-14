@@ -42,9 +42,9 @@ const TasksList = ({
   };
 
   return (
-    <div>
+    <div className="list-results">
       {!tasks?.length ? (
-        <h2> No tasks found for this time period </h2>
+        <h4> No tasks found for this time period. </h4>
       ) : (
         tasks.map((task: Task) => (
           <TaskCard

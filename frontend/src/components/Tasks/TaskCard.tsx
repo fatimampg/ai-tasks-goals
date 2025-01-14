@@ -149,7 +149,7 @@ const TaskCard = ({
           borderColor: `var(--${category})`,
         }}
       ></div>
-      <h3 className="dashboard__task-description">{description}</h3>
+      <p className="dashboard__task-description">{description}</p>
       <input
         type="radio"
         id={`checkboxToDo_${id}`}
@@ -201,57 +201,67 @@ const TaskCard = ({
             data-testid="dropdown-content"
             ref={dropdownRef}
           >
-            <h4> Priority: {priority}</h4>
-            <h4> Deadline: {formattedDeadline}</h4>
+            <p> Priority: {priority}</p>
+            <p> Deadline: {formattedDeadline}</p>
             <div className="task-progress">
-              <label id={`checkboxToDo_${id}`}> To do:</label>
-              <input
-                type="radio"
-                id={`checkboxToDo_${id}`}
-                name={`progress_${id}`}
-                value="TO_DO"
-                onChange={handleRadioChange}
-                checked={selectedOption === "TO_DO"}
-              />
-              <label id={`checkboxPercentage_${id}`}> In progress:</label>
-              <input
-                type="radio"
-                id={`checkboxPercentage_${id}`}
-                name={`progress_${id}`}
-                value="IN_PROGRESS"
-                onChange={handleRadioChange}
-                checked={selectedOption === "IN_PROGRESS"}
-              />
-              <label id={`percentageCompleted_${id}`} />
-              <input
-                type="text"
-                name={`percentageCompleted_${id}`}
-                id={`percentageCompleted_${id}`}
-                placeholder="%"
-                value={percentageInput || ""}
-                onChange={handlePercentageChange}
-                disabled={selectedOption !== "IN_PROGRESS"}
-                onKeyDown={checkPercentageInput}
-              />
-              <label id={`checkboxCompleted_${id}`}> Completed:</label>
-              <input
-                type="radio"
-                id={`checkboxCompleted_${id}`}
-                name={`progress_${id}`}
-                value="COMPLETED"
-                onChange={handleRadioChange}
-                checked={selectedOption === "COMPLETED"}
-              />
+              <div className="task-progress-state-set">
+                <input
+                  type="radio"
+                  id={`checkboxToDo_${id}`}
+                  name={`progress_${id}`}
+                  value="TO_DO"
+                  onChange={handleRadioChange}
+                  checked={selectedOption === "TO_DO"}
+                />
+                <label id={`checkboxToDo_${id}`}>To do</label>
+              </div>
+              <div className="task-progress-state-set">
+                  <input
+                    type="radio"
+                    id={`checkboxPercentage_${id}`}
+                    name={`progress_${id}`}
+                    value="IN_PROGRESS"
+                    onChange={handleRadioChange}
+                    checked={selectedOption === "IN_PROGRESS"}
+                  />
+                  <label id={`checkboxPercentage_${id}`}> In progress:</label>
+                <input
+                  type="text"
+                  name={`percentageCompleted_${id}`}
+                  id={`percentageCompleted_${id}`}
+                  placeholder="%"
+                  value={percentageInput || ""}
+                  onChange={handlePercentageChange}
+                  disabled={selectedOption !== "IN_PROGRESS"}
+                  onKeyDown={checkPercentageInput}
+                />
+              </div>
+              <div className="task-progress-state-set">
+                </div>
+              <div className="task-progress-state-set">
+                  <input
+                    type="radio"
+                    id={`checkboxCompleted_${id}`}
+                    name={`progress_${id}`}
+                    value="COMPLETED"
+                    onChange={handleRadioChange}
+                    checked={selectedOption === "COMPLETED"}
+                  />
+                  <label id={`percentageCompleted_${id}`} />
+                  <label id={`checkboxCompleted_${id}`}> Completed</label>
+              </div>
             </div>
-            <button
-              className="dropdown-menu-button"
-              onClick={() => setShowModal(true)}
-            >
-              Edit
-            </button>
-            <button className="dropdown-menu-button" onClick={handleRemoveTask}>
-              Remove
-            </button>
+            <div className="dropdown-menu__set">
+                <button
+                  className="dropdown-menu-button"
+                  onClick={() => setShowModal(true)}
+                >
+                  Edit
+                </button>
+                <button className="dropdown-menu-button" onClick={handleRemoveTask}>
+                  Remove
+                </button>
+              </div>
           </div>
         )}
       </div>

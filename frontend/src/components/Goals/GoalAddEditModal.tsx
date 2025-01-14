@@ -45,7 +45,7 @@ const GoalAddEditModal: React.FC<GoalAddEditModalProps> = (
     <div>
       <div className="modal__container">
         <div className="modal__info-key-value">
-          <h3>Description:</h3>
+          <p>Description:</p>
           <textarea
             form=""
             maxLength={150}
@@ -60,7 +60,7 @@ const GoalAddEditModal: React.FC<GoalAddEditModalProps> = (
         </div>
 
         <div className="modal__info-key-value">
-          <h3>Category:</h3>
+          <p>Category:</p>
           <select
             id="category"
             name="category"
@@ -78,24 +78,25 @@ const GoalAddEditModal: React.FC<GoalAddEditModalProps> = (
         </div>
 
         <div className="modal__info-key-value">
-          <h3>Deadline:</h3>
+          <p>Deadline:</p>
 
           <input
             type="month"
             id="month"
-            className="sidebar__month-input"
+            className="taskDeadlineModal"
             value={monthYearFormat.toString()}
             onChange={(e) => handleMonthYearChange(e)}
           />
         </div>
       </div>
-
-      <button className="button button--primary" onClick={onSave}>
-        Save
-      </button>
-      <button className="button button--primary" onClick={onClose}>
-        Close
-      </button>
+      <div style={{ marginTop: "2rem" }}>   
+        <button className="button button--primary" onClick={onSave}>
+          Save
+        </button>
+        <button className="button button--primary" onClick={onClose}>
+          Close
+        </button>
+      </div>
     </div>
   );
 };

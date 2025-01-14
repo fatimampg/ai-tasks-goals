@@ -4,12 +4,14 @@ interface SearchDatesState {
   taskDates: { gte: Date; lte: Date } | null;
   goalsMonth: { month: number; year: number } | null;
   error: string | null;
+  sidebarOpen: boolean;
 }
 
 const initialState: SearchDatesState = {
   taskDates: null,
   goalsMonth: null,
   error: null,
+  sidebarOpen: true,
 };
 
 const searchDatesSlice = createSlice({
@@ -22,9 +24,12 @@ const searchDatesSlice = createSlice({
     storedGoalMonthSearch: (state, action) => {
       state.goalsMonth = action.payload;
     },
+    storedSidebarOpenState: (state, action) => {
+      state.sidebarOpen = action.payload;
+    },
   },
 });
 
-export const { storedTaskDateSearch, storedGoalMonthSearch } =
+export const { storedTaskDateSearch, storedGoalMonthSearch, storedSidebarOpenState } =
   searchDatesSlice.actions;
 export default searchDatesSlice.reducer;

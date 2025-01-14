@@ -4,7 +4,7 @@ import "../base.css";
 const LoadingSpinner = () => (
   <div className="custom-loader" data-testid="loading-spinner">
     <RotatingLines
-      strokeColor="var(--orange)"
+      strokeColor="var(--color-button-primary-bg)"
       width="50"
       strokeWidth="5"
       animationDuration="0.85"

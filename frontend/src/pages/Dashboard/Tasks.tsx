@@ -22,7 +22,9 @@ const Tasks = () => {
   const [updatedTaskStatusList, setUpdatedTaskStatusList] = useState<Task[]>(
     [],
   );
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const isLoading = useSelector((state: RootState) => state.tasks.isLoading);
+  const isSideBarOpen = useSelector((state: RootState) => state.searchDates.sidebarOpen);
 
   // Manage show toast messages:
   const typeMessage = useSelector(
@@ -52,45 +54,29 @@ const Tasks = () => {
 
   // Callback function to get updated tasks from TaskList:
   const handleUpdateTasksTopParent = (updatedNewTaskList: Task[]) => {
-    setUpdatedTaskStatusList(updatedNewTaskList);
+    setUpdatedTaskStatusList(updatedNewTaskList);  
   };
 
-  // Change color button SAVE TASK PROGRESS when changes in status where made:
-  const updateStatusButton = document.querySelector(
-    "#save-task-progress",
-  ) as HTMLElement;
-
-  const areTasksUpdated = (
-    taskList: Task[],
-    updatedTaskStatusList: Task[],
-  ): boolean => {
+  const wereChangesMade = (): boolean => {
     for (let i = 0; i < taskList.length; i++) {
       const taskList1 = taskList[i];
       const taskList2 = updatedTaskStatusList.find(
         (task) => task.id === taskList1.id,
       ); //taskList2 is new array with updated status containing only tasks present in taskList (based on their id's)
       if (!taskList2) continue;
-
+  
       if (
         taskList1.status !== taskList2.status ||
         taskList1.percentageCompleted !== taskList2.percentageCompleted
-      ) {
-        return false;
-      }
+      ) {         
+        return true;
+      } 
     }
-    return true;
-  };
-
-  if (!areTasksUpdated(taskList, updatedTaskStatusList)) {
-    if (updateStatusButton) {
-      updateStatusButton.style.background = "var(--orange)";
-    }
-  } else {
-    if (updateStatusButton) {
-      updateStatusButton.style.background = "var(--null)";
-      updateStatusButton.style.outline = "var(--null)";
-    }
+    return false;
   }
+  useEffect(() => {
+    setIsButtonDisabled(!wereChangesMade());
+  }, [taskList, updatedTaskStatusList])
 
   const handleUpdateTasksStatus = async () => {
     const params: Task[] = updatedTaskStatusList;
@@ -103,16 +89,17 @@ const Tasks = () => {
       <aside className="dashboard__sidebar">
         <Sidebar />
       </aside>
-      <div className="main-page">
+      <div className={`main-page ${!isSideBarOpen ? '' : 'slide-up'}`}>
         <div className="dashboard__main-container">
           <div className="dashboard__top-info">
             <DashboardHeader header={header} />
             <div className="dashboard__main-title-and-button">
-              <h2 className="dashboard__main-title"> Tasks:</h2>
+              <h3 className="dashboard__main-title"> TASKS:</h3>
               <button
                 className="button button--primary"
                 id="save-task-progress"
                 onClick={handleUpdateTasksStatus}
+                disabled={isButtonDisabled}
               >
                 Save Task Progress
               </button>

@@ -9,22 +9,22 @@
 }
 .register__container h2 {
     text-align: center;
-    font-weight: 700;
-    font-family: AptosBold, sans-serif;
+    font-weight: 400;
+    font-size: 1.2rem;
+    font-family: var(--font-family);
     color: var(--dark-grey);
     padding-bottom: 1.25rem;
 }
-.register__container label {
+.register__form label {
+    font-family: var(--font-family);
     text-align: start;
-    font-weight: 400;
-    font-size: 1rem;
+    font-weight: 350;
+    font-size: 0.9rem;
     color: var(--color-text-on-primary);
-    padding-bottom: 0.3125rem;
-    padding-top: 0.625rem;
 }
 .register__container input {
-    font-weight: 400;
-    font-size: 1rem;
+    font-weight: 300;
+    font-size: 0.9rem;
     color: var(--color-text-on-primary);
     border: solid var(--light-grey-bg);
     background-color: var(--white);
@@ -40,7 +40,9 @@
 .register__card {
     font-family: var(--font-family);
     background-color: var(--white);
-    width: 15.625rem;
+    max-width: 20rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
     padding: 1.875rem 2.5rem;
     border-radius: 1.25rem;
     box-shadow: rgba(17, 17, 26, 0.1) 0rem 0.25rem 1.0rem, rgba(17, 17, 26, 0.05) 0rem 0.5rem 2rem;
@@ -58,6 +60,13 @@
     flex-direction: row;
     padding-top: 0.3125rem;
 }
+.register__signin-forward h4{
+    font-family: var(--font-family);
+    text-align: start;
+    font-weight: 350;
+    font-size: 0.875rem;
+
+}
 .register__signin-forward button {
     color: var(--color-text-on-primary-light);
     text-decoration: underline;
@@ -65,4 +74,26 @@
     font-size: 0.875rem;
     padding-left: 0.625rem;
     cursor: pointer;
+}
+
+@media (max-width: 390px) {
+    .register__card {
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+        padding: 2rem 1.5rem;
+    }
+}
+@media (max-width: 325px) {
+    .register__card {
+        margin-left: 1.0rem;
+        margin-right: 1.0rem;
+        padding: 2rem 1.0rem;
+    }
+    .register__signin-forward h4{
+        font-size: 0.8rem;    
+    }
+    .register__signin-forward button {
+        font-size: 0.78rem;
+        padding-left: 0.1rem;
+    }
 }

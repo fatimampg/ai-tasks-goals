@@ -6,6 +6,7 @@ import { fetchGoals, addGoal } from "../../store/goalsSlice";
 import {
   storedTaskDateSearch,
   storedGoalMonthSearch,
+  storedSidebarOpenState
 } from "../../store/searchDatesSlice";
 import { RootState } from "../../store";
 import type { AppDispatch } from "../../store";
@@ -19,6 +20,10 @@ import { formatMonthYear, formatDateToString } from "../../utils/formatDate";
 import { Task, AddTasksParams, AddGoalsParams } from "../../types";
 import "./sidebar.css";
 import DateStartEndInput from "./DateStartEndInput";
+import downArrow from "../../assets/icons/down-arrow.svg";
+import upArrow from "../../assets/icons/up-arrow.svg";
+import { set } from "cypress/types/lodash";
+import { boolean } from "zod";
 
 const Sidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -38,6 +43,9 @@ const Sidebar = () => {
   //   endDateStored = formatDateToString(taskDates.lte);
   // }
 
+  const sidebarOpenState = useSelector(
+    (state: RootState) => state.searchDates.sidebarOpen,
+  );
   const goalsMonth = useSelector(
     (state: RootState) => state.searchDates.goalsMonth,
   );
@@ -70,6 +78,18 @@ const Sidebar = () => {
 
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
   const [showAddGoalModal, setShowAddGoalModal] = useState(false);
+  
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  let currentPath = window.location.pathname;
+  // useEffect(() => {
+  //   let currentPath = window.location.pathname;
+  //   // if (currentPath === '/goals') {
+  //   //   sidebarClass = 'closedGoals';
+  //   // } else if (currentPath === '/tasks') {
+  //   //   sidebarClass = 'closedTasks';
+  //   // }
+  //   console.log(currentPath);
+  // }, []);
 
   // Count number of tasks completed, in progress and to do:
   const countTaskStatus = (taskList: Task[]) => {
@@ -176,8 +196,25 @@ const Sidebar = () => {
     dispatch(addGoal(params));
   };
 
+  const handleOpenCloseSidebar = () => {
+    setIsSideBarOpen(prevState => {
+      const newState = !prevState;
+      dispatch(storedSidebarOpenState(newState));
+      console.log(newState, "from navbar");
+      return newState;
+    })
+  }
+  
+
+  // useEffect(() => {
+  //   console.log(isSideBarOpen, "from navbar");
+
+  //   dispatch(storedSidebarOpenState(false));
+  // }, [isSideBarOpen]);
+
   return (
-    <div>
+    <div className={`sidebar-wrapper ${!isSideBarOpen ? '' : (currentPath === "/tasks" ? 'closed-tasks' : 'closed-goals')}`}>
+    {/* <div className={`sidebar-wrapper ${!isSideBarOpen ? '' : sidebarClass}`}> */}
       <div className="sidebar-container">
         {location.pathname === "/progress" && (
           <>
@@ -193,7 +230,7 @@ const Sidebar = () => {
 
         {location.pathname === "/goals" && (
           <div className="sidebar__goals-items">
-            <h1>Goals</h1>
+            <h4>Goals:</h4>
             <MonthInput monthYear={monthYear} setMonthYear={setMonthYear} />
             <button
               className="sidebar__button-secondary"
@@ -214,7 +251,7 @@ const Sidebar = () => {
 
         {location.pathname === "/tasks" && (
           <div className="sidebar__tasks-items">
-            <h1>Tasks</h1>
+            <h4>Tasks:</h4>
             <DateStartEndInput
               startDate={startDate}
               endDate={endDate}
@@ -250,6 +287,15 @@ const Sidebar = () => {
             </div>
           </div>
         )}
+      </div>
+      <div className="open-close-icon">
+        <button  onClick={handleOpenCloseSidebar}>
+            {isSideBarOpen ? (
+              <img src={downArrow} alt="down arrow" width="20" />
+            ) : (
+              <img src={upArrow} alt="up arrow" width="20" />
+            )} 
+        </button>
       </div>
       <div className="addTask">
         {showAddTaskModal ? (

@@ -1,5 +1,5 @@
 :root {
-  --font-family: "Aptos", sans-serif;
+  --font-family: "Lexend", sans-serif;
   --FAMILY_AND_FRIENDS: #997AF1;
   --PERSONAL_DEVELOPMENT: #FD80A0;
   --HEALTH_AND_WELLNESS:  #FDB547;
@@ -8,7 +8,8 @@
   --FINANCIAL: #a1a1a1;
   --null: #d7d6d6;
   --white: #ffffff;
-  --orange:  #FE914E;
+  --main-theme-color: #4B0790;
+  --orange:  #FF3E63;
   --purple: #4f5d97;
   --light-purple-bg:#ADAFCB;
   --light-coral-bg: #F9B1BC;
@@ -18,19 +19,23 @@
   --light-grey-bg: #d7d6d6;
   --grey-text: #a1a1a1;
   --dark-grey: #565656;
-  --main-color-bg: #F2F2F2; 
+  --main-color-bg: #F4F4F4; 
   --color-text-on-primary: #000000;
   --color-text-on-primary-light: #a1a1a1;
-  --color-button-primary-bg: #FE914E;
+  --color-button-primary-bg: #4B0790;
   --color-button-primary-text: white;
   --color-button-secondary-bg: white;
-  --color-button-secondary-text: #FE914E;
+  --color-button-secondary-text: #4B0790;
   --color-button-border: var(--color-main-button-background);
+  --space-1: 1rem;
+  --space-2: 2rem;
+  --space-3: 3rem;
+  --p-font-size: 1rem;
 }
 
 @font-face {
-  font-family: Aptos;
-  src: url(./assets/fonts/aptos.ttf);
+  font-family: Lexend;
+  src: url(./assets/fonts/lexend.ttf);
 }
 @font-face {
   font-family: AptosBold;
@@ -50,27 +55,51 @@ body {
   background-color: var(--main-color-bg);
   color:var(--color-text-on-primary);
   font-family:var(--font-family);
-  font-size: 18px;
+  font-size: 1rem;
   margin: 0;
   padding: 0;
   height: 100%;
   height: 100vh;
 }
 
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+}
+
 h1 {
-  font-size: 1.25rem;
+  font-size: 2.7rem;
 }
 
 h2 {
-  font-size: 1.125rem;
+  font-size: 1.5rem;
 }
 
 h3 {
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 h4 {
+  font-size: 1.125rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+h6 {
   font-size: 0.875rem;
+  font-weight: 500;
+}
+
+b {
+  font-weight: 700;
+}
+p {
+  font-size: var(--p-font-size);
+  font-weight: 350;
+  line-height: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: justify;
 }
 
 a {
@@ -85,13 +114,14 @@ a:hover {
   }
 
 .button {
-  font-size: 1rem;
-  font-weight: 400;
-  padding: 0.5rem 1.5rem;
+  font-family: "Lexend", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  padding: 0.6rem 1.5rem;
   text-align: center;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  border-radius: 0.5rem;
-  border: 0.22rem solid var(--color-button-border);
+  box-shadow: var(--color-button-primary-bg) 0 8px 18px -10px;
+  border-radius: 2rem;
+  border: 0.1rem solid var(--color-button-primary-bg);
   box-sizing: border-box; 
   cursor: pointer;
   transition: outline 0.1s linear;
@@ -101,13 +131,26 @@ a:hover {
   touch-action: manipulation;
 }
 
-.button:hover, .button:focus {
-outline: 0.125rem solid var(--color-button-primary-bg);
-}
-
 .button--primary {
   background-color: var(--color-button-primary-bg);
+  border: 0.1rem solid;
+  border-color: var(--color-button-primary-bg);
   color: var(--color-button-primary-text);
+}
+.button--primary:hover {
+  background-color: white;
+  color: black;
+}
+.button--primary:disabled {
+  cursor: not-allowed;
+  background-color: var(--main-color-bg);
+  border-color: var(--color-text-on-primary-light)!important; 
+  color: var(--color-text-on-primary-light); 
+  box-shadow: none; 
+}
+.button--primary:disabled:hover {
+  background-color: var(--main-color-bg)!important;
+  border-color: var(--color-text-on-primary-light); 
 }
 
 .button--secondary {

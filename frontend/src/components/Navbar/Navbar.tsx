@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate , useLocation} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import type { AppDispatch } from "../../store";
@@ -7,7 +7,7 @@ import { signOutUser } from "../../store/authSlice";
 import { clearTaskList } from "../../store/tasksSlice";
 import { clearGoalList } from "../../store/goalsSlice";
 import "./navbar.css";
-import Logo from "../../assets/images/Logo.svg";
+import Logo from "../../assets/images/logo.svg";
 import profileIcon from "../../assets/icons/profile-user.svg";
 import my_profile from "../../assets/icons/my-profile.svg";
 import menu from "../../assets/icons/menu.svg";
@@ -65,9 +65,13 @@ const Navbar = () => {
     setProfileDropdownMenuOpen(false);
     navigate("/");
   };
+  
+  const location = useLocation();  
+  const isHome = location.pathname === '/'; 
 
   return (
-    <nav className="nav-bar">
+    <nav className={`nav-bar ${isLoggedIn ? 'nav-bar-logged-in' : 'nav-bar-logged-out'} ${isHome ? 'nav-bar-transparent' : ''} `}>
+
       <NavLink
         to="/"
         onClick={() => {
@@ -76,26 +80,17 @@ const Navbar = () => {
       >
         <img src={Logo} alt="logo svg" className="nav__logo-link" />
       </NavLink>
+      {isLoggedIn && (
+        <img
+          src={isMenuOpen ? close : menu}
+          alt="menu icon"
+          className="menu"
+          onClick={toggleMenu}
+        />
+      )}
 
-      <img
-        src={isMenuOpen ? close : menu}
-        alt="menu icon"
-        className="menu"
-        onClick={toggleMenu}
-      />
-
-      <div className={`nav-text ${isMenuOpen ? "nav--visible" : ""}`}>
+      <section className={`nav-text ${isMenuOpen ? "dropdown-menu__visible" : ""}`}>
         <ul className="nav__list">
-          <li
-            className="nav__list-item"
-            onClick={() => {
-              navigate("/features");
-              setMenuOpen(false);
-            }}
-          >
-            {" "}
-            Features{" "}
-          </li>
           {isLoggedIn ? (
             <>
               <li
@@ -131,9 +126,9 @@ const Navbar = () => {
             </>
           ) : null}
         </ul>
-      </div>
+      </section>
 
-      <div className="nav__right-column">
+      <section className="nav__right-column">
         <div className="nav__right-column">
           {!isLoggedIn && (
             <button
@@ -170,7 +165,7 @@ const Navbar = () => {
                     </button>
                     <h4>
                       {" "}
-                      Haven't got an account? <br /> Register{" "}
+                      Don't have an account yet? <br /> Register{" "}
                       <a onClick={() => navigate("/register")}>here</a>{" "}
                     </h4>
                   </>
@@ -183,7 +178,7 @@ const Navbar = () => {
                     >
                       LOG OUT
                     </button>
-                    <button className="dropdown-menu-button-secondary__profile">
+                    <button className="dropdown-menu-button__profile">
                       <img
                         src={my_profile}
                         alt="my profile icon"
@@ -197,7 +192,7 @@ const Navbar = () => {
             )}
           </div>
         </div>
-      </div>
+      </section>
     </nav>
   );
 };

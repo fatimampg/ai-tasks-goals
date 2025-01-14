@@ -73,7 +73,7 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
           borderColor: `var(--${category})`,
         }}
       ></div>
-      <h3 className="dashboard__task-description">{description}</h3>
+      <p className="dashboard__task-description">{description}</p>
       <input
         type="checkbox"
         id="checkboxAchieved"
@@ -109,41 +109,50 @@ const GoalCard = ({ goal }: { goal: Goal }) => {
             ref={dropdownRef}
             data-testid="dropdown-content"
           >
-            <h4> Month: {month}</h4>
-            <h4> Year: {year}</h4>
+            <p> Month: {month}</p>
+            <p> Year: {year}</p>
             <div className="task-progress">
-              <label> Achieved:</label>
-              <input
-                type="checkbox"
-                id="checkboxAchieved"
-                checked={status === "ACHIEVED"}
-                disabled
-              />
-              <label> In progress:</label>
-              <input
-                type="checkbox"
-                id="checkboxInProgress"
-                checked={status === "IN_PROGRESS"}
-                disabled
-              />
-              <label> Needs Improvement:</label>
-              <input
-                type="checkbox"
-                id="checkboxNeedsImprovement"
-                checked={status === "NEEDS_IMPROVEMENT"}
-                disabled
-              />
+              <div className="task-progress-state-set">
+                <input
+                  type="checkbox"
+                  id="checkboxAchieved"
+                  checked={status === "ACHIEVED"}
+                  disabled
+                  />
+                  <label> Achieved</label>
+              </div>
+              <div className="task-progress-state-set">
+                <input
+                  type="checkbox"
+                  id="checkboxInProgress"
+                  checked={status === "IN_PROGRESS"}
+                  disabled
+                />
+                <label> In progress</label>
+              </div>
+              <div className="task-progress-state-set">
+                <input
+                  type="checkbox"
+                  id="checkboxNeedsImprovement"
+                  checked={status === "NEEDS_IMPROVEMENT"}
+                  disabled
+                />
+                <label> Needs Improvement:</label>
+              </div>
+
             </div>
-            <button
-              className="dropdown-menu-button"
-              onClick={() => setShowModal(true)}
-            >
-              Edit
-            </button>
-            <button className="dropdown-menu-button" onClick={handleRemoveGoal}>
-              Remove
-            </button>
-          </div>
+              <div className="dropdown-menu__set">
+                <button
+                  className="dropdown-menu-button"
+                  onClick={() => setShowModal(true)}
+                >
+                  Edit
+                </button>
+                <button className="dropdown-menu-button" onClick={handleRemoveGoal}>
+                  Remove
+                </button>
+              </div>
+            </div>
         )}
       </div>
       <div className="editTask">

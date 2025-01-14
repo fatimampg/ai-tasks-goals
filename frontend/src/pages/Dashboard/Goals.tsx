@@ -15,6 +15,12 @@ const Goals = () => {
   const goalList = useSelector((state: RootState) => state.goals.goalList);
   const isLoading = useSelector((state: RootState) => state.goals.isLoading);
   const header = useSelector((state: RootState) => state.auth.header);
+  const isSideBarOpen = useSelector((state: RootState) => state.searchDates.sidebarOpen);
+  
+  useEffect(() => {
+    console.log(isSideBarOpen, "from goals");
+  },[])
+  
   const dispatch = useDispatch<AppDispatch>();
 
   // Toastmessages:
@@ -42,17 +48,19 @@ const Goals = () => {
     };
   }, [dispatch]);
 
+
+
   return (
     <div>
       {isLoading && <LoadingSpinner />}
       <aside className="dashboard__sidebar">
         <Sidebar />
       </aside>
-      <div className="main-page">
+      <div className={`main-page-goals ${!isSideBarOpen ? '' : 'slide-up'}`}>
         <div className="dashboard__main-container">
           <div className="dashboard__top-info">
             <DashboardHeader header={header} />
-            <h2 className="dashboard__main-title"> Goals:</h2>
+            <h3 className="dashboard__main-title"> GOALS:</h3>
             <GoalsIdentifiers />
           </div>
           <div className="dashboard__list-container">

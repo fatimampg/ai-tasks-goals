@@ -19,34 +19,77 @@
 .progress__info-key-value  {
     padding: 1.25rem 0rem 0rem 0rem;
 }
+.progress__info-key-value h3 {
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+.progress__info-key-value p {
+    font-size: 0.9rem;
+    font-weight: 300;
+}
 .dashboard__progress-top-info {
     background-color: var(--main-color-bg);
-    padding-right: 1.5625rem;
 } 
 .dashboard__progress-list-container {
-    padding-right: 1.5625rem;
     padding-bottom: 9.375rem; 
 }
 .message-warning {
-    font-weight: 700;
+    font-weight: 500;
+    font-size: 1.0rem;
     font-family: var(--font-family);
-    color: var(--purple);
+    color: var(--main-theme-color);
 }
 .message-warning-secondary {
-    font-weight: 400;
+    font-weight: 350;
+    font-size: 0.95rem;
     font-family: var(--font-family);
     color: var(--dark-grey);
     margin-top: 0.625rem;
 }
+.progress-container-buttons {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.progress-container-buttons button {
+    margin-right: 0rem!important;
+ }
 
-@media (max-width: 650px) {
-    .dashboard__progress-top-info h3 {
-        font-size: 0.875em;
+@media (max-width: 850px) {
+    .progress-container-buttons button {
+       font-size: 0.875rem;
     }
-    .dashboard__progress-top-info {
-        padding-right: 0.9375em;
-    } 
-    .dashboard__progress-list-container {
-        padding-right: 0.9375em;
+}  
+@media (max-width: 450px) {
+    .progress-container-buttons {
+        gap: 0.5rem;
     }
+}  
+@media (max-width: 350px) {
+    
+.progressSummary, .progressRecommendations {
+    font-size: 0.875rem;
+   }
+
+.progress__info-key-value h3 {
+    font-size: 0.9rem;
+}
+.progress__info-key-value p {
+    font-size: 0.875rem;
+    font-weight: 300;
+} 
+.message-warning{
+    font-weight: 500;
+    font-size: 0.875rem!important;
+}
+.message-warning-secondary {
+    font-size: 0.875rem;
+}
+.progress-container-buttons {
+    margin-top: 1.5rem;
+    margin-bottom: 1.0rem;
+    gap: 0.5rem;
+}
 }  

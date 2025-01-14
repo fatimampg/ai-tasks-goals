@@ -10,7 +10,7 @@ const Categories = () => {
 
   return (
     <div className="sidebar__categories">
-      <h3 style={{ paddingBottom: "5px" }}>Categories:</h3>
+      <h4 style={{ paddingBottom: "5px" }}>Categories:</h4>
       <ul>
         {categories.map((category, index) => (
           <div className="sidebar__icon-title-pair" key={index}>

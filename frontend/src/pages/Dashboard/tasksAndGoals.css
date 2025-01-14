@@ -6,64 +6,67 @@
     justify-content: space-between;
 }
 .dashboard__main-title-and-button button {
-    margin-top: 1.25rem;
-    margin-bottom: 1.25rem;
-    font-family: AptosBold, sans-serif;
-    font-weight: 700;
-    font-size: 1.05rem;
+    margin: 1.25rem 0;
+    font-size: 0.9rem;
+}
+.dashboard__main-title-and-button button:hover {
+    background-color: var(--main-color-bg);
 }
 .dashboard__sidebar {
     height: 100%;
 }
-.main-page {
+.main-page, .main-page-goals, .main-page-progress {
     margin-top: 3.83125rem;
     margin-left:15.3125rem ;
+    background-color:var(--main-color-bg);
 }
 .progress-page {
     margin-top: 3.83125rem;
     margin-left:15.3125rem ;
 }
 .dashboard__main-container {
-    padding-left: 0.9375rem;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    background-color:var(--main-color-bg);
 }
 .dashboard__top-info {
-    position: fixed;
-    z-index: 2;
+    position: relative;
     background-color: var(--main-color-bg);
-    width: calc(100% - 18.125rem); 
-    padding-right: 1.25rem;
+    width: 100%; 
 }
 .dashboard__list-container {
-    position: absolute;
-    margin-top: 15.625rem;
-    width: calc(100% - 17.8125rem); 
-    right: 1.25rem;
+    position: relative;
+    margin-top: 1rem;
+    width: 100%; 
     padding-bottom: 9.375rem;
     
 }
 .dashboard__title-welcome { 
     padding-top: 2.1875rem;
-    font-weight: 700;
-    font-family: AptosBold, sans-serif;
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+.dashboard__title-welcome h3 { 
+    font-weight: 500;
+    font-family: Lexend, sans-serif;
     color: var(--color-text-on-primary);
 }
-.icon__waving-hand{
+.icon__waving-hand {
     height: 1.5rem;
     padding-left: 0.625rem;
 }
 .dashboard__sub-title { 
     padding-top: 0.625rem;
     color: var(--color-text-on-primary);
+    font-weight: 300;
+    font-size: 0.875rem;
 }
 .dashboard__main-title { 
     padding-top: 2.5rem;
     padding-bottom: 0.9375rem;
-    font-weight: 700;
-    font-family: AptosBold, sans-serif;
-    color: var(--color-text-on-primary);
+    font-weight: 500;
+    color: var(--maint-theme-color);
 }
 .dashboard__identifiers--tasks, .dashboard__identifiers--goals {
     display: flex;
@@ -71,7 +74,7 @@
     align-items: center;
     margin-bottom: 0rem;
     margin-top: 1.25rem;
-    color: var(--dark-grey);
+    color: black;
 }
 .dashboard__task-items {
     display: flex;
@@ -83,7 +86,12 @@
     background-color: var(--white);
     border-radius: 0.625rem;
 }
-.dashboard__identifiers--tasks h3:nth-child(2), .dashboard__task-items h3:nth-child(2) {
+.dashboard__identifiers--tasks h3, .dashboard__identifiers--goals h3, .dashboard__task-items p {
+    font-weight: 350;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+.dashboard__identifiers--tasks h3:nth-child(2) {
     padding: 0.625rem 0.625rem 0.625rem 0.3125rem;
     margin-right: auto;
 }
@@ -91,7 +99,7 @@
     padding: 0.625rem 0.8125rem 0.625rem 0.8125rem;
     text-align: center;
 } 
-.dashboard__identifiers--goals h3:nth-child(2), .dashboard__task-items h3:nth-child(2) {
+.dashboard__identifiers--goals h3:nth-child(2), .dashboard__task-items p {
     padding: 0.625rem 0.375rem 0.625rem 0.375rem;
     margin-right: auto;
 }
@@ -101,6 +109,11 @@
 } 
 #menu_vertical {
     padding: 0.625rem 0.125rem 0.625rem 0.125rem;
+    text-align: center; 
+    cursor: pointer;
+}
+.dashboard__identifiers--goals #menu_vertical {
+    padding: 0.625rem 0.70rem 0.625rem 0.125rem;
     text-align: center; 
     cursor: pointer;
 }
@@ -114,7 +127,7 @@
     accent-color: var(--dark-grey);}
 .dashboard__task-items.dashboard__card input[type="radio"]:first-of-type {
     margin-left: 0rem;
-    margin-right: 2.375rem;
+    margin-right: 1.8rem;
 }
 .dashboard__task-items.dashboard__card input[type="radio"]:last-of-type {
     margin-left: 0rem;
@@ -139,65 +152,76 @@
     margin: 0.3125rem 0.3125rem 0.3125rem 1.25rem;
     display: flex
 }
+.list-results > h4 {
+    padding-top: 2rem;
+    font-weight: 350;
+    font-size: 1rem;
+    font-style: italic;
+}
+
 .task__menu {
     position: relative;
 }
 .dropdown-content {
     background-color:var(--main-color-bg);
-    font-family: Aptos, sans-serif;
-    font-size: 1.0rem;
-    text-align: center;
+    padding: 1rem;
     border: 0.0625rem solid #dddbda;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: absolute;
-    top: 100%; /* Position below the menu button */
+    top: 100%;
     right:0;
-    min-width: 10rem;
+    min-width: 15rem;
     z-index: 1;
     color: black;
+    font-weight: 300;
+    font-size: 0.875rem;
     border-radius: 0.625rem;
 }
-.dropdown-content h4 {
-    display: block;
-    margin: 0.3125rem auto;
-    font-family: Aptos, sans-serif;
+
+.dropdown-content p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.875rem;
 }
-.dropdown-content h4:last-of-type {
-    margin-bottom: 1.25rem;
-}
-.dropdown-content button{
-    display: block;
-    margin: 0.625rem auto;
-}
-.dropdown-content h4:nth-child(1){
-    margin-top: 0.9375rem;
+.dropdown-content p:last-of-type {
+    margin-bottom: 1.0rem;
 }
 .dropdown-menu-button {
-    font-size: 0.9rem;
-    color: var(--dark-grey);
-    background-color: var(--white) ;
-    padding: 0 0.9rem;
-    height: 1.5625rem;
-    border-radius: 0.5rem;
-    border: 0.22rem solid var(--color-button-border);
-    box-sizing: border-box; 
-    cursor: pointer;
-    transition: outline 0.1s linear;
-    vertical-align: middle;
-    box-shadow: 0 0.0625rem 0.1875rem 0 rgba(0, 0, 0, 0.1), 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.06);
-    transition: outline 0.1s linear;
-    vertical-align: middle;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
+  font-size: 0.875rem;
+  font-weight: 300;
+  width: 90px;
+  padding: 0.4rem 0;
+  text-align: center;
+  box-shadow: var(--color-button-primary-bg) 0 8px 18px -10px;
+  border-radius: 2rem;
+  border: 0.1rem solid var(--color-button-primary-bg);
+  box-sizing: border-box; 
+  cursor: pointer;
+  transition: outline 0.1s linear;
+  vertical-align: middle;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  background-color: var(--color-button-primary-bg);
+  border-color: var(--color-button-primary-bg);
+  color: var(--color-button-primary-text);
+  margin: 0.2rem 0;
 }
-.dropdown-menu-button:last-child {
-    margin-bottom: 0.9375rem;
+
+.dropdown-menu-button:hover {
+    background-color: var(--main-color-bg);
+    color: black;
 }
-.dropdown-menu-button:hover, .dropdown-menu-button:focus {
-    outline: 0.125rem solid var(--color-button-primary-bg);
-    background-color: var(--color-button-primary-bg) ;
-    color: var(--white)
+.dropdown-menu__set {
+    margin-top: 1rem;
+    /* margin-top: 2.1rem; */
+    margin-bottom: 0.2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-self: center;
 }
 #checkboxAchieved,
 #checkboxInProgress,
@@ -229,47 +253,68 @@
 }
 #modal > div {
     background-color:var(--main-color-bg);
-    font-family: Aptos, sans-serif;
-    font-size: 1.0rem;
+    font-family: Lexend, sans-serif;
+    font-size: 0.875rem;
     padding: 2.5rem;
     text-align: center;
     border-radius: 1.25rem;
 }
+#modal button:hover {
+    background-color:var(--main-color-bg);
+}
+
 .modal__container select, .modal__container textarea, .modal__container input {
     color: var(--dark-grey);
     border: solid var(--light-grey-bg);
     background-color: var(--white);
-    margin: 0 0rem 0.3125rem 0.9375rem;
+    margin: 0 0rem 0rem 1.0rem;
     line-height: 1.25rem;
     border: 0.0625rem solid #dddbda;
     border-radius: 0.25rem;
     padding: 0 0.625rem 0 0.625rem;
-    box-sizing: border-box; 
+    box-sizing: border-box;
+    font-size: 0.875rem; 
+    font-weight: 350;
   }
 .modal__container select, .modal__container input {
     height: 1.875rem;
     width: 40%;
   }
+.modal__info-key-value p {
+    margin-bottom: 0;
+    font-size: 0.875rem;
+}
 .modal__container .taskPriorityModal {
-    margin-left: 1.6875rem;
+    margin-left: 3rem;
+    font-weight: 300;
+}
+.modal__container .taskCategoryModal {
+    margin-left: 2.0rem;
+    font-weight: 300;
+}
+.modal__container .taskDeadlineModal {
+    margin-left: 2.2rem;
+    font-weight: 300;
 }
 .modal__container textarea {
     height: 5.625rem;
     min-width: 23.75rem;
     width: 100%;
     padding-top: 0.3125rem;
+    font-weight: 300;
 }
 #modal .buttons button {
     display: inline-block;
-    margin-right: 0.9375rem;
+    margin-right: 2rem;
 }
 .modal__info-key-value {
     display: flex;
     flex-direction: row; 
-    /* gap: 1.25rem; */
     text-justify: start;
     justify-content: start;  
-    margin: 1.25rem auto;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0;
 }
 .modal__info-key-value:first-child {
     margin-top: 0rem;
@@ -318,29 +363,72 @@
     {
         margin: 0.3125rem 0.3125rem 0.3125rem 0rem !important;
     }
-    .dropdown-content label {
-        font-family: Aptos, sans-serif;
-        font-size: 0.95rem; 
-        display: inline-block;
-        margin-right: 0.625rem;
-        margin-bottom: 0.625rem;
-    }
-    .dropdown-content label[id^='checkboxToDo_'] {
-        margin-right: 2.875rem;
-    }
     .dropdown-content {
-        width: 12.5rem;
+        width: 15rem;
+        box-sizing: border-box;
+    }
+    .dropdown-menu__set {
+        margin-top: 2rem;
     }
     .task-progress {
-        display: inline-block;
-        text-align: left;
-        padding-left: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        /* text-align: left;
+        padding-left: 0rem; */
+    }
+    .task-progress-state-set label{
+        margin: 0;
+        padding: 0;
+    }
+    .task-progress-state-set {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
     }  
+    .task-progress-state-set input[type="radio"] {
+        margin: 0 0.5rem 0 0!important;
+        
+    }
+    .task-progress-state-set input[type="text"] {
+        margin: 0 0.5rem 0 0.5rem!important;
+        width: 85px!important;
+        font-size: 0.875rem!important;
+    }
 }
 
 @media (max-width: 650px) {
     .main-page {
-        margin: 0rem
+        margin: 29.0rem 0 0 0;
+        width: 100%;
+        overflow-y: auto; 
+        transition: transform 0.3s ease-in-out;
+    } 
+    .main-page-goals {
+        margin: 21.4rem 0 0 0;
+        width: 100%;
+        overflow-y: auto; 
+        transition: transform 0.3s ease-in-out;
+    } 
+    .main-page-progress {
+        margin: 21.4rem 0 0 0;
+        width: 100%;
+        overflow-y: auto; 
+        transition: transform 0.3s ease-in-out;
+    } 
+    .main-page.slide-up, .main-page-goals.slide-up, .main-page-progress.slide-up {
+        margin-top: 6.0rem;
+    }
+    .dashboard__main-container {
+        width: 100%;
+        height: 100%; 
+        box-sizing: border-box;
+        overflow-y: auto; 
+    } 
+    .dashboard__top-info {
+        width: 100%;
+        left: 0;
     }
     .progress-page {
         margin: 0rem
@@ -350,6 +438,7 @@
         margin: 0.3125rem 0.3125rem 0.3125rem 1.25rem;
         display: flex
     }
+
     .dashboard__title-welcome h2 {
         font-size: 1rem;
     }
@@ -359,28 +448,18 @@
     .dashboard__task-items > h3 {
         font-size: 0.875rem;
     }
-    .dashboard__main-container {
-        padding-left: 0.9375rem;
-    }
     .dashboard__main-title-and-button button {
         margin: 1.25rem 0.625rem auto auto;
         font-family: var(--font-family);
-        font-weight: 400;
-        font-size: 1.0rem;
+        font-weight: 300;
+        font-size: 0.8rem;
         width: 7.5rem;
         height: auto;
         word-wrap:break-word;
     }
-    .dashboard__top-info {
-        position: absolute;
-        width: 90%;
-        left:0.9375rem
-    }
     .dashboard__list-container {
-        position: absolute;
-        margin-top: 15.625rem;
-        width: 90%;
-        left:1.6rem;
+        position: relative;
+        margin-top: 2rem;
     }
     .dashboard__list-container h2 {
         font-size: 0.9375rem;
@@ -391,9 +470,11 @@
     #modal {
         flex-wrap: wrap;
     }
+    
     #modal > div {
         font-size: 0.875rem;
         padding: 1.25rem;
+        width: 80%;
     }
     .modal__container select, .modal__container textarea, .modal__container input {
         border: 0.0625rem solid #dddbda;
@@ -406,24 +487,28 @@
         width: 65%;
     }
     .modal__container .taskPriorityModal {
-        margin-left: 1.75rem;
+        margin-left: 2.75rem;
     }
     .modal__container .taskCategoryModal {
-        margin-left: 0.9375rem;
+        margin-left: 1.9375rem;
     }
     .modal__container textarea {
-        margin: 0.3125rem 0rem 0rem 0rem;
+        margin: 0.3125rem 0rem 0rem 1rem;
         height: auto;
         min-height: 6.25rem;
         min-width: 9.375rem;
     }
-    .modal__info-key-value h3 {
+    .modal__info-key-value p {
         font-size: 0.875rem;
         padding-top: 0.3125rem;
     }
 }
 
 @media (max-width: 550px) {
+
+    .sidebar-wrapper {
+        width: 100%;
+    }
     #menu_vertical {
         padding: 0.625rem 0rem 0.625rem 0rem;
         text-align: center; 
@@ -434,10 +519,39 @@
         margin: 0.3125rem 0.3125rem 0.3125rem 0.9375rem;
         display: flex
     }
+    .list-results > h4 {
+        font-size: 0.875rem;
+    }
 }
 
 @media (max-width: 350px) {
-    .dashboard__list-container {
-        left:1rem;
+
+    .dashboard__task-items p {
+        font-size: 0.875rem;
     }
+
+    .modal__container select {
+        margin: 0 0rem 0rem 0.3125rem;
+    }
+    .modal__container select, .modal__container input {
+        width: 65%;
+    }
+    .modal__container .taskPriorityModal {
+        margin-left: 1.55rem;
+    }
+    .modal__container .taskCategoryModal {
+        margin-left: 0.7375rem;
+    }
+    .modal__container .taskDeadlineModal {
+        margin-left: 0.8375rem;
+    }
+    .modal__container .taskDescriptionModal {
+        margin-left: 0rem;
+        width: 100%;
+    }
+    .modal__container .modal__info-key-value:first-of-type {
+        display: flex;
+        flex-direction: column; 
+        align-items: start;
+      }
 }

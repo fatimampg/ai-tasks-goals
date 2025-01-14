@@ -1,25 +1,24 @@
 import { useNavigate } from "react-router-dom";
-import img_homepage from "../../assets/images/img_homepage.jpg";
+import cover_img from "../../assets/images/cover_img.svg";
 
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <div className="home-container">
+    <div className="home__header">
       <h1 className="home__title">
-        Achieve your goals with a AI-Powered Tasks Manager.
+        Turn goals into actions and boost your productivity with our AI-powered tasks manager
       </h1>
-      <h3 className="home__subtitle">
-        Empower your productivity journey with inteligente task tracking and
-        goal setting.
-      </h3>
+      <h4 className="home__subtitle">
+        Empower your productivity! Break goals into actionable steps and let us help align your tasks for success.
+      </h4>
       <button
-        className="button button--primary home__button"
+        className="home__button button arrow-button"
         onClick={() => navigate("/register")}
       >
-        Try for free
+        Try for free <span className="arrow"></span>
       </button>
       <img
-        src={img_homepage}
+        src={cover_img}
         alt="img home"
         className="home__img"
         loading="lazy"
