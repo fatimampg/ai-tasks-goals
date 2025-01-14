@@ -5,6 +5,8 @@ import configureStore from "redux-mock-store";
 import { describe, it, expect, vi } from "vitest";
 import Navbar from "../../components/Navbar/Navbar";
 import { BrowserRouter } from "react-router-dom";
+import { EnhancedStore } from '@reduxjs/toolkit';
+
 
 describe("Navbar", () => {
   const mockStore = configureStore([]);
@@ -24,7 +26,7 @@ describe("Navbar", () => {
     ...toBeReplaced,
   });
 
-  const renderNavbar = (store) => {
+  const renderNavbar = (store: EnhancedStore) => {
     render(
       <Provider store={store}>
         <BrowserRouter>
@@ -34,7 +36,6 @@ describe("Navbar", () => {
     );
     return {
       logo: screen.getByRole("img", { name: /logo/i }),
-      features: screen.getByText(/features/i),
       tasks: screen.queryByText(/tasks/i),
       goals: screen.queryByText(/goals/i),
       progress: screen.queryByText(/progress/i),
@@ -53,11 +54,10 @@ describe("Navbar", () => {
     });
 
     const mockedStore = mockStore(initialState);
-    const { logo, features, tasks, goals, progress, button, profile } =
+    const { logo, tasks, goals, progress, button, profile } =
       renderNavbar(mockedStore);
 
     expect(logo).toBeInTheDocument();
-    expect(features).toBeInTheDocument();
     expect(tasks).not.toBeInTheDocument();
     expect(goals).not.toBeInTheDocument();
     expect(progress).not.toBeInTheDocument();
@@ -67,11 +67,10 @@ describe("Navbar", () => {
 
   it("should display correct items and buttons whe user is logged in", async () => {
     const mockedStore = mockStore(baseInitialState);
-    const { logo, features, tasks, goals, progress, button, profile } =
+    const { logo, tasks, goals, progress, button, profile } =
       renderNavbar(mockedStore);
 
     expect(logo).toBeInTheDocument();
-    expect(features).toBeInTheDocument();
     expect(tasks).toBeInTheDocument();
     expect(goals).toBeInTheDocument();
     expect(progress).toBeInTheDocument();

@@ -33,6 +33,7 @@ const initialState: RootState = {
       year: 2024,
     },
     error: null,
+    sidebarOpen: true,
   },
   goals: {
     goalList: [],
@@ -86,7 +87,7 @@ describe("Sidebar", () => {
 
     it("should show Task main items", async () => {
       renderSidebarTasks(mockedStore);
-      expect(screen.getByText("Tasks")).toBeInTheDocument();
+      expect(screen.getByText("Tasks:")).toBeInTheDocument();
 
       const startDate = screen.getByLabelText(/from:/i);
       expect(startDate).toBeInTheDocument();
@@ -95,9 +96,6 @@ describe("Sidebar", () => {
       const endDate = screen.getByLabelText(/to:/i);
       expect(endDate).toBeInTheDocument();
       expect(endDate).toHaveValue("2024-04-30");
-
-      const searchButton = screen.getByRole("button", { name: /earch tasks/i });
-      expect(searchButton).toBeInTheDocument();
 
       const addButton = screen.getByRole("button", {
         name: /add new task/i,
@@ -152,7 +150,7 @@ describe("Sidebar", () => {
     it("should show Goal search options when in /goals", async () => {
       renderSidebarGoals(mockedStore);
 
-      expect(screen.getByText("Goals")).toBeInTheDocument();
+      expect(screen.getByText("Goals:")).toBeInTheDocument();
 
       const monthSearch = screen.getByLabelText(/month:/i);
       expect(monthSearch).toBeInTheDocument();

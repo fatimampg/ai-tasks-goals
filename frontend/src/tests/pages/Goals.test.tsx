@@ -35,6 +35,7 @@ describe("Goals page", () => {
         year: 2024,
       },
       error: null,
+      sidebarOpen: true,
     },
     goals: {
       goalList: mockGoals,
