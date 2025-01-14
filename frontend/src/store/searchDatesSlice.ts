@@ -11,7 +11,7 @@ const initialState: SearchDatesState = {
   taskDates: null,
   goalsMonth: null,
   error: null,
-  sidebarOpen: true,
+  sidebarOpen: false,
 };
 
 const searchDatesSlice = createSlice({
